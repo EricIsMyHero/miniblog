@@ -22,15 +22,16 @@
         margin-bottom: 40px;
     }
     .post {
-        background: white;
-        padding: 20px;
-        border-radius: 8px;
-        margin-bottom: 30px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    background: white;
+    padding: 20px;
+    margin-bottom: 30px;
 
-        /* Şəkil çərçivəsi */
-        border: 30px solid transparent;
-        border-image: url('frame.png') 40 round;
+    /* Çərçivə şəkli */
+    border: 40px solid transparent; /* çərçivə qalınlığı */
+    border-image-source: url('frame.png');
+    border-image-slice: 40; /* şəkildən kəsiləcək hissə (px) */
+    border-image-repeat: stretch; /* küncləri saxlayır, kənarları uzadır */
+    border-radius: 0; /* istəsən yuvarlaq künc edə bilərsən */
     }
     .post h2 {
         margin-top: 0;
