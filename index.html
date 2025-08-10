@@ -3,93 +3,57 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Instagram Blog</title>
+<title>Blog Səhifə</title>
 <style>
     body {
         background: #f5f5f5;
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
+        line-height: 1.8;
     }
     .container {
-        max-width: 1000px;
+        max-width: 800px;
         margin: auto;
         padding: 20px;
     }
-    .block {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin: 60px 0;
-        flex-wrap: wrap;
+    h1 {
+        text-align: center;
+        margin-bottom: 40px;
     }
-    .block:nth-child(even) {
-        flex-direction: row-reverse;
-    }
-    .text {
-        flex: 1;
+    .post {
+        background: white;
         padding: 20px;
-        font-size: 20px;
-        line-height: 1.6;
+        border-radius: 8px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
-    .frame {
-        flex: 1;
-        position: relative;
-        width: 300px;
-        height: 400px;
-        margin: auto;
+    .post h2 {
+        margin-top: 0;
     }
-    .frame img.frame-img {
-        width: 260px;
-        height: 260px;
-        object-fit: contain;
-        position: relative;
-        z-index: 1;
-    }
-    .frame img.content-img {
-        position: absolute;
-        top: 50px; /* qaralığın yuxarısından məsafə */
-        left: 20px;
-        width: 260px;
-        height: 260px;
-        object-fit: cover;
-        z-index: 0;
-        border-radius: 5px;
+    .post p {
+        font-size: 18px;
     }
 </style>
 </head>
 <body>
 
 <div class="container">
+    <h1>Mənim Blogum</h1>
 
-    <div class="block">
-        <div class="text">
-            Mətn #1 - Burada istədiyin bloq yazısını əlavə edə bilərsən.
-        </div>
-        <div class="frame">
-            <img class="frame-img" src="frame.png">
-            <img class="content-img" src="sekil1.jpg">
-        </div>
+    <div class="post">
+        <h2>Məqalə #1</h2>
+        <p>Bu hissədə istədiyin yazını yerləşdirə bilərsən. HTML faylını açıb buranı dəyişmək kifayətdir.</p>
     </div>
 
-    <div class="block">
-        <div class="text">
-            Mətn #2 - Bu hissədə başqa bir yazı olacaq.
-        </div>
-        <div class="frame">
-            <img class="frame-img" src="frame.png">
-            <img class="content-img" src="sekil2.jpg">
-        </div>
+    <div class="post">
+        <h2>Məqalə #2</h2>
+        <p>Burada isə başqa bir məqalə və ya düşüncələrini paylaşa bilərsən.</p>
     </div>
 
-    <div class="block">
-        <div class="text">
-            Mətn #3 - İstədiyin qədər əlavə edə bilərsən.
-        </div>
-        <div class="frame">
-            <img class="frame-img" src="frame.png">
-            <img class="content-img" src="sekil3.jpg">
-        </div>
+    <div class="post">
+        <h2>Məqalə #3</h2>
+        <p>Bura qeydlər, hekayələr və ya şəxsi fikirlər üçün istifadə oluna bilər.</p>
     </div>
 
 </div>
