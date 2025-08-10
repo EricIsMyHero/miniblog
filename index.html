@@ -34,6 +34,13 @@
     .post p {
         font-size: 18px;
     }
+    .post-image {
+        width: 100%;
+        max-width: 400px;
+        margin-top: 15px;
+        border-radius: 8px;
+        display: block;
+    }
 </style>
 </head>
 <body>
@@ -41,22 +48,34 @@
 <div class="container">
     <h1>Mənim Blogum</h1>
 
-    <div class="post">
+    <div class="post" data-image="shekil1.jpg">
         <h2>Hər şey necə başladı?</h2>
         <p>Əslində, düzünə qalsa əvvəllər də az da olsa belə bir arzum vardı. Bir gün oturmuşdum, birdən ağlıma gəldi: “Bəlkə bir sayt açım?” Dedim, onsuz da boş vaxtımda çoxdur, bir cəhd etsəm nə olar ki? Elə o andan başladım işə… və budur, artıq buradayam!</p>
     </div>
 
-    <div class="post">
+    <div class="post" data-image="shekil2.jpg">
         <h2>İlk sayt, ilk təəssüratlar</h2>
         <p>Daha sonra birazcıq kömək ilə (ChatGPT) adi bir saytın mühim məqamlarını öyrəndim. Ən rahat sayt yaratmağın yolu isə GitHub olduğunu öyrəndim. Daha doğrusu pulsuz və daha sadə olduğu üçün. İlk saytım isə "Səni Sevməyimin 200 Səbəbi" oldu.</p>
     </div>
 
-    <div class="post">
+    <div class="post" data-image="shekil3.jpg">
         <h2>Məqalə #3</h2>
         <p>Bura qeydlər, hekayələr və ya şəxsi fikirlər üçün istifadə oluna bilər.</p>
     </div>
-
 </div>
 
+<script>
+    document.querySelectorAll(".post").forEach(post => {
+        let imgSrc = post.getAttribute("data-image");
+        if (imgSrc) {
+            let img = document.createElement("img");
+            img.src = imgSrc;
+            img.alt = "Post şəkili";
+            img.className = "post-image";
+            post.appendChild(img);
+        }
+    });
+</script>
+
 </body>
-</html> 
+</html>
