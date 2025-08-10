@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blog Səhifə</title>
+<title>MİNİ BLOG</title>
 <style>
     body {
         background: #f5f5f5;
@@ -30,7 +30,7 @@
         text-align: center;
     }
     .post h2 {
-        margin-top: 10px;
+        margin-top: 0;
     }
     .post p {
         font-size: 18px;
@@ -40,7 +40,7 @@
         width: 100%;
         max-width: 800px;
         height: auto;
-        margin-bottom: 15px;
+        margin-top: 15px;
         border-radius: 0;
         display: block;
     }
@@ -49,7 +49,7 @@
 <body>
 
 <div class="container">
-    <h1>Mənim Blogum</h1>
+    <h1>Mənim Mini Blogum</h1>
 
     <div class="post" data-image="shekil1.jpg">
         <h2>Hər şey necə başladı?</h2>
@@ -75,7 +75,7 @@
             img.src = imgSrc;
             img.alt = "Post şəkili";
             img.className = "post-image";
-            post.insertBefore(img, post.firstChild); // şəkili ən yuxarıya qoyur
+            post.appendChild(img); // şəkil mətnin sonunda olacaq
         }
     });
 </script>
