@@ -8,29 +8,36 @@
     body {
         background: #f5f5f5;
         font-family: Arial, sans-serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 1000px;
+        margin: auto;
         padding: 20px;
     }
     .block {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin: 40px 0;
-        width: 90%;
-        max-width: 1000px;
+        margin: 60px 0;
+        flex-wrap: wrap;
+    }
+    .block:nth-child(even) {
+        flex-direction: row-reverse;
     }
     .text {
         flex: 1;
         padding: 20px;
         font-size: 20px;
+        line-height: 1.6;
     }
     .frame {
         flex: 1;
         position: relative;
         width: 300px;
         height: 400px;
+        margin: auto;
     }
     .frame img.frame-img {
         width: 100%;
@@ -53,21 +60,39 @@
 </head>
 <body>
 
-<div class="block">
-    <div class="text">Mətn #1 - Burada istədiyin yazını əlavə edə bilərsən.</div>
-    <div class="frame">
-        <img class="frame-img" src="frame.png">
-        <img class="content-img" src="sekil1.jpg">
-    </div>
-</div>
+<div class="container">
 
-<div class="block">
-    <div class="frame">
-        <img class="frame-img" src="frame.png">
-        <img class="content-img" src="sekil2.jpg">
+    <div class="block">
+        <div class="text">
+            Mətn #1 - Burada istədiyin bloq yazısını əlavə edə bilərsən.
+        </div>
+        <div class="frame">
+            <img class="frame-img" src="frame.png">
+            <img class="content-img" src="sekil1.jpg">
+        </div>
     </div>
-    <div class="text">Mətn #2 - Digər yazı burada olacaq.</div>
+
+    <div class="block">
+        <div class="text">
+            Mətn #2 - Bu hissədə başqa bir yazı olacaq.
+        </div>
+        <div class="frame">
+            <img class="frame-img" src="frame.png">
+            <img class="content-img" src="sekil2.jpg">
+        </div>
+    </div>
+
+    <div class="block">
+        <div class="text">
+            Mətn #3 - İstədiyin qədər əlavə edə bilərsən.
+        </div>
+        <div class="frame">
+            <img class="frame-img" src="frame.png">
+            <img class="content-img" src="sekil3.jpg">
+        </div>
+    </div>
+
 </div>
 
 </body>
-</html>
+</html> 
