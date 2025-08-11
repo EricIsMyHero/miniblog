@@ -21,31 +21,44 @@
         text-align: center;
         margin-bottom: 40px;
     }
-    .post {
+    .category {
         background: white;
+        padding: 15px;
         border-radius: 8px;
-        margin-bottom: 15px;
+        margin-bottom: 20px;
         box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        overflow: hidden;
-    }
-    .post-header {
+        cursor: pointer;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 15px 20px;
-        cursor: pointer;
+    }
+    .post {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 10px 0 20px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        text-align: center;
+        display: none;
+    }
+    .post h2 {
+        margin-top: 0;
+    }
+    .post p {
+        font-size: 18px;
+        text-align: justify;
+    }
+    .post-image {
+        width: 100%;
+        max-width: 800px;
+        height: auto;
+        margin-top: 15px;
+        border-radius: 0;
+        display: block;
+    }
+    .toggle-btn {
         font-size: 20px;
         font-weight: bold;
-        background: #eee;
-    }
-    .post-header span {
-        font-size: 24px;
-    }
-    .post-content {
-        display: none;
-        padding: 20px;
-        text-align: justify;
-        font-size: 18px;
     }
     footer {
         margin-top: 80px;
@@ -65,60 +78,61 @@
 <div class="container">
     <h1>Mənim Mini Blogum</h1>
 
-    <div class="post">
-        <div class="post-header">
-            <div>Hər şey necə başladı?</div>
-            <span>+</span>
-        </div>
-        <div class="post-content">
-            Əslində, düzünə qalsa əvvəllər də az da olsa belə bir arzum vardı. 
-            Bir gün oturmuşdum, birdən ağlıma gəldi: “Bəlkə bir sayt açım?” Dedim, onsuz da boş vaxtımda çoxdur, 
-            bir cəhd etsəm nə olar ki? Elə o andan başladım işə… və budur, artıq buradayam!
-        </div>
+    <div class="category" data-target="cat1">
+        <span>Başlanğıc</span>
+        <span class="toggle-btn">+</span>
+    </div>
+    <div id="cat1" class="post">
+        <h2>Hər şey necə başladı?</h2>
+        <p>Əslində, düzünə qalsa əvvəllər də az da olsa belə bir arzum vardı...</p>
     </div>
 
-    <div class="post">
-        <div class="post-header">
-            <div>İlk sayt, ilk təəssüratlar</div>
-            <span>+</span>
-        </div>
-        <div class="post-content">
-            Daha sonra birazcıq kömək ilə (ChatGPT) adi bir saytın mühim məqamlarını öyrəndim. 
-            Ən rahat sayt yaratmağın yolu isə GitHub olduğunu öyrəndim. Daha doğrusu pulsuz və 
-            daha sadə olduğu üçün. İlk saytım isə "Səni Sevməyimin 200 Səbəbi" oldu.
-        </div>
+    <div class="category" data-target="cat2">
+        <span>İlk Təcrübələr</span>
+        <span class="toggle-btn">+</span>
+    </div>
+    <div id="cat2" class="post" data-image="shekil2.jpg">
+        <h2>İlk sayt, ilk təəssüratlar</h2>
+        <p>Daha sonra birazcıq kömək ilə (ChatGPT) adi bir saytın mühüm məqamlarını öyrəndim...</p>
     </div>
 
-    <div class="post">
-        <div class="post-header">
-            <div>Digər saytlar</div>
-            <span>+</span>
-        </div>
-        <div class="post-content">
-            Nəysə ilk saytı düzəltdikdən sonra mənə bir həvəs gəldi. 
-            Düzdü kod yazmaq çətindi heç bunları mən yazmamışam sadəcə kiçik düzəlişlər etmişəm. 
-            Nə qədər səhvlər oldu, düzəldik. Və axırda son nöqtə. 
-            Nədənsə yeni bir şeylə məşğul olmaq maraqlı gəlir. Məncə elə insan yeniliklərə açıq olmalıdır. 
-            Sizədə məsləhət görürəm.
-        </div>
+    <div class="category" data-target="cat3">
+        <span>Sonrakı Addımlar</span>
+        <span class="toggle-btn">+</span>
+    </div>
+    <div id="cat3" class="post" data-image="shekil3.jpg">
+        <h2>Digər saytlar</h2>
+        <p>Nəysə ilk saytı düzəltdikdən sonra mənə bir həvəs gəldi...</p>
     </div>
 </div>
 
 <script>
-document.querySelectorAll('.post-header').forEach(header => {
-    header.addEventListener('click', () => {
-        const content = header.nextElementSibling;
-        const symbol = header.querySelector('span');
+    document.querySelectorAll(".category").forEach(cat => {
+        cat.addEventListener("click", () => {
+            let targetId = cat.getAttribute("data-target");
+            let post = document.getElementById(targetId);
+            let btn = cat.querySelector(".toggle-btn");
 
-        if (content.style.display === "block") {
-            content.style.display = "none";
-            symbol.textContent = "+";
-        } else {
-            content.style.display = "block";
-            symbol.textContent = "−";
+            if (post.style.display === "none" || post.style.display === "") {
+                post.style.display = "block";
+                btn.textContent = "-";
+            } else {
+                post.style.display = "none";
+                btn.textContent = "+";
+            }
+        });
+    });
+
+    document.querySelectorAll(".post").forEach(post => {
+        let imgSrc = post.getAttribute("data-image");
+        if (imgSrc) {
+            let img = document.createElement("img");
+            img.src = imgSrc;
+            img.alt = "Post şəkili";
+            img.className = "post-image";
+            post.appendChild(img);
         }
     });
-});
 </script>
 
 <footer>
@@ -126,5 +140,6 @@ document.querySelectorAll('.post-header').forEach(header => {
     <a href="https://linktr.ee/EricIsMyHero">Əlaqə</a> |
     <a href="mailto:ericismyhero2467@gmail.com">Təklif və İradlarınız üçün</a>
 </footer>
+
 </body>
-</html> 
+</html>
