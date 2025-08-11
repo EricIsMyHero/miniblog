@@ -34,26 +34,15 @@
         justify-content: space-between;
         align-items: center;
     }
-
-    /* Animasiya ilə post hissəsi */
     .post {
         background: white;
-        padding: 0 20px; /* başlanğıcda iç boşluq sıfırlanır */
+        padding: 20px;
         border-radius: 8px;
         margin: 10px 0 20px;
         box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         text-align: center;
-        overflow: hidden;
-        max-height: 0; /* gizli vəziyyətdə */
-        opacity: 0; /* şəffaf */
-        transition: max-height 0.5s ease, opacity 0.5s ease, padding 0.3s ease;
+        display: none;
     }
-    .post.open {
-        padding: 20px;
-        max-height: 1000px; /* böyük olmalı ki, bütün mətn sığsın */
-        opacity: 1;
-    }
-
     .post h2 {
         margin-top: 0;
     }
@@ -74,24 +63,26 @@
         font-weight: bold;
     }
     .share-button {
-        text-align: center;
-        margin-bottom: 30px;
-    }
-    .share-button button {
-        padding: 10px 20px;
-        background-color: #c2185b;
-        color: white;
-        border: none;
-        border-radius: 10px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: 0.3s;
-        position: relative;
-        z-index: 1;
-    }
-    .share-button button:hover {
-        background-color: #a01048;
-    }
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.share-button button {
+  padding: 10px 20px;
+  background-color: #c2185b;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  position: relative;
+  z-index: 1;
+}
+
+.share-button button:hover {
+  background-color: #a01048;
+}
     footer {
         margin-top: 80px;
         padding: 20px;
@@ -145,51 +136,49 @@
             Sizədə məsləhət görürəm.</p>
     </div>
 </div>
-
 <div class="share-button">
     <button onclick="shareSite()">💌 Saytı paylaş</button>
 </div>
-
 <script>
-document.querySelectorAll(".category").forEach(cat => {
-    cat.addEventListener("click", () => {
-        let targetId = cat.getAttribute("data-target");
-        let post = document.getElementById(targetId);
-        let btn = cat.querySelector(".toggle-btn");
+    document.querySelectorAll(".category").forEach(cat => {
+        cat.addEventListener("click", () => {
+            let targetId = cat.getAttribute("data-target");
+            let post = document.getElementById(targetId);
+            let btn = cat.querySelector(".toggle-btn");
 
-        if (!post.classList.contains("open")) {
-            post.classList.add("open");
-            btn.textContent = "-";
-        } else {
-            post.classList.remove("open");
-            btn.textContent = "+";
+            if (post.style.display === "none" || post.style.display === "") {
+                post.style.display = "block";
+                btn.textContent = "-";
+            } else {
+                post.style.display = "none";
+                btn.textContent = "+";
+            }
+        });
+    });
+
+    document.querySelectorAll(".post").forEach(post => {
+        let imgSrc = post.getAttribute("data-image");
+        if (imgSrc) {
+            let img = document.createElement("img");
+            img.src = imgSrc;
+            img.alt = "Post şəkili";
+            img.className = "post-image";
+            post.appendChild(img);
         }
     });
-});
+    function shareSite() {
+  const shareData = {
+    title: "Miniblog",
+    text: "my life, my rules",
+    url: window.location.href
+  };
 
-document.querySelectorAll(".post").forEach(post => {
-    let imgSrc = post.getAttribute("data-image");
-    if (imgSrc) {
-        let img = document.createElement("img");
-        img.src = imgSrc;
-        img.alt = "Post şəkili";
-        img.className = "post-image";
-        post.appendChild(img);
+  if (navigator.share) {
+    navigator.share(shareData).catch((err) => console.log("Xəta:", err));
+  } else {
+    prompt("Linki kopyala və paylaş ✨", window.location.href);
+  }
     }
-});
-
-function shareSite() {
-    const shareData = {
-        title: "Miniblog",
-        text: "my life, my rules",
-        url: window.location.href
-    };
-    if (navigator.share) {
-        navigator.share(shareData).catch((err) => console.log("Xəta:", err));
-    } else {
-        prompt("Linki kopyala və paylaş ✨", window.location.href);
-    }
-}
 </script>
 
 <footer>
@@ -199,4 +188,4 @@ function shareSite() {
 </footer>
 
 </body>
-</html> 
+</html>
