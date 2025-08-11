@@ -62,6 +62,27 @@
         font-size: 20px;
         font-weight: bold;
     }
+    .share-button {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.share-button button {
+  padding: 10px 20px;
+  background-color: #c2185b;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  position: relative;
+  z-index: 1;
+}
+
+.share-button button:hover {
+  background-color: #a01048;
+}
     footer {
         margin-top: 80px;
         padding: 20px;
@@ -115,7 +136,9 @@
             Sizədə məsləhət görürəm.</p>
     </div>
 </div>
-
+<div class="share-button">
+    <button onclick="shareSite()">💌 Saytı paylaş</button>
+</div>
 <script>
     document.querySelectorAll(".category").forEach(cat => {
         cat.addEventListener("click", () => {
@@ -143,6 +166,19 @@
             post.appendChild(img);
         }
     });
+    function shareSite() {
+  const shareData = {
+    title: "💖Hər Gün Bir İltifat 💖",
+    text: "Nə yəni hər gün bir iltifat?🥺💘",
+    url: window.location.href
+  };
+
+  if (navigator.share) {
+    navigator.share(shareData).catch((err) => console.log("Xəta:", err));
+  } else {
+    prompt("Linki kopyala və paylaş ✨", window.location.href);
+  }
+    }
 </script>
 
 <footer>
