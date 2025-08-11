@@ -149,32 +149,6 @@
     <button onclick="shareSite()">💌 Saytı paylaş</button>
 </div>
 <script>
-    document.querySelectorAll(".category").forEach(cat => {
-        cat.addEventListener("click", () => {
-            let targetId = cat.getAttribute("data-target");
-            let post = document.getElementById(targetId);
-            let btn = cat.querySelector(".toggle-btn");
-
-            if (post.style.display === "none" || post.style.display === "") {
-                post.style.display = "block";
-                btn.textContent = "-";
-            } else {
-                post.style.display = "none";
-                btn.textContent = "+";
-            }
-        });
-    });
-
-    document.querySelectorAll(".post").forEach(post => {
-        let imgSrc = post.getAttribute("data-image");
-        if (imgSrc) {
-            let img = document.createElement("img");
-            img.src = imgSrc;
-            img.alt = "Post şəkili";
-            img.className = "post-image";
-            post.appendChild(img);
-        }
-    });
     function shareSite() {
   const shareData = {
     title: "Miniblog",
