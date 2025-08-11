@@ -1,202 +1,435 @@
 <!DOCTYPE html>
 <html lang="az">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MİNİ BLOG</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mini Blog</title>
 <style>
-    body {
-        background: #f5f5f5;
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        line-height: 1.8;
-    }
-    .container {
-        max-width: 1200px;
-        margin: auto;
-        padding: 20px;
-    }
-    h1 {
-        text-align: center;
-        margin-bottom: 40px;
-    }
-    .category {
-        background: white;
-        padding: 15px;
-        border-radius: 8px;
-        margin-bottom: 5px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        cursor: pointer;
-        font-size: 20px;
-        font-weight: bold;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+  :root{
+    --bg: #f5f5f5;
+    --card: #ffffff;
+    --text: #111827;
+    --muted: #6b7280;
+    --accent: #c2185b;
+    --accent-2: #f48fb1;
+    --shadow: 0 6px 18px rgba(17,24,39,0.08);
+    --radius: 10px;
+    --anim-duration: 0.45s; /* buranı dəyişərək bütün animasiya sürətini tənzimləyə bilərsən */
+    --gap-category: 20px; /* kateqoriyalar arasındakı məsafə */
+  }
 
-    /* Animasiya ilə post hissəsi */
-    .post {
-        background: white;
-        padding: 0 20px; /* başlanğıcda iç boşluq sıfırlanır */
-        border-radius: 8px;
-        margin: 10px 0 20px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        text-align: center;
-        overflow: hidden;
-        max-height: 0; /* gizli vəziyyətdə */
-        opacity: 0; /* şəffaf */
-        transition: max-height 1s ease, opacity 1s ease, padding 0.6s ease;
-    }
-    .post.open {
-        padding: 20px;
-        max-height: 1000px; /* böyük olmalı ki, bütün mətn sığsın */
-        opacity: 1;
-    }
+  /* Dark mode variables (will be toggled by .dark on html) */
+  html.dark {
+    --bg: #0b1220;
+    --card: #071022;
+    --text: #e6eef8;
+    --muted: #9fb3cf;
+    --accent: #ff6fa0;
+    --accent-2: #ff97c4;
+    --shadow: 0 8px 24px rgba(0,0,0,0.6);
+  }
 
-    .post h2 {
-        margin-top: 0;
-    }
-    .post p {
-        font-size: 18px;
-        text-align: justify;
-    }
-    .post-image {
-        width: 100%;
-        max-width: 800px;
-        height: auto;
-        margin-top: 15px;
-        border-radius: 0;
-        display: block;
-    }
-    .toggle-btn {
-        font-size: 20px;
-        font-weight: bold;
-    }
-    .share-button {
-        text-align: center;
-        margin-bottom: 30px;
-    }
-    .share-button button {
-        padding: 10px 20px;
-        background-color: #c2185b;
-        color: white;
-        border: none;
-        border-radius: 10px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: 0.3s;
-        position: relative;
-        z-index: 1;
-    }
-    .share-button button:hover {
-        background-color: #a01048;
-    }
-    footer {
-        margin-top: 80px;
-        padding: 20px;
-        background-color: white;
-        color: #000;
-        text-align: center;
-        font-size: 16px;
-    }
-    footer a {
-        color: #f48fb1;
-    }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background:linear-gradient(180deg, var(--bg), rgba(0,0,0,0.01));
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.6;
+    padding:36px 16px;
+  }
+
+  .container{
+    max-width:900px;
+    margin:0 auto;
+    padding:24px;
+  }
+
+  /* Header */
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:28px;
+    opacity:0;
+    transform:translateY(-8px);
+    animation: headerIn var(--anim-duration) ease forwards;
+    animation-delay: 0.12s;
+  }
+  @keyframes headerIn{
+    to { opacity:1; transform:none; }
+  }
+  h1{
+    margin:0;
+    font-size:clamp(20px, 4vw, 28px);
+    letter-spacing:0.2px;
+  }
+  .header-actions{
+    display:flex;
+    gap:10px;
+    align-items:center;
+  }
+
+  /* Dark toggle */
+  .toggle {
+    background:transparent;
+    border:1px solid rgba(0,0,0,0.06);
+    padding:8px 10px;
+    border-radius:999px;
+    cursor:pointer;
+    display:inline-flex;
+    gap:8px;
+    align-items:center;
+    color:var(--text);
+    font-weight:600;
+    box-shadow:var(--shadow);
+    transition: transform 0.18s ease;
+  }
+  .toggle:active{ transform:scale(.98) }
+
+  /* share button */
+  .share {
+    background:var(--accent);
+    color:white;
+    border:none;
+    padding:8px 12px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+    box-shadow:0 6px 18px rgba(194,24,91,0.12);
+  }
+
+  /* Categories */
+  .category {
+    background:var(--card);
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+    padding:14px 16px;
+    border-radius:var(--radius);
+    margin-bottom: var(--gap-category);
+    box-shadow:var(--shadow);
+    cursor:pointer;
+    transition: transform 0.12s ease, box-shadow 0.18s ease;
+    border: 1px solid rgba(0,0,0,0.03);
+  }
+  .category:hover{ transform:translateY(-4px) }
+  .cat-left{
+    display:flex;
+    gap:12px;
+    align-items:center;
+  }
+  .cat-emoji{
+    font-size:20px;
+    line-height:1;
+  }
+  .cat-title{
+    font-weight:700;
+    font-size:16px;
+  }
+  .cat-sub{
+    display:block;
+    font-size:13px;
+    color:var(--muted);
+    margin-top:4px;
+  }
+  .toggle-btn{
+    font-weight:800;
+    font-size:18px;
+    color:var(--muted);
+    min-width:28px;
+    text-align:center;
+  }
+
+  /* Post panel (collapsible) */
+  .post {
+    background:var(--card);
+    border-radius:calc(var(--radius) - 2px);
+    margin: -8px 0 18px; /* overlap a bit with category for cleaner look */
+    padding:0 18px; /* collapsed padding */
+    overflow:hidden;
+    max-height:0;
+    opacity:0;
+    transform:translateY(-6px);
+    transition: max-height var(--anim-duration) ease, opacity calc(var(--anim-duration)/1.2) ease, transform calc(var(--anim-duration)/1.1) ease, padding 0.22s ease;
+    box-shadow:var(--shadow);
+    border: 1px solid rgba(0,0,0,0.03);
+  }
+  .post.open{
+    padding:18px;
+    max-height:1200px; /* kifayət qədər böyük tut */
+    opacity:1;
+    transform:none;
+  }
+
+  .post h2{ margin:6px 0 12px; font-size:18px }
+  .post p{ margin:0 0 12px; font-size:15px; color:var(--text); text-align:justify }
+  .post .meta{ font-size:13px; color:var(--muted); margin-bottom:10px }
+
+  .post-image{
+    width:100%;
+    border-radius:8px;
+    display:block;
+    margin-top:10px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+  }
+
+  /* back to top */
+  #topBtn{
+    position:fixed;
+    right:18px;
+    bottom:18px;
+    width:46px;
+    height:46px;
+    border-radius:999px;
+    border:none;
+    background:var(--accent);
+    color:white;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+    cursor:pointer;
+    box-shadow:0 10px 30px rgba(194,24,91,0.14);
+    z-index:1200;
+  }
+
+  /* Footer */
+  footer{
+    margin-top:28px;
+    padding:16px;
+    text-align:center;
+    color:var(--muted);
+    font-size:14px;
+  }
+
+  /* small screens */
+  @media (max-width:560px){
+    body{ padding:20px 10px }
+    .category{ padding:12px }
+    .post{ padding-left:14px; padding-right:14px }
+  }
+
+  /* focus accessibility */
+  .category:focus{ outline:3px solid rgba(196,24,91,0.12); outline-offset:4px }
 </style>
 </head>
 <body>
+  <div class="container">
+    <header>
+      <h1>Mənim Mini Blogum</h1>
+      <div class="header-actions">
+        <button class="toggle" id="themeToggle" aria-pressed="false" title="Dark / Light">
+          🌙 <span style="font-weight:600; margin-left:6px;">Tema</span>
+        </button>
+        <button class="share" id="shareBtn">💌 Paylaş</button>
+      </div>
+    </header>
 
-<div class="container">
-    <h1>Mənim Mini Blogum</h1>
-
-    <div class="category" data-target="cat1">
-        <span>Başlanğıc</span>
-        <span class="toggle-btn">+</span>
+    <!-- Category 1 -->
+    <div class="category" data-target="cat1" tabindex="0" role="button" aria-expanded="false" aria-controls="cat1">
+      <div class="cat-left">
+        <span class="cat-emoji">✨</span>
+        <div>
+          <span class="cat-title">Başlanğıc</span>
+          <span class="cat-sub">Səyahətin necə başladığı</span>
+        </div>
+      </div>
+      <div class="toggle-btn">+</div>
     </div>
-    <div id="cat1" class="post">
-        <h2>Hər şey necə başladı?</h2>
-        <p>Əslində, düzünə qalsa əvvəllər az da olsa belə bir arzum vardı. 
-            Bir gün oturmuşdum, birdən ağlıma gəldi: “Bəlkə bir sayt açım?” Dedim, onsuz da boş vaxtımda çoxdur, 
-            bir cəhd etsəm nə olar ki? Elə o andan başladım işə… və budur, artıq buradayam!</p>
-    </div>
-
-    <div class="category" data-target="cat2">
-        <span>İlk Təcrübələr</span>
-        <span class="toggle-btn">+</span>
-    </div>
-    <div id="cat2" class="post" data-image="shekil2.jpg">
-        <h2>İlk sayt, ilk təəssüratlar</h2>
-        <p>Daha sonra birazcıq kömək ilə (ChatGPT) adi bir saytın mühim məqamlarını öyrəndim. 
-            Ən rahat sayt yaratmağın yolu isə GitHub olduğunu öyrəndim. Daha doğrusu pulsuz və 
-            daha sadə olduğu üçün. İlk saytım isə "Səni Sevməyimin 200 Səbəbi" oldu.</p>
+    <div id="cat1" class="post" aria-hidden="true">
+      <div class="meta">Dərc olundu: 05 Avqust 2025</div>
+      <h2>Hər şey necə başladı?</h2>
+      <p>Əslində, düzünə qalsa əvvəllər az da olsa belə bir arzum vardı. Bir gün oturmuşdum, birdən ağlıma gəldi: “Bəlkə bir sayt açım?” Dedim, onsuz da boş vaxtımda çoxdur, bir cəhd etsəm nə olar ki? Elə o andan başladım işə… və budur, artıq buradayam!</p>
     </div>
 
-    <div class="category" data-target="cat3">
-        <span>Sonrakı Addımlar</span>
-        <span class="toggle-btn">+</span>
+    <!-- Category 2 -->
+    <div class="category" data-target="cat2" tabindex="0" role="button" aria-expanded="false" aria-controls="cat2">
+      <div class="cat-left">
+        <span class="cat-emoji">📚</span>
+        <div>
+          <span class="cat-title">İlk Təcrübələr</span>
+          <span class="cat-sub">Öyrəndiklərim və səhvlər</span>
+        </div>
+      </div>
+      <div class="toggle-btn">+</div>
     </div>
-    <div id="cat3" class="post" data-image="shekil3.jpg">
-        <h2>Digər saytlar</h2>
-        <p>Nəysə ilk saytı düzəltdikdən sonra mənə bir həvəs gəldi. 
-            Düzdü kod yazmaq çətindi heç bunları mən yazmamışam sadəcə kiçik düzəlişlər etmişəm. 
-            Nə qədər səhvlər oldu, düzəldik. Və axırda son nöqtə. 
-            Nədənsə yeni bir şeylə məşğul olmaq maraqlı gəlir. Məncə elə insan yeniliklərə açıq olmalıdır. 
-            Sizədə məsləhət görürəm.</p>
+    <div id="cat2" class="post" aria-hidden="true" data-image="shekil2.jpg">
+      <div class="meta">Dərc olundu: 12 İyul 2025</div>
+      <h2>İlk sayt, ilk təəssüratlar</h2>
+      <p>Daha sonra biraz kömək ilə (ChatGPT) adi bir saytın məqbul nöqtələrini öyrəndim. GitHub Pages vasitəsilə pulsuz yerləşdirmə öyrəndim və ilk layihəm "Səni Sevməyimin 200 Səbəbi" oldu.</p>
+      <!-- image əlavə olunacaq JS ilə -->
     </div>
-</div>
 
-<div class="share-button">
-    <button onclick="shareSite()">💌 Saytı paylaş</button>
-</div>
+    <!-- Category 3 -->
+    <div class="category" data-target="cat3" tabindex="0" role="button" aria-expanded="false" aria-controls="cat3">
+      <div class="cat-left">
+        <span class="cat-emoji">🚀</span>
+        <div>
+          <span class="cat-title">Sonrakı Addımlar</span>
+          <span class="cat-sub">Nə edəcəm sonra?</span>
+        </div>
+      </div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div id="cat3" class="post" aria-hidden="true" data-image="shekil3.jpg">
+      <div class="meta">Dərc olundu: 20 May 2025</div>
+      <h2>Digər saytlar</h2>
+      <p>Nəysə ilk saytı düzəltdikdən sonra mənə bir həvəs gəldi. Kod yazmaq çətin ola bilər, amma hər səhv bir dərsdir. Nə qədər səhvlər oldu, düzəldik və daha çox layihə yaratmaq arzusu doğdu.</p>
+    </div>
+
+    <footer>
+      © 2025 Sənin saytın 💖 — <a href="mailto:ericismyhero2467@gmail.com">Əlaqə</a>
+    </footer>
+  </div>
+
+  <button id="topBtn" title="Yuxarı">⬆</button>
 
 <script>
-document.querySelectorAll(".category").forEach(cat => {
-    cat.addEventListener("click", () => {
-        let targetId = cat.getAttribute("data-target");
-        let post = document.getElementById(targetId);
-        let btn = cat.querySelector(".toggle-btn");
+  // -- SETTINGS
+  const ANIM_DURATION = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--anim-duration')) || 0.45;
 
-        if (!post.classList.contains("open")) {
-            post.classList.add("open");
-            btn.textContent = "-";
-        } else {
-            post.classList.remove("open");
-            btn.textContent = "+";
-        }
+  // Elements
+  const categories = document.querySelectorAll('.category');
+  const posts = document.querySelectorAll('.post');
+  const topBtn = document.getElementById('topBtn');
+  const themeToggle = document.getElementById('themeToggle');
+  const shareBtn = document.getElementById('shareBtn');
+
+  // Load stored theme
+  function setTheme(dark){
+    if(dark) document.documentElement.classList.add('dark');
+    else document.documentElement.classList.remove('dark');
+    themeToggle.setAttribute('aria-pressed', dark ? 'true' : 'false');
+    localStorage.setItem('miniBlogTheme', dark ? 'dark' : 'light');
+  }
+  const savedTheme = localStorage.getItem('miniBlogTheme');
+  setTheme(savedTheme === 'dark');
+
+  themeToggle.addEventListener('click', () => {
+    const isDark = document.documentElement.classList.toggle('dark');
+    setTheme(isDark);
+  });
+
+  // Accordion behavior: open clicked and close others. remember last open
+  function openPanel(panel){
+    // close others
+    posts.forEach(p => {
+      if(p !== panel){
+        p.classList.remove('open');
+        p.setAttribute('aria-hidden','true');
+        const cat = document.querySelector(`.category[data-target="${p.id}"]`);
+        if(cat) { cat.querySelector('.toggle-btn').textContent = '+'; cat.setAttribute('aria-expanded','false'); }
+      }
     });
-});
+    // open chosen
+    panel.classList.add('open');
+    panel.setAttribute('aria-hidden','false');
+    const parentCat = document.querySelector(`.category[data-target="${panel.id}"]`);
+    if(parentCat){ parentCat.querySelector('.toggle-btn').textContent = '-'; parentCat.setAttribute('aria-expanded','true'); }
+    localStorage.setItem('miniBlogOpen', panel.id);
+  }
+  function closePanel(panel){
+    panel.classList.remove('open');
+    panel.setAttribute('aria-hidden','true');
+    const parentCat = document.querySelector(`.category[data-target="${panel.id}"]`);
+    if(parentCat){ parentCat.querySelector('.toggle-btn').textContent = '+'; parentCat.setAttribute('aria-expanded','false'); }
+    localStorage.removeItem('miniBlogOpen');
+  }
 
-document.querySelectorAll(".post").forEach(post => {
-    let imgSrc = post.getAttribute("data-image");
-    if (imgSrc) {
-        let img = document.createElement("img");
-        img.src = imgSrc;
-        img.alt = "Post şəkili";
-        img.className = "post-image";
-        post.appendChild(img);
-    }
-});
+  categories.forEach(cat => {
+    const targetId = cat.getAttribute('data-target');
+    const panel = document.getElementById(targetId);
 
-function shareSite() {
-    const shareData = {
-        title: "Miniblog",
-        text: "my life, my rules",
-        url: window.location.href
+    // click handler
+    const handler = () => {
+      if(panel.classList.contains('open')){
+        closePanel(panel);
+      } else {
+        openPanel(panel);
+        // smooth scroll into view if on small screens
+        setTimeout(()=> {
+          const rect = cat.getBoundingClientRect();
+          if(rect.top < 40 || rect.bottom > (window.innerHeight - 80)){
+            cat.scrollIntoView({behavior:'smooth', block:'start'});
+          }
+        }, (ANIM_DURATION*1000));
+      }
     };
-    if (navigator.share) {
-        navigator.share(shareData).catch((err) => console.log("Xəta:", err));
-    } else {
-        prompt("Linki kopyala və paylaş ✨", window.location.href);
+
+    cat.addEventListener('click', handler);
+    // keyboard accessibility (Enter / Space)
+    cat.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        handler();
+      }
+    });
+  });
+
+  // Load last-opened panel from localStorage
+  const lastOpen = localStorage.getItem('miniBlogOpen');
+  if(lastOpen){
+    const panel = document.getElementById(lastOpen);
+    if(panel) openPanel(panel);
+  }
+
+  // Inject post images if data-image exists
+  document.querySelectorAll('.post').forEach(p => {
+    const src = p.getAttribute('data-image');
+    if(src){
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = 'Post şəkili';
+      img.className = 'post-image';
+      // lazy loading if browser supports
+      img.loading = 'lazy';
+      p.appendChild(img);
     }
-}
+  });
+
+  // Share button (Web Share API fallback)
+  shareBtn.addEventListener('click', async () => {
+    const shareData = {
+      title: document.title,
+      text: "Gözəl bir mini blog - paylaş!",
+      url: location.href
+    };
+    try {
+      if(navigator.share){
+        await navigator.share(shareData);
+      } else {
+        prompt('Sayt linkini kopyala və paylaş:', location.href);
+      }
+    } catch(e){
+      console.log('Share error', e);
+    }
+  });
+
+  // Back to top button behavior
+  window.addEventListener('scroll', () => {
+    if(window.scrollY > 250) topBtn.style.display = 'flex';
+    else topBtn.style.display = 'none';
+  });
+  topBtn.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+  // small enhancement: close open panel when click outside
+  document.addEventListener('click', (e) => {
+    const isCatOrPanel = e.target.closest('.category') || e.target.closest('.post');
+    if(!isCatOrPanel){
+      posts.forEach(p => closePanel(p));
+    }
+  });
+
+  // Improve reduced-motion preference
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(prefersReduced){
+    document.documentElement.style.setProperty('--anim-duration', '0s');
+  }
 </script>
-
-<footer>
-    © 2025 Sənin saytın 💖 |
-    <a href="https://linktr.ee/EricIsMyHero">Əlaqə</a> |
-    <a href="mailto:ericismyhero2467@gmail.com">Təklif və İradlarınız üçün</a>
-</footer>
-
 </body>
-</html>
+</html> 
