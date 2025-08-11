@@ -35,14 +35,23 @@
         align-items: center;
     }
     .post {
-        background: white;
-        padding: 20px;
-        border-radius: 8px;
-        margin: 10px 0 20px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        text-align: center;
-        display: none;
-    }
+    background: white;
+    padding: 0 20px; /* başlanğıcda iç boşluq sıfırlanır */
+    border-radius: 8px;
+    margin: 10px 0 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    text-align: center;
+    overflow: hidden;
+    max-height: 0; /* gizli vəziyyətdə */
+    opacity: 0; /* şəffaf */
+    transition: max-height 0.5s ease, opacity 0.5s ease, padding 0.3s ease;
+}
+
+.post.open {
+    padding: 20px; /* açıldıqda iç boşluq */
+    max-height: 1000px; /* kifayət qədər böyük olmalı ki, bütün mətn görünsün */
+    opacity: 1;
+}
     .post h2 {
         margin-top: 0;
     }
@@ -172,7 +181,32 @@
     text: "my life, my rules",
     url: window.location.href
   };
+document.querySelectorAll(".category").forEach(cat => {
+    cat.addEventListener("click", () => {
+        let targetId = cat.getAttribute("data-target");
+        let post = document.getElementById(targetId);
+        let btn = cat.querySelector(".toggle-btn");
 
+        if (!post.classList.contains("open")) {
+            post.classList.add("open");
+            btn.textContent = "-";
+        } else {
+            post.classList.remove("open");
+            btn.textContent = "+";
+        }
+    });
+});
+
+document.querySelectorAll(".post").forEach(post => {
+    let imgSrc = post.getAttribute("data-image");
+    if (imgSrc) {
+        let img = document.createElement("img");
+        img.src = imgSrc;
+        img.alt = "Post şəkili";
+        img.className = "post-image";
+        post.appendChild(img);
+    }
+});
   if (navigator.share) {
     navigator.share(shareData).catch((err) => console.log("Xəta:", err));
   } else {
