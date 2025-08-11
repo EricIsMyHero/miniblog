@@ -23,41 +23,41 @@
     }
     .post {
         background: white;
-        padding: 20px;
         border-radius: 8px;
-        margin-bottom: 30px;
+        margin-bottom: 15px;
         box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        text-align: center;
+        overflow: hidden;
     }
-    .post h2 {
-        margin-top: 0;
+    .post-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        cursor: pointer;
+        font-size: 20px;
+        font-weight: bold;
+        background: #eee;
     }
-    .post p {
-        font-size: 18px;
+    .post-header span {
+        font-size: 24px;
+    }
+    .post-content {
+        display: none;
+        padding: 20px;
         text-align: justify;
-    }
-    .post-image {
-        width: 100%;
-        max-width: 800px;
-        height: auto;
-        margin-top: 15px;
-        border-radius: 0;
-        display: block;
+        font-size: 18px;
     }
     footer {
-  margin-top: 80px;
-  padding: 20px;
-  background-color: white;
-  color: #000;
-  text-align: center;
-  position: relative;
-  z-index: 1;
-  font-size: 16px;
-}
-
-footer a {
-  color: #f48fb1;
-}
+        margin-top: 80px;
+        padding: 20px;
+        background-color: white;
+        color: #000;
+        text-align: center;
+        font-size: 16px;
+    }
+    footer a {
+        color: #f48fb1;
+    }
 </style>
 </head>
 <body>
@@ -66,33 +66,61 @@ footer a {
     <h1>Mənim Mini Blogum</h1>
 
     <div class="post">
-        <h2>Hər şey necə başladı?</h2>
-        <p>Əslində, düzünə qalsa əvvəllər də az da olsa belə bir arzum vardı. Bir gün oturmuşdum, birdən ağlıma gəldi: “Bəlkə bir sayt açım?” Dedim, onsuz da boş vaxtımda çoxdur, bir cəhd etsəm nə olar ki? Elə o andan başladım işə… və budur, artıq buradayam!</p>
+        <div class="post-header">
+            <div>Hər şey necə başladı?</div>
+            <span>+</span>
+        </div>
+        <div class="post-content">
+            Əslində, düzünə qalsa əvvəllər də az da olsa belə bir arzum vardı. 
+            Bir gün oturmuşdum, birdən ağlıma gəldi: “Bəlkə bir sayt açım?” Dedim, onsuz da boş vaxtımda çoxdur, 
+            bir cəhd etsəm nə olar ki? Elə o andan başladım işə… və budur, artıq buradayam!
+        </div>
     </div>
 
-    <div class="post" data-image="shekil2.jpg">
-        <h2>İlk sayt, ilk təəssüratlar</h2>
-        <p>Daha sonra birazcıq kömək ilə (ChatGPT) adi bir saytın mühim məqamlarını öyrəndim. Ən rahat sayt yaratmağın yolu isə GitHub olduğunu öyrəndim. Daha doğrusu pulsuz və daha sadə olduğu üçün. İlk saytım isə "Səni Sevməyimin 200 Səbəbi" oldu.</p>
+    <div class="post">
+        <div class="post-header">
+            <div>İlk sayt, ilk təəssüratlar</div>
+            <span>+</span>
+        </div>
+        <div class="post-content">
+            Daha sonra birazcıq kömək ilə (ChatGPT) adi bir saytın mühim məqamlarını öyrəndim. 
+            Ən rahat sayt yaratmağın yolu isə GitHub olduğunu öyrəndim. Daha doğrusu pulsuz və 
+            daha sadə olduğu üçün. İlk saytım isə "Səni Sevməyimin 200 Səbəbi" oldu.
+        </div>
     </div>
 
-    <div class="post" data-image="shekil3.jpg">
-        <h2>Digər saytlar</h2>
-        <p>Nəysə ilk saytı düzəltdikdən sonra mənə bir həvəs gəldi. Düzdü kod yazmaq çətindi heç bunları mən yazmamışam sadəcə kiçik düzəlişlər etmişəm. Nə qədər səhvlər oldu, düzəldik. Və axırda son nöqtə. Nədənsə yeni bir şeylə məşğul olmaq maraqlı gəlir. Məncə elə insan yeniliklərə açıq olmalıdır. Sizədə məsləhət görürəm.</p>
+    <div class="post">
+        <div class="post-header">
+            <div>Digər saytlar</div>
+            <span>+</span>
+        </div>
+        <div class="post-content">
+            Nəysə ilk saytı düzəltdikdən sonra mənə bir həvəs gəldi. 
+            Düzdü kod yazmaq çətindi heç bunları mən yazmamışam sadəcə kiçik düzəlişlər etmişəm. 
+            Nə qədər səhvlər oldu, düzəldik. Və axırda son nöqtə. 
+            Nədənsə yeni bir şeylə məşğul olmaq maraqlı gəlir. Məncə elə insan yeniliklərə açıq olmalıdır. 
+            Sizədə məsləhət görürəm.
+        </div>
     </div>
 </div>
 
 <script>
-    document.querySelectorAll(".post").forEach(post => {
-        let imgSrc = post.getAttribute("data-image");
-        if (imgSrc) {
-            let img = document.createElement("img");
-            img.src = imgSrc;
-            img.alt = "Post şəkili";
-            img.className = "post-image";
-            post.appendChild(img); // şəkil mətnin sonunda olacaq
+document.querySelectorAll('.post-header').forEach(header => {
+    header.addEventListener('click', () => {
+        const content = header.nextElementSibling;
+        const symbol = header.querySelector('span');
+
+        if (content.style.display === "block") {
+            content.style.display = "none";
+            symbol.textContent = "+";
+        } else {
+            content.style.display = "block";
+            symbol.textContent = "−";
         }
     });
+});
 </script>
+
 <footer>
     © 2025 Sənin saytın 💖 |
     <a href="https://linktr.ee/EricIsMyHero">Əlaqə</a> |
