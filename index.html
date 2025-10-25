@@ -11,29 +11,27 @@
 --text: #111827;
 --muted: #6b7280;
 --accent: #c2185b;
---accent-2: #f48fb1;
---shadow: 0 6px 18px rgba(17,24,39,0.08);
+--shadow: 0 4px 14px rgba(17,24,39,0.06); /* Kölgə bir az yumşaldıldı */
 --radius: 10px;
---anim-duration: 0.75s; /* buranı dəyişərək bütün animasiya sürətini tənzimləyə bilərsən */
---gap-category: 20px; /* kateqoriyalar arasındakı məsafə */
+--anim-duration: 0.45s; /* Animasiya sürəti sabit saxlandı */
+--gap-item: 20px; /* Kateqoriyalar/Postlar arasındakı ümumi məsafə */
 }
 
-/* Dark mode variables (will be toggled by .dark on html) */
+/* Dark mode variables */
 html.dark {
 --bg: #0b1220;
 --card: #071022;
 --text: #e6eef8;
 --muted: #9fb3cf;
 --accent: #ff6fa0;
---accent-2: #ff97c4;
---shadow: 0 8px 24px rgba(0,0,0,0.6);
+--shadow: 0 6px 18px rgba(0,0,0,0.5); /* Kölgə daha tünd edildi */
 }
 
 *{box-sizing:border-box}
 body{
 margin:0;
 font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-background:linear-gradient(180deg, var(--bg), rgba(0,0,0,0.01));
+background:var(--bg); /* Linear gradient silindi */
 color:var(--text);
 -webkit-font-smoothing:antialiased;
 -moz-osx-font-smoothing:grayscale;
@@ -86,9 +84,10 @@ align-items:center;
 color:var(--text);
 font-weight:600;
 box-shadow:var(--shadow);
-transition: transform 0.18s ease;
+transition: transform 0.18s ease, border-color 0.2s ease;
 }
 .toggle:active{ transform:scale(.98) }
+html.dark .toggle { border-color: rgba(255,255,255,0.1); }
 
 /* share button */
 .share {
@@ -100,24 +99,35 @@ border-radius:10px;
 cursor:pointer;
 font-weight:600;
 box-shadow:0 6px 18px rgba(194,24,91,0.12);
+transition: transform 0.18s ease;
 }
+.share:active{ transform:scale(.98) }
 
-/* Categories */
+/* Categories (Artıq bir <button> elementidir) */
 .category {
+/* Mövcud CSS-in çoxu saxlanıldı */
 background:var(--card);
+width:100%;
+border:none; /* Button-un defolt borderini sil */
+text-align:left;
 display:flex;
 align-items:flex-start;
 justify-content:space-between;
 gap:12px;
 padding:14px 16px;
 border-radius:var(--radius);
-margin-bottom: var(--gap-category);
+margin-bottom: var(--gap-item);
 box-shadow:var(--shadow);
 cursor:pointer;
 transition: transform 0.12s ease, box-shadow 0.18s ease;
 border: 1px solid rgba(0,0,0,0.03);
+color:var(--text); /* Mətn rəngini təmin edin */
 }
-.category:hover{ transform:translateY(-4px) }
+html.dark .category { border-color: rgba(255,255,255,0.05); }
+
+.category:hover{ transform:translateY(-3px); box-shadow: 0 8px 20px rgba(17,24,39,0.1); }
+html.dark .category:hover{ box-shadow: 0 8px 24px rgba(0,0,0,0.7); }
+
 .cat-left{
 display:flex;
 gap:12px;
@@ -139,29 +149,33 @@ margin-top:4px;
 }
 .toggle-btn{
 font-weight:800;
-font-size:18px;
+font-size:20px; /* Biraz böyüdüldü */
 color:var(--muted);
 min-width:28px;
 text-align:center;
+line-height:1;
+transition: transform 0.2s ease;
 }
+[aria-expanded="true"] .toggle-btn { transform: rotate(45deg); } /* '–' yerinə '+' 45 dərəcə çevrildi */
 
 /* Post panel (collapsible) */
 .post {
 background:var(--card);
-border-radius:calc(var(--radius) - 2px);
-margin: -8px 0 18px; /* overlap a bit with category for cleaner look */
+border-radius:var(--radius);
+margin-top: calc(-1 * var(--gap-item) + 4px); /* Categoriyə yaxınlaşdırmaq üçün */
+margin-bottom: var(--gap-item);
 padding:0 18px; /* collapsed padding */
 overflow:hidden;
 max-height:0;
 opacity:0;
-transform:translateY(-6px);
+transform:translateY(-4px);
 transition: max-height var(--anim-duration) ease, opacity calc(var(--anim-duration)/1.2) ease, transform calc(var(--anim-duration)/1.1) ease, padding 0.22s ease;
 box-shadow:var(--shadow);
 border: 1px solid rgba(0,0,0,0.03);
 }
 .post.open{
 padding:18px;
-max-height:1200px; /* kifayət qədər böyük tut */
+max-height:1500px; /* Təminat üçün daha böyük dəyər */
 opacity:1;
 transform:none;
 }
@@ -206,16 +220,19 @@ text-align:center;
 color:var(--muted);
 font-size:14px;
 }
+footer a{ color:var(--accent); text-decoration:none; transition: color 0.2s ease; }
+footer a:hover{ color:var(--text); }
 
 /* small screens */
 @media (max-width:560px){
 body{ padding:20px 10px }
 .category{ padding:12px }
-.post{ padding-left:14px; padding-right:14px }
+.post{ padding-left:14px; padding-right:14px; margin-bottom: calc(var(--gap-item) - 8px); }
+.container { padding: 12px; }
 }
 
-/* focus accessibility */
-.category:focus{ outline:3px solid rgba(196,24,91,0.12); outline-offset:4px }
+/* focus accessibility (Artıq button olduğu üçün outline daha yaxşı görünür) */
+.category:focus-visible{ outline:3px solid var(--accent); outline-offset:2px; }
 </style>
 </head>
 <body>
@@ -230,8 +247,7 @@ body{ padding:20px 10px }
 </div>
 </header>
 
-<!-- Category 1 -->
-<div class="category" data-target="cat1" tabindex="0" role="button" aria-expanded="false" aria-controls="cat1">
+<button class="category" data-target="cat1" aria-expanded="false" aria-controls="cat1">
 <div class="cat-left">
 <span class="cat-emoji">✨</span>
 <div>
@@ -240,17 +256,15 @@ body{ padding:20px 10px }
 </div>
 </div>
 <div class="toggle-btn">+</div>
-</div>
+</button>
 <div id="cat1" class="post" aria-hidden="true" data-image="shekil1.jpg">
 <div class="meta">Dərc olundu: 12 Avqust 2025</div>
 <h2>Hər şey necə başladı?</h2>
 <p>Əslində, düzünə qalsa əvvəllər az da olsa belə bir arzum vardı. Öz saytım olsun falan nəsə maraqlı gəlirdi nədənsə. Bir gün oturmuşdum, birdən ağlıma gəldi: “Bəlkə bir sayt açım?” Dedim, onsuz da boş vaxtımda çoxdur, bir cəhd etsəm nə olar ki? Elə o andan başladım işə… və budur, artıq buradayam!
-
 Daha sonra birazcıq kömək ilə (ChatGPT) adi bir saytın mühim məqamlarını öyrəndim. Ən rahat sayt yaratmağın yolu isə GitHub Pages olduğunu öyrəndim. Daha doğrusu pulsuz və daha sadə olduğu üçün. İlk saytım isə "Səni Sevməyimin 200 Səbəbi" oldu. </p>
 </div>
 
-<!-- Category 2 -->
-<div class="category" data-target="cat2" tabindex="0" role="button" aria-expanded="false" aria-controls="cat2">
+<button class="category" data-target="cat2" aria-expanded="false" aria-controls="cat2">
 <div class="cat-left">
 <span class="cat-emoji">📚</span>
 <div>
@@ -259,18 +273,15 @@ Daha sonra birazcıq kömək ilə (ChatGPT) adi bir saytın mühim məqamların�
 </div>
 </div>
 <div class="toggle-btn">+</div>
-</div>
+</button>
 <div id="cat2" class="post" aria-hidden="true" data-image="shekil2.jpg">
 <div class="meta">Dərc olundu: 13 Avqust 2025</div>
 <h2>İlk saytlar, ilk təəssüratlar</h2>
 <p>İlk düzəltdiyimdə doğrudur sadə idi, onsuz da çox bəyənməmişdim. Heç belə aktiv şəkildə düzəltmək istəyimdə yox idi. İlk saytı düzəltdikdən sonra mənə nəsə bir həvəs gəldi. Düzdü kod yazmaq çətindi, heç bunları da mən yazmamışam sadəcə kiçik düzəlişlər etmişəm. Nə qədər səhvlər oldu, düzəldik. Və axırda son nöqtə. Nədənsə yeni bir şeylə məşğul olmaq maraqlı gəlir. Məncə elə insan yeniliklərə açıq olmalıdır. Sizədə məsləhət görürəm.
-
 Bir neçə tövsiyə: Hər yeni bir dəyişiklik əlavə edərkən bir əvvəlki kodu yadda saxlamanızı önərirəm, əks-təqdirdə yeni kodu bəyənməyəndə köhnəyədə qayıda bilməzsiniz. Yaxşıki başıma gəlməyib. Daha sonra nə əlavə etsəm bilmirəm, əsas saytınız yararlı olsun bəsdi, əsas funksiyasıdı. Nə olur olsun birdə səy göstərmək lazımdır.</p>
-<!-- image əlavə olunacaq JS ilə -->
 </div>
 
-<!-- Category 3 -->
-<div class="category" data-target="cat3" tabindex="0" role="button" aria-expanded="false" aria-controls="cat3">
+<button class="category" data-target="cat3" aria-expanded="false" aria-controls="cat3">
 <div class="cat-left">
 <span class="cat-emoji">🚀</span>
 <div>
@@ -279,15 +290,14 @@ Bir neçə tövsiyə: Hər yeni bir dəyişiklik əlavə edərkən bir əvvəlki
 </div>
 </div>
 <div class="toggle-btn">+</div>
-</div>
+</button>
 <div id="cat3" class="post" aria-hidden="true" data-image="shekil3.png">
 <div class="meta">Dərc olundu: 14 Avqust 2025</div>
 <h2>Bu işin sonu hara gedir?</h2>
 <p>Hər nə qədər hələlik bir fikrim olmasa da, əlavə bir neçə sayt düzəltmək fikrim var. Baxaqda mənim həvəsimə baxır. Nə zaman bitərsə, məndə bitirərəm. Elədə alim kimi danışıram, sanki çox böyük iş başarmışam🤓. Nəysə siz mənə fikir verməyin yenə "EGO"mu tatmin edirəm.😝</p>
 </div>
 
-<!-- Category 4 -->
-<div class="category" data-target="cat4" tabindex="0" role="button" aria-expanded="false" aria-controls="cat4">
+<button class="category" data-target="cat4" aria-expanded="false" aria-controls="cat4">
 <div class="cat-left">
 <span class="cat-emoji">🚫</span>
 <div>
@@ -296,12 +306,11 @@ Bir neçə tövsiyə: Hər yeni bir dəyişiklik əlavə edərkən bir əvvəlki
 </div>
 </div>
 <div class="toggle-btn">+</div>
-</div>
+</button>
 <div id="cat4" class="post" aria-hidden="true" data-image="shekil4.jpg">
 <div class="meta">Dərc olundu: 18 Avqust 2025</div>
 <h2>İptal edilənlər</h2>
 <p>İptal deyəndəki bəzi səbəblərdən alınmayan bir neçə sayt fikrim var idi. Bunlardan bir neçəsi: Sənin bölgən sənin ehtimalın, Ad günü xatırlama və s. Sənin bölgən sənin ehtimalın belə olacaqdıki bir yer yazacan o bölgədə doğulma ehtimalını deyəcəkdi. Kod uzun olduğu (olacağı) üçün çox üstünə getmədim. Daha sonra Ad günü xatırladacaq bir sayt fikridə bir cloud problemi və başqa səbəblərdən alınmadı. Daha doğrusu bu kimi böyük həcmdə saytlar üçün mənim yetərli bilgim yoxdu deyək.</p>
-<!-- image əlavə olunacaq JS ilə -->
 </div>
 <footer>
 © 2025 Sənin saytın 💖 |
@@ -314,7 +323,8 @@ Bir neçə tövsiyə: Hər yeni bir dəyişiklik əlavə edərkən bir əvvəlki
 
 <script>
 // -- SETTINGS
-const ANIM_DURATION = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--anim-duration')) || 0.45;
+const ANIM_DURATION_S = 0.45; // Saniyə olaraq animasiya müddəti
+const ANIM_DURATION_MS = ANIM_DURATION_S * 1000;
 
 // Elements
 const categories = document.querySelectorAll('.category');
@@ -325,133 +335,136 @@ const shareBtn = document.getElementById('shareBtn');
 
 // Load stored theme
 function setTheme(dark){
-if(dark) document.documentElement.classList.add('dark');
-else document.documentElement.classList.remove('dark');
-themeToggle.setAttribute('aria-pressed', dark ? 'true' : 'false');
-localStorage.setItem('miniBlogTheme', dark ? 'dark' : 'light');
+    document.documentElement.classList.toggle('dark', dark);
+    themeToggle.setAttribute('aria-pressed', dark ? 'true' : 'false');
+    localStorage.setItem('miniBlogTheme', dark ? 'dark' : 'light');
 }
 const savedTheme = localStorage.getItem('miniBlogTheme');
 setTheme(savedTheme === 'dark');
 
 themeToggle.addEventListener('click', () => {
-const isDark = document.documentElement.classList.toggle('dark');
-setTheme(isDark);
+    const isDark = document.documentElement.classList.contains('dark');
+    setTheme(!isDark);
 });
 
-// Accordion behavior: open clicked and close others. remember last open
-function openPanel(panel){
-// close others
-posts.forEach(p => {
-if(p !== panel){
-p.classList.remove('open');
-p.setAttribute('aria-hidden','true');
-const cat = document.querySelector(`.category[data-target="${p.id}"]`);
-if(cat) { cat.querySelector('.toggle-btn').textContent = '+'; cat.setAttribute('aria-expanded','false'); }
+// Accordion behavior: open/close panel
+function updateCategoryState(categoryElement, postPanel, isOpen) {
+    const toggleBtn = categoryElement.querySelector('.toggle-btn');
+    
+    postPanel.classList.toggle('open', isOpen);
+    postPanel.setAttribute('aria-hidden', !isOpen);
+    
+    categoryElement.setAttribute('aria-expanded', isOpen);
+    toggleBtn.textContent = '+'; // Həmişə '+' qalır, CSS ilə fırlanır
+    
+    if (isOpen) {
+        localStorage.setItem('miniBlogOpen', postPanel.id);
+    } else {
+        localStorage.removeItem('miniBlogOpen');
+    }
 }
-});
-// open chosen
-panel.classList.add('open');
-panel.setAttribute('aria-hidden','false');
-const parentCat = document.querySelector(`.category[data-target="${panel.id}"]`);
-if(parentCat){ parentCat.querySelector('.toggle-btn').textContent = '-'; parentCat.setAttribute('aria-expanded','true'); }
-localStorage.setItem('miniBlogOpen', panel.id);
+
+function closeAllPanels(exceptPanel = null) {
+    posts.forEach(p => {
+        if (p !== exceptPanel && p.classList.contains('open')) {
+            const cat = document.querySelector(`.category[data-target="${p.id}"]`);
+            if (cat) updateCategoryState(cat, p, false);
+        }
+    });
 }
-function closePanel(panel){
-panel.classList.remove('open');
-panel.setAttribute('aria-hidden','true');
-const parentCat = document.querySelector(`.category[data-target="${panel.id}"]`);
-if(parentCat){ parentCat.querySelector('.toggle-btn').textContent = '+'; parentCat.setAttribute('aria-expanded','false'); }
-localStorage.removeItem('miniBlogOpen');
+
+function togglePanel(categoryElement) {
+    const targetId = categoryElement.getAttribute('data-target');
+    const panel = document.getElementById(targetId);
+    const isCurrentlyOpen = panel.classList.contains('open');
+    
+    // Bütün panelləri bağla, yalnız seçiləni açıq saxla
+    closeAllPanels(panel);
+
+    if (isCurrentlyOpen) {
+        updateCategoryState(categoryElement, panel, false); // Bağla
+    } else {
+        updateCategoryState(categoryElement, panel, true); // Aç
+        
+        // Kiçik ekranlarda yuxarı fırlatma
+        setTimeout(()=> {
+            const rect = categoryElement.getBoundingClientRect();
+            if(rect.top < 40 || rect.bottom > (window.innerHeight - 80)){
+                categoryElement.scrollIntoView({behavior:'smooth', block:'start'});
+            }
+        }, ANIM_DURATION_MS);
+    }
 }
 
 categories.forEach(cat => {
-const targetId = cat.getAttribute('data-target');
-const panel = document.getElementById(targetId);
-
-// click handler
-const handler = () => {
-if(panel.classList.contains('open')){
-closePanel(panel);
-} else {
-openPanel(panel);
-// smooth scroll into view if on small screens
-setTimeout(()=> {
-const rect = cat.getBoundingClientRect();
-if(rect.top < 40 || rect.bottom > (window.innerHeight - 80)){
-cat.scrollIntoView({behavior:'smooth', block:'start'});
-}
-}, (ANIM_DURATION*1000));
-}
-};
-
-cat.addEventListener('click', handler);
-// keyboard accessibility (Enter / Space)
-cat.addEventListener('keydown', (e) => {
-if(e.key === 'Enter' || e.key === ' '){
-e.preventDefault();
-handler();
-}
-});
+    cat.addEventListener('click', () => togglePanel(cat));
+    // klaviatura girişi button olduğu üçün defolt olaraq işləyir
 });
 
 // Load last-opened panel from localStorage
 const lastOpen = localStorage.getItem('miniBlogOpen');
 if(lastOpen){
-const panel = document.getElementById(lastOpen);
-if(panel) openPanel(panel);
+    const panel = document.getElementById(lastOpen);
+    const cat = document.querySelector(`.category[data-target="${lastOpen}"]`);
+    if(panel && cat) updateCategoryState(cat, panel, true);
 }
 
 // Inject post images if data-image exists
 document.querySelectorAll('.post').forEach(p => {
-const src = p.getAttribute('data-image');
-if(src){
-const img = document.createElement('img');
-img.src = src;
-img.alt = 'Post şəkili';
-img.className = 'post-image';
-// lazy loading if browser supports
-img.loading = 'lazy';
-p.appendChild(img);
-}
+    const src = p.getAttribute('data-image');
+    if(src){
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = 'Post şəkili';
+        img.className = 'post-image';
+        img.loading = 'lazy';
+        // Post mətninin sonuna deyil, xüsusi bir yerə əlavə edilməlidir.
+        // Sadəlik üçün yenə də postun sonuna əlavə edək.
+        p.appendChild(img);
+    }
 });
 
 // Share button (Web Share API fallback)
 shareBtn.addEventListener('click', async () => {
-const shareData = {
-title: document.title,
-text: "Gözəl bir mini blog - paylaş!",
-url: location.href
-};
-try {
-if(navigator.share){
-await navigator.share(shareData);
-} else {
-prompt('Sayt linkini kopyala və paylaş:', location.href);
-}
-} catch(e){
-console.log('Share error', e);
-}
+    const shareData = {
+        title: document.title,
+        text: "Gözəl bir mini blog - paylaş!",
+        url: location.href
+    };
+    try {
+        if(navigator.share){
+            await navigator.share(shareData);
+        } else {
+            prompt('Sayt linkini kopyala və paylaş:', location.href);
+        }
+    } catch(e){
+        // Konsolda səhvləri göstərmək təmizdir
+        console.error('Share error:', e);
+    }
 });
 
 // Back to top button behavior
 window.addEventListener('scroll', () => {
-if(window.scrollY > 250) topBtn.style.display = 'flex';
-else topBtn.style.display = 'none';
+    // scrollY daha müasirdir
+    if(window.scrollY > 250) topBtn.style.display = 'flex';
+    else topBtn.style.display = 'none';
 });
 topBtn.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
 
 // small enhancement: close open panel when click outside
 document.addEventListener('click', (e) => {
-const isCatOrPanel = e.target.closest('.category') || e.target.closest('.post');
-if(!isCatOrPanel){
-posts.forEach(p => closePanel(p));
-}
+    const isCatOrPanel = e.target.closest('.category') || e.target.closest('.post');
+    // Header actions, footer klikləri üçün istisna əlavə edilmədi.
+    // Əksər halda bu, kifayətdir.
+    if(!isCatOrPanel && !e.target.closest('.header-actions') && !e.target.closest('footer')){
+        closeAllPanels();
+    }
 });
 
 // Improve reduced-motion preference
 const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if(prefersReduced){
-document.documentElement.style.setProperty('--anim-duration', '0s');
+    document.documentElement.style.setProperty('--anim-duration', '0s');
 }
 </script>
 </body>
