@@ -1,471 +1,192 @@
 <!DOCTYPE html>
 <html lang="az">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Mini Blog</title>
-<style>
-:root{
---bg: #f5f5f5;
---card: #ffffff;
---text: #111827;
---muted: #6b7280;
---accent: #c2185b;
---shadow: 0 4px 14px rgba(17,24,39,0.06); /* Kölgə bir az yumşaldıldı */
---radius: 10px;
---anim-duration: 0.45s; /* Animasiya sürəti sabit saxlandı */
---gap-item: 20px; /* Kateqoriyalar/Postlar arasındakı ümumi məsafə */
-}
-
-/* Dark mode variables */
-html.dark {
---bg: #0b1220;
---card: #071022;
---text: #e6eef8;
---muted: #9fb3cf;
---accent: #ff6fa0;
---shadow: 0 6px 18px rgba(0,0,0,0.5); /* Kölgə daha tünd edildi */
-}
-
-*{box-sizing:border-box}
-body{
-margin:0;
-font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-background:var(--bg); /* Linear gradient silindi */
-color:var(--text);
--webkit-font-smoothing:antialiased;
--moz-osx-font-smoothing:grayscale;
-line-height:1.6;
-padding:36px 16px;
-}
-
-.container{
-max-width:900px;
-margin:0 auto;
-padding:24px;
-}
-
-/* Header */
-header{
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:12px;
-margin-bottom:28px;
-opacity:0;
-transform:translateY(-8px);
-animation: headerIn var(--anim-duration) ease forwards;
-animation-delay: 0.12s;
-}
-@keyframes headerIn{
-to { opacity:1; transform:none; }
-}
-h1{
-margin:0;
-font-size:clamp(20px, 4vw, 28px);
-letter-spacing:0.2px;
-}
-.header-actions{
-display:flex;
-gap:10px;
-align-items:center;
-}
-
-/* Dark toggle */
-.toggle {
-background:transparent;
-border:1px solid rgba(0,0,0,0.06);
-padding:8px 10px;
-border-radius:999px;
-cursor:pointer;
-display:inline-flex;
-gap:8px;
-align-items:center;
-color:var(--text);
-font-weight:600;
-box-shadow:var(--shadow);
-transition: transform 0.18s ease, border-color 0.2s ease;
-}
-.toggle:active{ transform:scale(.98) }
-html.dark .toggle { border-color: rgba(255,255,255,0.1); }
-
-/* share button */
-.share {
-background:var(--accent);
-color:white;
-border:none;
-padding:8px 12px;
-border-radius:10px;
-cursor:pointer;
-font-weight:600;
-box-shadow:0 6px 18px rgba(194,24,91,0.12);
-transition: transform 0.18s ease;
-}
-.share:active{ transform:scale(.98) }
-
-/* Categories (Artıq bir <button> elementidir) */
-.category {
-/* Mövcud CSS-in çoxu saxlanıldı */
-background:var(--card);
-width:100%;
-border:none; /* Button-un defolt borderini sil */
-text-align:left;
-display:flex;
-align-items:flex-start;
-justify-content:space-between;
-gap:12px;
-padding:14px 16px;
-border-radius:var(--radius);
-margin-bottom: var(--gap-item);
-box-shadow:var(--shadow);
-cursor:pointer;
-transition: transform 0.12s ease, box-shadow 0.18s ease;
-border: 1px solid rgba(0,0,0,0.03);
-color:var(--text); /* Mətn rəngini təmin edin */
-}
-html.dark .category { border-color: rgba(255,255,255,0.05); }
-
-.category:hover{ transform:translateY(-3px); box-shadow: 0 8px 20px rgba(17,24,39,0.1); }
-html.dark .category:hover{ box-shadow: 0 8px 24px rgba(0,0,0,0.7); }
-
-.cat-left{
-display:flex;
-gap:12px;
-align-items:center;
-}
-.cat-emoji{
-font-size:20px;
-line-height:1;
-}
-.cat-title{
-font-weight:700;
-font-size:16px;
-}
-.cat-sub{
-display:block;
-font-size:13px;
-color:var(--muted);
-margin-top:4px;
-}
-.toggle-btn{
-font-weight:800;
-font-size:20px; /* Biraz böyüdüldü */
-color:var(--muted);
-min-width:28px;
-text-align:center;
-line-height:1;
-transition: transform 0.2s ease;
-}
-[aria-expanded="true"] .toggle-btn { transform: rotate(45deg); } /* '–' yerinə '+' 45 dərəcə çevrildi */
-
-/* Post panel (collapsible) */
-.post {
-background:var(--card);
-border-radius:var(--radius);
-margin-top: calc(-1 * var(--gap-item) + 4px); /* Categoriyə yaxınlaşdırmaq üçün */
-margin-bottom: var(--gap-item);
-padding:0 18px; /* collapsed padding */
-overflow:hidden;
-max-height:0;
-opacity:0;
-transform:translateY(-4px);
-transition: max-height var(--anim-duration) ease, opacity calc(var(--anim-duration)/1.2) ease, transform calc(var(--anim-duration)/1.1) ease, padding 0.22s ease;
-box-shadow:var(--shadow);
-border: 1px solid rgba(0,0,0,0.03);
-}
-.post.open{
-padding:18px;
-max-height:1500px; /* Təminat üçün daha böyük dəyər */
-opacity:1;
-transform:none;
-}
-
-.post h2{ margin:6px 0 12px; font-size:18px }
-.post p{ margin:0 0 12px; font-size:15px; color:var(--text); text-align:justify }
-.post .meta{ font-size:13px; color:var(--muted); margin-bottom:10px }
-
-.post-image{
-width:100%;
-border-radius:8px;
-display:block;
-margin-top:10px;
-box-shadow: 0 8px 30px rgba(0,0,0,0.06);
-}
-
-/* back to top */
-#topBtn{
-position:fixed;
-right:18px;
-bottom:18px;
-width:46px;
-height:46px;
-border-radius:999px;
-border:none;
-background:var(--accent);
-color:white;
-display:none;
-align-items:center;
-justify-content:center;
-font-size:20px;
-cursor:pointer;
-box-shadow:0 10px 30px rgba(194,24,91,0.14);
-z-index:1200;
-}
-
-/* Footer */
-footer{
-margin-top:28px;
-padding:16px;
-text-align:center;
-color:var(--muted);
-font-size:14px;
-}
-footer a{ color:var(--accent); text-decoration:none; transition: color 0.2s ease; }
-footer a:hover{ color:var(--text); }
-
-/* small screens */
-@media (max-width:560px){
-body{ padding:20px 10px }
-.category{ padding:12px }
-.post{ padding-left:14px; padding-right:14px; margin-bottom: calc(var(--gap-item) - 8px); }
-.container { padding: 12px; }
-}
-
-/* focus accessibility (Artıq button olduğu üçün outline daha yaxşı görünür) */
-.category:focus-visible{ outline:3px solid var(--accent); outline-offset:2px; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UNEC İmtahan Materialları</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#3b82f6">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
 </head>
 <body>
-<div class="container">
-<header>
-<h1>Mənim Mini Blogum</h1>
-<div class="header-actions">
-<button class="toggle" id="themeToggle" aria-pressed="false" title="Dark / Light">
-🌙 <span style="font-weight:600; margin-left:6px;">Tema</span>
-</button>
-<button class="share" id="shareBtn">💌 Paylaş</button>
+
+<!-- PWA Install Banner -->
+<div id="installBanner">
+  <span>📱 Bu saytı tətbiq kimi əlavə et</span>
+  <div class="banner-actions">
+    <button class="banner-btn-dismiss" onclick="dismissBanner()">Sonra</button>
+    <button class="banner-btn-install" onclick="installApp()">Əlavə et</button>
+  </div>
 </div>
+
+<div class="grid-bg"></div>
+
+<header>
+  <div class="logo">UNEC · İMTAHAN</div>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <button class="theme-toggle-btn" onclick="toggleThemePanel()" title="Tema seç">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+    </button>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('az')">AZ</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
 </header>
 
-<button class="category" data-target="cat1" aria-expanded="false" aria-controls="cat1">
-<div class="cat-left">
-<span class="cat-emoji">✨</span>
-<div>
-<span class="cat-title">Başlanğıc</span>
-<span class="cat-sub">Səyahətin necə başladığı</span>
-</div>
-</div>
-<div class="toggle-btn">+</div>
-</button>
-<div id="cat1" class="post" aria-hidden="true" data-image="shekil1.jpg">
-<div class="meta">Dərc olundu: 12 Avqust 2025</div>
-<h2>Hər şey necə başladı?</h2>
-<p>Əslində, düzünə qalsa əvvəllər az da olsa belə bir arzum vardı. Öz saytım olsun falan nəsə maraqlı gəlirdi nədənsə. Bir gün oturmuşdum, birdən ağlıma gəldi: “Bəlkə bir sayt açım?” Dedim, onsuz da boş vaxtımda çoxdur, bir cəhd etsəm nə olar ki? Elə o andan başladım işə… və budur, artıq buradayam!
-Daha sonra birazcıq kömək ilə (ChatGPT) adi bir saytın mühim məqamlarını öyrəndim. Ən rahat sayt yaratmağın yolu isə GitHub Pages olduğunu öyrəndim. Daha doğrusu pulsuz və daha sadə olduğu üçün. İlk saytım isə "Səni Sevməyimin 200 Səbəbi" oldu. </p>
-</div>
-
-<button class="category" data-target="cat2" aria-expanded="false" aria-controls="cat2">
-<div class="cat-left">
-<span class="cat-emoji">📚</span>
-<div>
-<span class="cat-title">İlk Təcrübələr</span>
-<span class="cat-sub">Öyrəndiklərim və səhvlər</span>
-</div>
-</div>
-<div class="toggle-btn">+</div>
-</button>
-<div id="cat2" class="post" aria-hidden="true" data-image="shekil2.jpg">
-<div class="meta">Dərc olundu: 13 Avqust 2025</div>
-<h2>İlk saytlar, ilk təəssüratlar</h2>
-<p>İlk düzəltdiyimdə doğrudur sadə idi, onsuz da çox bəyənməmişdim. Heç belə aktiv şəkildə düzəltmək istəyimdə yox idi. İlk saytı düzəltdikdən sonra mənə nəsə bir həvəs gəldi. Düzdü kod yazmaq çətindi, heç bunları da mən yazmamışam sadəcə kiçik düzəlişlər etmişəm. Nə qədər səhvlər oldu, düzəldik. Və axırda son nöqtə. Nədənsə yeni bir şeylə məşğul olmaq maraqlı gəlir. Məncə elə insan yeniliklərə açıq olmalıdır. Sizədə məsləhət görürəm.
-Bir neçə tövsiyə: Hər yeni bir dəyişiklik əlavə edərkən bir əvvəlki kodu yadda saxlamanızı önərirəm, əks-təqdirdə yeni kodu bəyənməyəndə köhnəyədə qayıda bilməzsiniz. Yaxşıki başıma gəlməyib. Daha sonra nə əlavə etsəm bilmirəm, əsas saytınız yararlı olsun bəsdi, əsas funksiyasıdı. Nə olur olsun birdə səy göstərmək lazımdır.</p>
-</div>
-
-<button class="category" data-target="cat3" aria-expanded="false" aria-controls="cat3">
-<div class="cat-left">
-<span class="cat-emoji">🚀</span>
-<div>
-<span class="cat-title">Sonrakı Addımlar</span>
-<span class="cat-sub">Nə edəcəm sonra?</span>
-</div>
-</div>
-<div class="toggle-btn">+</div>
-</button>
-<div id="cat3" class="post" aria-hidden="true" data-image="shekil3.png">
-<div class="meta">Dərc olundu: 14 Avqust 2025</div>
-<h2>Bu işin sonu hara gedir?</h2>
-<p>Hər nə qədər hələlik bir fikrim olmasa da, əlavə bir neçə sayt düzəltmək fikrim var. Baxaqda mənim həvəsimə baxır. Nə zaman bitərsə, məndə bitirərəm. Elədə alim kimi danışıram, sanki çox böyük iş başarmışam🤓. Nəysə siz mənə fikir verməyin yenə "EGO"mu tatmin edirəm.😝</p>
+<!-- Theme Panel -->
+<div id="theme-panel" class="theme-panel hidden">
+  <div class="theme-panel-inner">
+    <p class="theme-panel-title">Tema seç</p>
+    <div class="theme-options">
+      <button class="theme-opt active" data-theme="ocean" onclick="applyTheme('ocean',this)">
+        <span class="theme-dot" style="background:#3b82f6"></span>
+        <span class="theme-dot" style="background:#06b6d4"></span>
+        <span class="theme-dot" style="background:#8b5cf6"></span>
+        <span class="theme-opt-name">Ocean</span>
+      </button>
+      <button class="theme-opt" data-theme="forest" onclick="applyTheme('forest',this)">
+        <span class="theme-dot" style="background:#22c55e"></span>
+        <span class="theme-dot" style="background:#4ade80"></span>
+        <span class="theme-dot" style="background:#86efac"></span>
+        <span class="theme-opt-name">Forest</span>
+      </button>
+      <button class="theme-opt" data-theme="sunset" onclick="applyTheme('sunset',this)">
+        <span class="theme-dot" style="background:#f97316"></span>
+        <span class="theme-dot" style="background:#ec4899"></span>
+        <span class="theme-dot" style="background:#fbbf24"></span>
+        <span class="theme-opt-name">Sunset</span>
+      </button>
+      <button class="theme-opt" data-theme="midnight" onclick="applyTheme('midnight',this)">
+        <span class="theme-dot" style="background:#ffffff"></span>
+        <span class="theme-dot" style="background:#a3a3a3"></span>
+        <span class="theme-dot" style="background:#737373"></span>
+        <span class="theme-opt-name">Midnight</span>
+      </button>
+      <button class="theme-opt" data-theme="candy" onclick="applyTheme('candy',this)">
+        <span class="theme-dot" style="background:#a855f7"></span>
+        <span class="theme-dot" style="background:#ec4899"></span>
+        <span class="theme-dot" style="background:#8b5cf6"></span>
+        <span class="theme-opt-name">Candy</span>
+      </button>
+      <button class="theme-opt" data-theme="arctic" onclick="applyTheme('arctic',this)">
+        <span class="theme-dot" style="background:#0284c7"></span>
+        <span class="theme-dot" style="background:#0ea5e9"></span>
+        <span class="theme-dot" style="background:#38bdf8"></span>
+        <span class="theme-opt-name">Arctic</span>
+      </button>
+    </div>
+  </div>
 </div>
 
-<button class="category" data-target="cat4" aria-expanded="false" aria-controls="cat4">
-<div class="cat-left">
-<span class="cat-emoji">🚫</span>
-<div>
-<span class="cat-title">Yarıda Qalmış Fikirlər</span>
-<span class="cat-sub">Bilgi yetərsizliyi</span>
-</div>
-</div>
-<div class="toggle-btn">+</div>
-</button>
-<div id="cat4" class="post" aria-hidden="true" data-image="shekil4.jpg">
-<div class="meta">Dərc olundu: 18 Avqust 2025</div>
-<h2>İptal edilənlər</h2>
-<p>İptal deyəndəki bəzi səbəblərdən alınmayan bir neçə sayt fikrim var idi. Bunlardan bir neçəsi: Sənin bölgən sənin ehtimalın, Ad günü xatırlama və s. Sənin bölgən sənin ehtimalın belə olacaqdıki bir yer yazacan o bölgədə doğulma ehtimalını deyəcəkdi. Kod uzun olduğu (olacağı) üçün çox üstünə getmədim. Daha sonra Ad günü xatırladacaq bir sayt fikridə bir cloud problemi və başqa səbəblərdən alınmadı. Daha doğrusu bu kimi böyük həcmdə saytlar üçün mənim yetərli bilgim yoxdu deyək.</p>
-</div>
-<footer>
-    <p>&copy; 2025 Ali Production 💖 |
-    <a href="https://ericismyhero.github.io/my-portfolio/">Əlaqə</a> |
-    <a href="mailto:ericismyhero2467@gmail.com">Təklif və İradlarınız üçün</a> </p>
-  </footer>
+
+
+<div class="container">
+
+  <!-- HOME -->
+  <div id="view-home">
+    <div class="hero">
+      <div class="hero-badge" id="hero-badge">İmtahan Materialları</div>
+      <h1 id="hero-title">UNEC <span>İmtahan</span><br>Materialları</h1>
+      <p id="hero-desc">Bütün kurslar üzrə imtahan materiallarına tez çatın. Fənni seçin, PDF-i açın.</p>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-num" id="stat-courses">4</div>
+          <div class="stat-label" id="stat-courses-label">Kurs</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" id="stat-subjects">21</div>
+          <div class="stat-label" id="stat-subjects-label">Fənn</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" id="stat-pdfs">21</div>
+          <div class="stat-label" id="stat-pdfs-label">PDF</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="section-label" id="label-courses">Kurslar</p>
+    <div class="courses-grid" id="courses-grid"></div>
+  </div>
+
+  <!-- SUBJECTS -->
+  <div id="view-subjects" class="hidden">
+    <div class="back-btn" onclick="goTo('home')">
+      <span>←</span> <span id="back1-text">Kurslara qayıt</span>
+    </div>
+    <div class="breadcrumb">
+      <span class="breadcrumb-item" onclick="goTo('home')" id="bc-home">Ana səhifə</span>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-current" id="bc-course"></span>
+    </div>
+    <p class="section-label" id="label-subjects">Fənlər</p>
+    <div class="subjects-grid" id="subjects-grid"></div>
+  </div>
+
+  <!-- PDFS -->
+  <div id="view-pdfs" class="hidden">
+    <div class="back-btn" onclick="goTo('subjects')">
+      <span>←</span> <span id="back2-text">Fənlərə qayıt</span>
+    </div>
+    <div class="breadcrumb">
+      <span class="breadcrumb-item" onclick="goTo('home')" id="bc-home2">Ana səhifə</span>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-item" onclick="goTo('subjects')" id="bc-course2"></span>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-current" id="bc-subject"></span>
+    </div>
+    <div class="pdf-section-header">
+      <p class="section-label" id="label-pdfs">PDF Materiallar</p>
+      <div class="pdf-subject-title" id="pdf-subject-title"></div>
+    </div>
+    <div class="pdf-items" id="pdf-items"></div>
+  </div>
+
 </div>
 
-<button id="topBtn" title="Yuxarı">⬆</button>
-
+<footer class="footer">
+  <span id="footer-text">Bu sayt rəsmi deyil. Yalnız tələbələrin imtahan zamanı materialları daha rahat tapması üçün hazırlanıb.</span>
+  <div class="footer-credits">
+    &copy; 2025 - 2026 Ali Production 💖
+    <span class="footer-sep">|</span>
+    <a href="https://ericismyhero.github.io/my-portfolio/" target="_blank">Əlaqə</a>
+    <span class="footer-sep">|</span>
+    <a href="/cdn-cgi/l/email-protection#1772657e747e647a6e7f7265782523212057707a767e7b3974787a">Təklif və İradlarınız üçün</a>
+  </div>
+</footer>
+<script src="app.js"></script>
 <script>
-// -- SETTINGS
-const ANIM_DURATION_S = 0.45; // Saniyə olaraq animasiya müddəti
-const ANIM_DURATION_MS = ANIM_DURATION_S * 1000;
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js");
+  }
 
-// Elements
-const categories = document.querySelectorAll('.category');
-const posts = document.querySelectorAll('.post');
-const topBtn = document.getElementById('topBtn');
-const themeToggle = document.getElementById('themeToggle');
-const shareBtn = document.getElementById('shareBtn');
+  let deferredPrompt;
 
-// Load stored theme
-function setTheme(dark){
-    document.documentElement.classList.toggle('dark', dark);
-    themeToggle.setAttribute('aria-pressed', dark ? 'true' : 'false');
-    localStorage.setItem('miniBlogTheme', dark ? 'dark' : 'light');
-}
-const savedTheme = localStorage.getItem('miniBlogTheme');
-setTheme(savedTheme === 'dark');
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    document.getElementById("installBanner").classList.add("visible");
+  });
 
-themeToggle.addEventListener('click', () => {
-    const isDark = document.documentElement.classList.contains('dark');
-    setTheme(!isDark);
-});
-
-// Accordion behavior: open/close panel
-function updateCategoryState(categoryElement, postPanel, isOpen) {
-    const toggleBtn = categoryElement.querySelector('.toggle-btn');
-    
-    postPanel.classList.toggle('open', isOpen);
-    postPanel.setAttribute('aria-hidden', !isOpen);
-    
-    categoryElement.setAttribute('aria-expanded', isOpen);
-    toggleBtn.textContent = '+'; // Həmişə '+' qalır, CSS ilə fırlanır
-    
-    if (isOpen) {
-        localStorage.setItem('miniBlogOpen', postPanel.id);
-    } else {
-        localStorage.removeItem('miniBlogOpen');
+  function installApp() {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(() => {
+        deferredPrompt = null;
+        dismissBanner();
+      });
     }
-}
+  }
 
-function closeAllPanels(exceptPanel = null) {
-    posts.forEach(p => {
-        if (p !== exceptPanel && p.classList.contains('open')) {
-            const cat = document.querySelector(`.category[data-target="${p.id}"]`);
-            if (cat) updateCategoryState(cat, p, false);
-        }
-    });
-}
+  function dismissBanner() {
+    document.getElementById("installBanner").classList.remove("visible");
+  }
 
-function togglePanel(categoryElement) {
-    const targetId = categoryElement.getAttribute('data-target');
-    const panel = document.getElementById(targetId);
-    const isCurrentlyOpen = panel.classList.contains('open');
-    
-    // Bütün panelləri bağla, yalnız seçiləni açıq saxla
-    closeAllPanels(panel);
-
-    if (isCurrentlyOpen) {
-        updateCategoryState(categoryElement, panel, false); // Bağla
-    } else {
-        updateCategoryState(categoryElement, panel, true); // Aç
-        
-        // Kiçik ekranlarda yuxarı fırlatma
-        setTimeout(()=> {
-            const rect = categoryElement.getBoundingClientRect();
-            if(rect.top < 40 || rect.bottom > (window.innerHeight - 80)){
-                categoryElement.scrollIntoView({behavior:'smooth', block:'start'});
-            }
-        }, ANIM_DURATION_MS);
-    }
-}
-
-categories.forEach(cat => {
-    cat.addEventListener('click', () => togglePanel(cat));
-    // klaviatura girişi button olduğu üçün defolt olaraq işləyir
-});
-
-// Load last-opened panel from localStorage
-const lastOpen = localStorage.getItem('miniBlogOpen');
-if(lastOpen){
-    const panel = document.getElementById(lastOpen);
-    const cat = document.querySelector(`.category[data-target="${lastOpen}"]`);
-    if(panel && cat) updateCategoryState(cat, panel, true);
-}
-
-// Inject post images if data-image exists
-document.querySelectorAll('.post').forEach(p => {
-    const src = p.getAttribute('data-image');
-    if(src){
-        const img = document.createElement('img');
-        img.src = src;
-        img.alt = 'Post şəkili';
-        img.className = 'post-image';
-        img.loading = 'lazy';
-        // Post mətninin sonuna deyil, xüsusi bir yerə əlavə edilməlidir.
-        // Sadəlik üçün yenə də postun sonuna əlavə edək.
-        p.appendChild(img);
-    }
-});
-
-// Share button (Web Share API fallback)
-shareBtn.addEventListener('click', async () => {
-    const shareData = {
-        title: document.title,
-        text: "Gözəl bir mini blog - paylaş!",
-        url: location.href
-    };
-    try {
-        if(navigator.share){
-            await navigator.share(shareData);
-        } else {
-            prompt('Sayt linkini kopyala və paylaş:', location.href);
-        }
-    } catch(e){
-        // Konsolda səhvləri göstərmək təmizdir
-        console.error('Share error:', e);
-    }
-});
-
-// Back to top button behavior
-window.addEventListener('scroll', () => {
-    // scrollY daha müasirdir
-    if(window.scrollY > 250) topBtn.style.display = 'flex';
-    else topBtn.style.display = 'none';
-});
-topBtn.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
-
-// small enhancement: close open panel when click outside
-document.addEventListener('click', (e) => {
-    const isCatOrPanel = e.target.closest('.category') || e.target.closest('.post');
-    // Header actions, footer klikləri üçün istisna əlavə edilmədi.
-    // Əksər halda bu, kifayətdir.
-    if(!isCatOrPanel && !e.target.closest('.header-actions') && !e.target.closest('footer')){
-        closeAllPanels();
-    }
-});
-
-// Improve reduced-motion preference
-const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-if(prefersReduced){
-    document.documentElement.style.setProperty('--anim-duration', '0s');
-}
+  window.addEventListener("appinstalled", () => {
+    dismissBanner();
+  });
 </script>
 </body>
 </html>
