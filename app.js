@@ -107,6 +107,22 @@ const data = {
   }
 };
 
+const EXTRAS_BASE = "/unecimtahanmateriallari/pdf-extra/";
+
+const extrasData = {
+  "1-ci kurs": [
+    { name: "Nümunə Material", file: "numune1.pdf", desc: "Əlavə qeydlər" }
+  ],
+  "2-ci kurs": [
+    { name: "Nümunə Material", file: "numune2.pdf", desc: "Əlavə qeydlər" }
+  ],
+  "3-cü kurs": [
+    { name: "Nümunə Material", file: "numune3.pdf", desc: "Əlavə qeydlər" }
+  ],
+  "4-cü kurs": [
+    { name: "Nümunə Material", file: "numune4.pdf", desc: "Əlavə qeydlər" }
+  ]
+};
 // ============================================================
 // TƏRCÜMƏ
 // ============================================================
@@ -114,9 +130,11 @@ const translations = {
   az: {
     badge: "İmtahan Materialları",
     heroTitle: 'UNEC <span>İmtahan</span><br>Materialları',
-    heroDesc: "Bütün kurslar üzrə imtahan materiallarına tez çatın. Fənni seçin, PDF-i açın.",
+    heroDesc: "Bütün kurslar üzrə imtahan materiallarına tez çatın. Fənni seçərək, PDF-i açın.",
     coursesLabel: "Kurslar",
     subjectsLabel: "Fənlər",
+    extrasLabel: "Əlavələr",
+    favoritesLabel: "Seçilmişlər",
     pdfsLabel: "PDF Materiallar",
     back1: "Kurslara qayıt",
     back2: "Fənlərə qayıt",
@@ -127,7 +145,9 @@ const translations = {
     statCourses: "Kurs",
     statSubjects: "Fənn",
     statPdfs: "PDF",
-    footer: "Bu sayt rəsmi deyil. Yalnız tələbələrin imtahan zamanı materialları daha rahat tapması üçün hazırlanıb."
+    noFavorites: "Hələ seçilən PDF yoxdur. ★ basaraq əlavə edin.",
+    noExtras: "Bu kurs üçün hələ əlavə material yoxdur.",
+    footer: "Bu sayt rəsmi deyil. Yalnız tələbələrin imtahan zamanı materialları daha rahat və əlçatan tapması üçün hazırlanıb."
   },
   en: {
     badge: "Exam Materials",
@@ -135,6 +155,8 @@ const translations = {
     heroDesc: "Quick access to exam materials for all courses. Select a subject, open the PDF.",
     coursesLabel: "Courses",
     subjectsLabel: "Subjects",
+    extrasLabel: "Extras",
+    favoritesLabel: "Favorites",
     pdfsLabel: "PDF Materials",
     back1: "Back to Courses",
     back2: "Back to Subjects",
@@ -145,6 +167,8 @@ const translations = {
     statCourses: "Courses",
     statSubjects: "Subjects",
     statPdfs: "PDFs",
+    noFavorites: "No favorites yet. Tap ★ to add one.",
+    noExtras: "No extra materials for this course yet.",
     footer: "This site is unofficial. Created to help students find exam materials more easily."
   }
 };
@@ -212,6 +236,8 @@ function applyTranslations() {
   document.getElementById('hero-desc').textContent           = t.heroDesc;
   document.getElementById('label-courses').textContent       = t.coursesLabel;
   document.getElementById('label-subjects').textContent      = t.subjectsLabel;
+  document.getElementById('label-extras').textContent        = t.extrasLabel;
+  document.getElementById('label-favorites').textContent     = t.favoritesLabel;
   document.getElementById('label-pdfs').textContent          = t.pdfsLabel;
   document.getElementById('back1-text').textContent          = t.back1;
   document.getElementById('back2-text').textContent          = t.back2;
@@ -281,8 +307,118 @@ function openSubjects(courseName) {
   currentCourse = courseName;
   document.getElementById('bc-course').textContent  = courseName;
   document.getElementById('bc-course2').textContent = courseName;
+  switchTab('subjects'); // hər dəfə fənlər tabından başla
   goTo('subjects');
   renderSubjects(courseName);
+}
+
+function switchTab(tab) {
+  ['subjects', 'extras', 'favorites'].forEach(t => {
+    document.getElementById(`tab-${t}-btn`).classList.toggle('active', t === tab);
+    document.getElementById(`tab-${t}-content`).classList.toggle('hidden', t !== tab);
+  });
+  if (tab === 'favorites') renderFavorites();
+  if (tab === 'extras')    renderExtras();
+}
+
+function renderExtras() {
+  const t = translations[lang];
+  const list = document.getElementById('extras-list');
+  list.innerHTML = '';
+  const items = (extrasData[currentCourse] || []);
+
+  if (items.length === 0) {
+    list.innerHTML = `<div class="empty-favs">${t.noExtras}</div>`;
+    return;
+  }
+
+  items.forEach(pdf => {
+    const isFav = getFavorites().includes('pdf-extra/' + pdf.file);
+    const div = document.createElement('div');
+    div.className = 'pdf-item animate-in';
+    div.innerHTML = `
+      <div class="pdf-file-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706);">
+        <span>PDF</span>
+      </div>
+      <div class="pdf-info">
+        <div class="pdf-name">${pdf.name}</div>
+        <div class="pdf-meta">${pdf.desc || pdf.file}</div>
+      </div>
+      <div class="pdf-actions">
+        <button class="fav-btn ${isFav ? 'active' : ''}"
+          onclick="toggleFavorite('pdf-extra/${pdf.file}', this)"
+          title="Sevimlilərə əlavə et">
+          ${isFav ? '★' : '☆'}
+        </button>
+        <a class="pdf-open-btn" href="${EXTRAS_BASE}${pdf.file}" target="_blank">
+          ↗ ${t.openPdf}
+        </a>
+      </div>
+    `;
+    list.appendChild(div);
+  });
+}
+
+function renderFavorites() {
+  const t = translations[lang];
+  const favs = getFavorites();
+  const list = document.getElementById('favorites-list');
+  list.innerHTML = '';
+
+  // Cari kursun bütün PDF-lərini (pdf/ + pdf-extra/) yığ
+  const allPdfs = [];
+
+  if (currentCourse) {
+    // Fənn PDF-ləri
+    Object.entries(data[currentCourse].subjects).forEach(([subjectName, pdfs]) => {
+      pdfs.forEach(pdf => {
+        const path = 'pdf/' + pdf.file;
+        if (favs.includes(path)) {
+          allPdfs.push({ name: pdf.name, meta: subjectName, path, color: '' });
+        }
+      });
+    });
+    // Əlavə materiallar
+    (extrasData[currentCourse] || []).forEach(pdf => {
+      const path = 'pdf-extra/' + pdf.file;
+      if (favs.includes(path)) {
+        allPdfs.push({ name: pdf.name, meta: pdf.desc || '📦 Əlavə material', path, color: 'background:linear-gradient(135deg,#f59e0b,#d97706)' });
+      }
+    });
+  }
+
+  if (allPdfs.length === 0) {
+    list.innerHTML = `<div class="empty-favs">${t.noFavorites}</div>`;
+    return;
+  }
+
+  allPdfs.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'pdf-item animate-in';
+    div.innerHTML = `
+      <div class="pdf-file-icon" ${item.color ? `style="${item.color}"` : ''}>
+        <span>PDF</span>
+      </div>
+      <div class="pdf-info">
+        <div class="pdf-name">${item.name}</div>
+        <div class="pdf-meta">${item.meta}</div>
+      </div>
+      <div class="pdf-actions">
+        <button class="fav-btn active" onclick="removeFavAndRefresh('${item.path}')" title="Sil">★</button>
+        <a class="pdf-open-btn" href="${BASE}${item.path}" target="_blank">
+          ↗ ${t.openPdf}
+        </a>
+      </div>
+    `;
+    list.appendChild(div);
+  });
+}
+
+function removeFavAndRefresh(filePath) {
+  let favs = getFavorites().filter(f => f !== filePath);
+  localStorage.setItem("favorites", JSON.stringify(favs));
+  removeFromCache(filePath);
+  renderFavorites();
 }
 
 function renderSubjects(courseName) {
@@ -316,7 +452,7 @@ function openPDFs(subjectName) {
   list.innerHTML = '';
 
   pdfs.forEach(pdf => {
-    const isFav = getFavorites().includes(pdf.file);
+    const isFav = getFavorites().includes('pdf/' + pdf.file);
     const div = document.createElement('div');
     div.className = 'pdf-item animate-in';
     div.innerHTML = `
@@ -328,7 +464,7 @@ function openPDFs(subjectName) {
         <div class="pdf-meta">${pdf.file}</div>
       </div>
       <div class="pdf-actions">
-        <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite('${pdf.file}', this)" title="Sevimlilərə əlavə et">
+        <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite('pdf/${pdf.file}', this)" title="Seçilmişlərə əlavə et">
           ${isFav ? '★' : '☆'}
         </button>
         <a class="pdf-open-btn" href="/unecimtahanmateriallari/pdf/${pdf.file}" target="_blank">
@@ -343,49 +479,46 @@ function openPDFs(subjectName) {
 }
 
 // ============================================================
-// SEVİMLİLƏR + CACHE
+// SEVİMLİLƏR + CACHE (universal — pdf/ və pdf-extra/ dəstəklənir)
+// filePath → "pdf/iktQ26.pdf" və ya "pdf-extra/cheat.pdf"
 // ============================================================
-const PDF_BASE = "/unecimtahanmateriallari/pdf/";
+const BASE = "/unecimtahanmateriallari/";
 
 function getFavorites() {
   return JSON.parse(localStorage.getItem("favorites")) || [];
 }
 
-async function toggleFavorite(file, btn) {
+async function toggleFavorite(filePath, btn) {
   let favs = getFavorites();
 
-  if (favs.includes(file)) {
-    // Sevimlilərden sil + cache-dən sil
-    favs = favs.filter(f => f !== file);
-    removeFromCache(file);
-    btn.textContent = '☆';
-    btn.classList.remove('active');
+  if (favs.includes(filePath)) {
+    favs = favs.filter(f => f !== filePath);
+    removeFromCache(filePath);
+    if (btn) { btn.textContent = '☆'; btn.classList.remove('active'); }
   } else {
-    // Sevimlilərə əlavə et + cache et
-    favs.push(file);
-    cacheOnePDF(file);
-    btn.textContent = '★';
-    btn.classList.add('active');
+    favs.push(filePath);
+    cacheOnePDF(filePath);
+    if (btn) { btn.textContent = '★'; btn.classList.add('active'); }
   }
 
   localStorage.setItem("favorites", JSON.stringify(favs));
 }
 
-async function cacheOnePDF(file) {
+async function cacheOnePDF(filePath) {
   if (!("caches" in window)) return;
   try {
     const cache = await caches.open("pdf-cache");
-    await cache.add(PDF_BASE + file);
+    await cache.add(BASE + filePath);
   } catch (e) {
     console.warn("Cache xətası:", e);
   }
 }
 
-async function removeFromCache(file) {
+async function removeFromCache(filePath) {
   if (!("caches" in window)) return;
   try {
     const cache = await caches.open("pdf-cache");
-    await cache.delete(PDF_BASE + file);
+    await cache.delete(BASE + filePath);
   } catch (e) {
     console.warn("Cache silmə xətası:", e);
   }
