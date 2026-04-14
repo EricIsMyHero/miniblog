@@ -1,4 +1,3 @@
-// ============================================================
 // DATA — hər fənn üçün istədiyiniz qədər PDF əlavə edə bilərsiniz
 // Format: "Fənn adı": [ {name: "Fayl adı", file: "fayl.pdf"}, ... ]
 // ============================================================
@@ -18,20 +17,26 @@ const data = {
       "Karyera planlaması": [
         { name: "Karyera Planlaması Q26", file: "karyeraQ26.pdf" }
       ],
-      "Azərbaycan dilində işgüzar və akademik kommunikasiya": [
-        { name: "ADİAK Q26", file: "adiakQ26.pdf" },
-        { name: "ADİAK Y25", file: "adiakY25.pdf" },
-        { name: "ADİAK Y23", file: "adiakY23.pdf" }
+      "Xarici dildə işgüzar və akademik kommunikasiya A1": [
+        { name: "White Death A1", file: "whitedeathA1.pdf" }
       ],
       "Ehtimal nəzəriyyəsi və riyazi statistika": [
         { name: "Ehtimal Nəzəriyyəsi və Riyazi Statistika Y25", file: "enrsY25.pdf" },
         { name: "Ehtimal Nəzəriyyəsi və Riyazi Statistika Y23", file: "enrsY23.pdf" }
+      ],
+      "Azərbaycan dilində işgüzar və akademik kommunikasiya": [
+        { name: "ADİAK Q26", file: "adiakQ26.pdf" },
+        { name: "ADİAK Y25", file: "adiakY25.pdf" },
+        { name: "ADİAK Y23", file: "adiakY23.pdf" }
       ],
       "Yumşaq bacarıqlar (Soft skills)": [
         { name: "Soft Skills Y25", file: "softskillsY25.pdf" }
       ],
       "İqtisadiyyata giriş": [
         { name: "İqtisadiyyata Giriş - 1", file: "iqtisadiyyat1.pdf" }
+      ],
+      "Xarici dildə işgüzar və akademik kommunikasiya A2": [
+        { name: "Robinson Crusoe A2", file: "robinsoncrusoeA2.pdf" }
       ],
       "Liner cebir ve matematiksel analiz": [
         { name: "Liner Cebir ve Matematiksel Analiz Q26", file: "lcmaQ26.pdf" },
@@ -85,7 +90,9 @@ const data = {
         { name: "Maliyyə Uçotu Q26", file: "maliyyeQ26.pdf" }
       ],
       "İqtisadi fikir tarixi": [
-        { name: "İqtisadi Fikir Tarixi", file: "iqtfkrtrx.pdf" }
+        { name: "İqtisadi Fikir Tarixi - 1", file: "iqtfkrtrx1.pdf" },
+        { name: "İqtisadi Fikir Tarixi - 2", file: "iqtfkrtrx2.pdf" },
+        { name: "İqtisadi Fikir Tarixi - 3", file: "iqtfkrtrx3.pdf" }
       ]
     }
   },
@@ -114,7 +121,7 @@ const extrasData = {
     { name: "Nümunə Material", file: "numune1.pdf", desc: "Əlavə qeydlər" }
   ],
   "2-ci kurs": [
-    { name: "Nümunə Material", file: "numune2.pdf", desc: "Əlavə qeydlər" }
+    { name: "Robinson Crusoe - Azərbaycan", file: "robinsonazeA2.pdf", desc: "Robinson Crusoe Azərbaycan dilindəki versiyası" }
   ],
   "3-cü kurs": [
     { name: "Nümunə Material", file: "numune3.pdf", desc: "Əlavə qeydlər" }
@@ -123,6 +130,7 @@ const extrasData = {
     { name: "Nümunə Material", file: "numune4.pdf", desc: "Əlavə qeydlər" }
   ]
 };
+
 // ============================================================
 // TƏRCÜMƏ
 // ============================================================
@@ -136,6 +144,9 @@ const translations = {
     extrasLabel: "Əlavələr",
     favoritesLabel: "Seçilmişlər",
     pdfsLabel: "PDF Materiallar",
+    searchPlaceholder: "Fənn axtar...",
+    searchResults: "Axtarış Nəticələri",
+    noResults: "Heç bir nəticə tapılmadı",
     back1: "Kurslara qayıt",
     back2: "Fənlərə qayıt",
     bcHome: "Ana səhifə",
@@ -158,6 +169,9 @@ const translations = {
     extrasLabel: "Extras",
     favoritesLabel: "Favorites",
     pdfsLabel: "PDF Materials",
+    searchPlaceholder: "Search subjects...",
+    searchResults: "Search Results",
+    noResults: "No results found",
     back1: "Back to Courses",
     back2: "Back to Subjects",
     bcHome: "Home",
@@ -221,6 +235,10 @@ function setLang(l) {
   const view = getCurrentView();
   if (view === 'subjects') renderSubjects(currentCourse);
   else if (view === 'home') renderCourses();
+  const searchInput = document.getElementById('searchInput');
+  if (searchInput) {
+    searchInput.placeholder = translations[lang].searchPlaceholder;
+  }
 }
 
 function getCurrentView() {
@@ -248,7 +266,6 @@ function applyTranslations() {
   document.getElementById('stat-pdfs-label').textContent     = t.statPdfs;
   document.getElementById('footer-text').textContent         = t.footer;
 
-  // Aktiv dil düyməsini işarələ
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.lang-btn')[lang === 'az' ? 0 : 1].classList.add('active');
 }
@@ -276,8 +293,78 @@ function goTo(view) {
     document.getElementById('view-' + v).classList.add('hidden');
   });
   document.getElementById('view-' + view).classList.remove('hidden');
+
+  // Search-i təmizlə
+  clearSearch();
+
   if (view === 'home') renderCourses();
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ============================================================
+// AXTARIŞ — yalnız view-subjects daxilində fənn filtri
+// ============================================================
+function initSearch() {
+  const searchInput = document.getElementById('searchInput');
+  const searchClear = document.getElementById('searchClear');
+
+  if (!searchInput) return;
+
+  searchInput.placeholder = translations[lang].searchPlaceholder;
+
+  searchInput.addEventListener('input', (e) => {
+    const query = e.target.value.trim().toLowerCase();
+
+    if (query.length > 0) {
+      searchClear.classList.add('visible');
+    } else {
+      searchClear.classList.remove('visible');
+    }
+
+    filterSubjects(query);
+  });
+}
+
+function clearSearch() {
+  const searchInput = document.getElementById('searchInput');
+  const searchClear = document.getElementById('searchClear');
+  const searchResultsInfo = document.getElementById('searchResultsInfo');
+
+  if (searchInput) {
+    searchInput.value = '';
+    if (searchClear) searchClear.classList.remove('visible');
+    if (searchResultsInfo) searchResultsInfo.textContent = '';
+    filterSubjects('');
+  }
+}
+
+// Yalnız fənn kartlarını filtr edir (view-subjects / subjects tab)
+function filterSubjects(query) {
+  const grid = document.getElementById('subjects-grid');
+  if (!grid) return;
+
+  const cards = grid.querySelectorAll('.subject-card');
+  const searchResultsInfo = document.getElementById('searchResultsInfo');
+  let visibleCount = 0;
+
+  cards.forEach(card => {
+    const subjectName = card.querySelector('h4').textContent.toLowerCase();
+    const matches = !query || subjectName.includes(query);
+    card.style.display = matches ? 'flex' : 'none';
+    if (matches) visibleCount++;
+  });
+
+  if (searchResultsInfo) {
+    if (query) {
+      searchResultsInfo.textContent = `${visibleCount} nəticə tapıldı`;
+    } else {
+      searchResultsInfo.textContent = '';
+    }
+  }
+}
+
+function escapeRegex(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 // ============================================================
@@ -307,7 +394,7 @@ function openSubjects(courseName) {
   currentCourse = courseName;
   document.getElementById('bc-course').textContent  = courseName;
   document.getElementById('bc-course2').textContent = courseName;
-  switchTab('subjects'); // hər dəfə fənlər tabından başla
+  switchTab('subjects');
   goTo('subjects');
   renderSubjects(courseName);
 }
@@ -317,6 +404,10 @@ function switchTab(tab) {
     document.getElementById(`tab-${t}-btn`).classList.toggle('active', t === tab);
     document.getElementById(`tab-${t}-content`).classList.toggle('hidden', t !== tab);
   });
+
+  // Axtarışı tab dəyişdikdə sıfırla
+  clearSearch();
+
   if (tab === 'favorites') renderFavorites();
   if (tab === 'extras')    renderExtras();
 }
@@ -365,11 +456,9 @@ function renderFavorites() {
   const list = document.getElementById('favorites-list');
   list.innerHTML = '';
 
-  // Cari kursun bütün PDF-lərini (pdf/ + pdf-extra/) yığ
   const allPdfs = [];
 
   if (currentCourse) {
-    // Fənn PDF-ləri
     Object.entries(data[currentCourse].subjects).forEach(([subjectName, pdfs]) => {
       pdfs.forEach(pdf => {
         const path = 'pdf/' + pdf.file;
@@ -378,7 +467,6 @@ function renderFavorites() {
         }
       });
     });
-    // Əlavə materiallar
     (extrasData[currentCourse] || []).forEach(pdf => {
       const path = 'pdf-extra/' + pdf.file;
       if (favs.includes(path)) {
@@ -479,8 +567,7 @@ function openPDFs(subjectName) {
 }
 
 // ============================================================
-// SEVİMLİLƏR + CACHE (universal — pdf/ və pdf-extra/ dəstəklənir)
-// filePath → "pdf/iktQ26.pdf" və ya "pdf-extra/cheat.pdf"
+// SEVİMLİLƏR + CACHE
 // ============================================================
 const BASE = "/unecimtahanmateriallari/";
 
@@ -527,7 +614,6 @@ async function removeFromCache(filePath) {
 // ============================================================
 // BAŞLAT
 // ============================================================
-// Saxlanılmış temanı yüklə
 (function loadSavedTheme() {
   const saved = localStorage.getItem('theme');
   if (saved && themes[saved]) {
@@ -539,3 +625,4 @@ async function removeFromCache(filePath) {
 computeStats();
 applyTranslations();
 renderCourses();
+initSearch();
