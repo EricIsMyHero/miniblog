@@ -1,214 +1,136 @@
 <!DOCTYPE html>
-<html lang="az">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UNEC İmtahan Materialları</title>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#3b82f6">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UNEC Exam Materials</title>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: white;
+}
+
+header {
+  padding: 20px;
+  text-align: center;
+  background: #020617;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.search-box {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 12px;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  background: #334155;
+}
+
+.card h3 {
+  margin: 0 0 10px;
+}
+
+.card p {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 15px;
+  background: #3b82f6;
+  border-radius: 8px;
+  text-decoration: none;
+  color: white;
+  font-size: 14px;
+}
+
+footer {
+  margin-top: 40px;
+  padding: 20px;
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.7;
+}
+</style>
 </head>
 <body>
 
-<!-- PWA Install Banner -->
-<div id="installBanner">
-  <span>📱 Bu saytı tətbiq kimi əlavə et</span>
-  <div class="banner-actions">
-    <button class="banner-btn-dismiss" onclick="dismissBanner()">Sonra</button>
-    <button class="banner-btn-install" onclick="installApp()">Əlavə et</button>
-  </div>
-</div>
-
-<div class="grid-bg"></div>
-
 <header>
-  <div class="logo">UNEC · İMTAHAN</div>
-  <div style="display:flex;align-items:center;gap:10px;">
-    <button class="theme-toggle-btn" onclick="toggleThemePanel()" title="Tema seç">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-    </button>
-    <div class="lang-toggle">
-      <button class="lang-btn active" onclick="setLang('az')">AZ</button>
-      <button class="lang-btn" onclick="setLang('en')">EN</button>
-    </div>
-  </div>
+UNEC Exam Materials
 </header>
-
-<!-- Theme Panel -->
-<div id="theme-panel" class="theme-panel hidden">
-  <div class="theme-panel-inner">
-    <p class="theme-panel-title">Tema seç</p>
-    <div class="theme-options">
-      <button class="theme-opt active" data-theme="ocean" onclick="applyTheme('ocean',this)">
-        <span class="theme-dot" style="background:#3b82f6"></span>
-        <span class="theme-dot" style="background:#06b6d4"></span>
-        <span class="theme-dot" style="background:#8b5cf6"></span>
-        <span class="theme-opt-name">Ocean</span>
-      </button>
-      <button class="theme-opt" data-theme="forest" onclick="applyTheme('forest',this)">
-        <span class="theme-dot" style="background:#22c55e"></span>
-        <span class="theme-dot" style="background:#4ade80"></span>
-        <span class="theme-dot" style="background:#86efac"></span>
-        <span class="theme-opt-name">Forest</span>
-      </button>
-      <button class="theme-opt" data-theme="sunset" onclick="applyTheme('sunset',this)">
-        <span class="theme-dot" style="background:#f97316"></span>
-        <span class="theme-dot" style="background:#ec4899"></span>
-        <span class="theme-dot" style="background:#fbbf24"></span>
-        <span class="theme-opt-name">Sunset</span>
-      </button>
-      <button class="theme-opt" data-theme="midnight" onclick="applyTheme('midnight',this)">
-        <span class="theme-dot" style="background:#ffffff"></span>
-        <span class="theme-dot" style="background:#a3a3a3"></span>
-        <span class="theme-dot" style="background:#737373"></span>
-        <span class="theme-opt-name">Midnight</span>
-      </button>
-      <button class="theme-opt" data-theme="candy" onclick="applyTheme('candy',this)">
-        <span class="theme-dot" style="background:#a855f7"></span>
-        <span class="theme-dot" style="background:#ec4899"></span>
-        <span class="theme-dot" style="background:#8b5cf6"></span>
-        <span class="theme-opt-name">Candy</span>
-      </button>
-      <button class="theme-opt" data-theme="arctic" onclick="applyTheme('arctic',this)">
-        <span class="theme-dot" style="background:#0284c7"></span>
-        <span class="theme-dot" style="background:#0ea5e9"></span>
-        <span class="theme-dot" style="background:#38bdf8"></span>
-        <span class="theme-opt-name">Arctic</span>
-      </button>
-    </div>
-  </div>
-</div>
-
-
 
 <div class="container">
 
-  <!-- HOME -->
-  <div id="view-home">
-    <div class="hero">
-      <div class="hero-badge" id="hero-badge">İmtahan Materialları</div>
-      <h1 id="hero-title">UNEC <span>İmtahan</span><br>Materialları</h1>
-      <p id="hero-desc">Bütün kurslar üzrə imtahan materiallarına tez çatın. Fənni seçərək, PDF-i açın.</p>
-      <div class="stats">
-        <div class="stat">
-          <div class="stat-num" id="stat-courses">4</div>
-          <div class="stat-label" id="stat-courses-label">Kurs</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num" id="stat-subjects">21</div>
-          <div class="stat-label" id="stat-subjects-label">Fənn</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num" id="stat-pdfs">21</div>
-          <div class="stat-label" id="stat-pdfs-label">PDF</div>
-        </div>
-      </div>
-    </div>
+<input type="text" class="search-box" placeholder="Search materials..." onkeyup="searchCards()">
 
-    <p class="section-label" id="label-courses">Kurslar</p>
-    <div class="courses-grid" id="courses-grid"></div>
-  </div>
+<div class="grid" id="grid">
 
-  <!-- SUBJECTS -->
-  <div id="view-subjects" class="hidden">
-    <div class="back-btn" onclick="goTo('home')">
-      <span>←</span> <span id="back1-text">Kurslara qayıt</span>
-    </div>
-    <div class="breadcrumb">
-      <span class="breadcrumb-item" onclick="goTo('home')" id="bc-home">Ana səhifə</span>
-      <span class="breadcrumb-sep">›</span>
-      <span class="breadcrumb-current" id="bc-course"></span>
-    </div>
-    <!-- Tab düymələri -->
-    <div class="tab-bar">
-      <button class="tab-btn active" id="tab-subjects-btn" onclick="switchTab('subjects')">
-        📚 <span id="label-subjects">Fənlər</span>
-      </button>
-      <button class="tab-btn" id="tab-extras-btn" onclick="switchTab('extras')">
-        📦 <span id="label-extras">Əlavələr</span>
-      </button>
-      <button class="tab-btn" id="tab-favorites-btn" onclick="switchTab('favorites')">
-        ★ <span id="label-favorites">Seçilmişlər</span>
-      </button>
-    </div>
-    <!-- Fənlər -->
-    <div id="tab-subjects-content">
-      <div class="subjects-grid" id="subjects-grid"></div>
-    </div>
-    <!-- Əlavə materiallar -->
-    <div id="tab-extras-content" class="hidden">
-      <div class="pdf-items" id="extras-list"></div>
-    </div>
-    <!-- Sevimlilər -->
-    <div id="tab-favorites-content" class="hidden">
-      <div class="pdf-items" id="favorites-list"></div>
-    </div>
-  </div>
+<div class="card">
+<h3>Microeconomics</h3>
+<p>PDF materials for exam</p>
+<a href="#" class="btn">Download</a>
+</div>
 
-  <!-- PDFS -->
-  <div id="view-pdfs" class="hidden">
-    <div class="back-btn" onclick="goTo('subjects')">
-      <span>←</span> <span id="back2-text">Fənlərə qayıt</span>
-    </div>
-    <div class="breadcrumb">
-      <span class="breadcrumb-item" onclick="goTo('home')" id="bc-home2">Ana səhifə</span>
-      <span class="breadcrumb-sep">›</span>
-      <span class="breadcrumb-item" onclick="goTo('subjects')" id="bc-course2"></span>
-      <span class="breadcrumb-sep">›</span>
-      <span class="breadcrumb-current" id="bc-subject"></span>
-    </div>
-    <div class="pdf-section-header">
-      <p class="section-label" id="label-pdfs">PDF Materiallar</p>
-      <div class="pdf-subject-title" id="pdf-subject-title"></div>
-    </div>
-    <div class="pdf-items" id="pdf-items"></div>
-  </div>
+<div class="card">
+<h3>Macroeconomics</h3>
+<p>PDF materials for exam</p>
+<a href="#" class="btn">Download</a>
+</div>
+
+<div class="card">
+<h3>Statistics</h3>
+<p>PDF materials for exam</p>
+<a href="#" class="btn">Download</a>
+</div>
 
 </div>
 
-<footer class="footer">
-  <span id="footer-text">Bu sayt rəsmi deyil. Yalnız tələbələrin imtahan zamanı materialları daha rahat və əlçatan tapması üçün hazırlanıb.</span>
-  <div class="footer-credits">
-    &copy; 2025 - 2026 Ali Production 💖
-    <span class="footer-sep">|</span>
-    <a href="https://ericismyhero.github.io/my-portfolio/" target="_blank">Əlaqə</a>
-    <span class="footer-sep">|</span>
-    <a href="mailto:ericismyhero2467@gmail.com">Təklif və İradlarınız üçün</a>
-  </div>
+</div>
+
+<footer>
+This site is not official. Created to help students find materials faster.
 </footer>
-<script src="app.js"></script>
+
 <script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("sw.js");
-  }
+function searchCards() {
+  let input = document.querySelector('.search-box').value.toLowerCase();
+  let cards = document.querySelectorAll('.card');
 
-  let deferredPrompt;
-
-  window.addEventListener("beforeinstallprompt", (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    document.getElementById("installBanner").classList.add("visible");
+  cards.forEach(card => {
+    let text = card.innerText.toLowerCase();
+    card.style.display = text.includes(input) ? 'block' : 'none';
   });
-
-  function installApp() {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then(() => {
-        deferredPrompt = null;
-        dismissBanner();
-      });
-    }
-  }
-
-  function dismissBanner() {
-    document.getElementById("installBanner").classList.remove("visible");
-  }
-
-  window.addEventListener("appinstalled", () => {
-    dismissBanner();
-  });
+}
 </script>
+
 </body>
 </html>
