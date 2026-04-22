@@ -1,8 +1,5 @@
 // ============================================================
 // İMTAHAN TİPİNƏ GÖRƏ OTOMATİK QEYDLƏR
-// type: "test"   → Elektron-test fənni
-// type: "yazili" → Elektron-yazılı fənni
-// Hər fənnə data obyektinin içində "type" yazın, qalanını sistem edir.
 // ============================================================
 const EXAM_NOTES = {
   test: [
@@ -21,69 +18,50 @@ const EXAM_NOTES = {
 
 // ============================================================
 // DATA
-// Hər fənnə mütləq "type" yazın: "test" və ya "yazili"
-// Hər fənnə mütləq "semester" yazın: 1 (Payız) və ya 2 (Yaz)
-// subjects altında: { type: "test", semester: 1, pdfs: [...] }
 // ============================================================
 const data = {
   "1-ci kurs": {
     icon: "📘",
     subjects: {
       "Xətti cəbr və riyazi analiz": {
-        type: "test",
-        semester: 1,
-        pdfs: [
-          { name: "Xətti Cəbr və Riyazi Analiz Q26", file: "xcraQ26.pdf" }
-        ]
+        type: "test", semester: 1,
+        pdfs: [{ name: "Xətti Cəbr və Riyazi Analiz Q26", file: "xcraQ26.pdf" }]
       },
       "İKT - Baza kompüter bilikləri": {
-        type: "test",
-        semester: 1,
+        type: "test", semester: 1,
         pdfs: [
           { name: "İKT - Baza Kompüter Bilikləri Q26", file: "iktQ26.pdf" },
           { name: "İKT - Baza Kompüter Bilikləri Q25", file: "iktQ25.pdf" }
         ]
       },
       "Azərbaycanın tarixi": {
-        type: "test",
-        semester: 1,
-        pdfs: [
-          { name: "Azərbaycanın Tarixi Q26", file: "aztarixiQ26.pdf" }
-        ]
+        type: "test", semester: 1,
+        pdfs: [{ name: "Azərbaycanın Tarixi Q26", file: "aztarixiQ26.pdf" }]
       },
       "Karyera planlaması": {
-        type: "test",
-        semester: 1,
+        type: "test", semester: 1,
         pdfs: [
           { name: "Karyera Planlaması Q26", file: "karyeraQ26.pdf" },
           { name: "Karyera Planlaması Q25", file: "karyeraQ25.pdf" }
         ]
       },
       "Xarici dildə işgüzar və akademik kommunikasiya A1": {
-        type: "test",
-        semester: 1,
-        pdfs: [
-          { name: "White Death A1", file: "whitedeathA1.pdf" }
-        ]
+        type: "test", semester: 1,
+        pdfs: [{ name: "White Death A1", file: "whitedeathA1.pdf" }]
       },
       "Ehtimal nəzəriyyəsi və riyazi statistika": {
-        type: "test",
-        semester: 2,
+        type: "test", semester: 2,
         pdfs: [
           { name: "Ehtimal Nəzəriyyəsi və Riyazi Statistika Y25", file: "enrsY25.pdf" },
           { name: "Ehtimal Nəzəriyyəsi və Riyazi Statistika Y23", file: "enrsY23.pdf" }
         ]
       },
       "Xarici dildə işgüzar və akademik kommunikasiya A2": {
-        type: "test",
-        semester: 2,
-        pdfs: [
-          { name: "Robinson Crusoe A2", file: "robinsoncrusoeA2.pdf" }
-        ]
+        type: "test", semester: 2,
+        pdfs: [{ name: "Robinson Crusoe A2", file: "robinsoncrusoeA2.pdf" }]
       },
       "Azərbaycan dilində işgüzar və akademik kommunikasiya": {
-        type: "test",
-        semester: 2,
+        type: "test", semester: 2,
         pdfs: [
           { name: "ADİAK Q26", file: "adiakQ26.pdf" },
           { name: "ADİAK Y25", file: "adiakY25.pdf" },
@@ -91,22 +69,15 @@ const data = {
         ]
       },
       "Yumşaq bacarıqlar (Soft skills)": {
-        type: "test",
-        semester: 2,
-        pdfs: [
-          { name: "Soft Skills Y25", file: "softskillsY25.pdf" }
-        ]
+        type: "test", semester: 2,
+        pdfs: [{ name: "Soft Skills Y25", file: "softskillsY25.pdf" }]
       },
       "İqtisadiyyata giriş": {
-        type: "yazili",
-        semester: 2,
-        pdfs: [
-          { name: "İqtisadiyyata Giriş - 1", file: "iqtisadiyyat1.pdf" }
-        ]
+        type: "yazili", semester: 2,
+        pdfs: [{ name: "İqtisadiyyata Giriş - 1", file: "iqtisadiyyat1.pdf" }]
       },
       "Mülki müdafiə": {
-        type: "test",
-        semester: 2,
+        type: "test", semester: 2,
         pdfs: [
           { name: "Mülki Müdafiə Q26", file: "mulkimudafieQ26.pdf" },
           { name: "Mülki Müdafiə Y24", file: "mulkimudafieY24.pdf" },
@@ -114,41 +85,30 @@ const data = {
         ]
       },
       "Liner cebir ve matematiksel analiz": {
-        type: "test",
-        semester: 1,
+        type: "test", semester: 1,
         pdfs: [
           { name: "Liner Cebir ve Matematiksel Analiz Q26", file: "lcmaQ26.pdf" },
           { name: "Liner Cebir ve Matematiksel Analiz Q23", file: "lcmaQ23.pdf" }
         ]
       },
       "Azerbaycanın tarihi": {
-        type: "test",
-        semester: 1,
+        type: "test", semester: 1,
         pdfs: [
           { name: "Azerbaycanın Tarihi Q26", file: "aztarihiQ26.pdf" },
           { name: "Azerbaycanın Tarihi Q25", file: "aztarihiQ25.pdf" }
         ]
       },
       "Bilgi işlem teknolojileri": {
-        type: "test",
-        semester: 1,
-        pdfs: [
-          { name: "Bilgi İşlem Teknolojileri - 1", file: "bit1.pdf" }
-        ]
+        type: "test", semester: 1,
+        pdfs: [{ name: "Bilgi İşlem Teknolojileri - 1", file: "bit1.pdf" }]
       },
       "Yönetim ve organizasyon": {
-        type: "test",
-        semester: 1,
-        pdfs: [
-          { name: "Yönetim ve Organizasyon Q25", file: "yonetimorganizasyonQ25.pdf" }
-        ]
+        type: "test", semester: 1,
+        pdfs: [{ name: "Yönetim ve Organizasyon Q25", file: "yonetimorganizasyonQ25.pdf" }]
       },
       "Olasılık teorisi ve matematiksel istatistik": {
-        type: "test",
-        semester: 2,
-        pdfs: [
-          { name: "Olasılık Teorisi ve Matematiksel İstatistik Y26", file: "otmiY26.pdf" }
-        ]
+        type: "test", semester: 2,
+        pdfs: [{ name: "Olasılık Teorisi ve Matematiksel İstatistik Y26", file: "otmiY26.pdf" }]
       },
     }
   },
@@ -156,8 +116,7 @@ const data = {
     icon: "📗",
     subjects: {
       "Mikroiqtisadiyyat": {
-        type: "yazili",
-        semester: 1,
+        type: "yazili", semester: 1,
         pdfs: [
           { name: "Mikroiqtisadiyyat - 1", file: "mikroiqt1.pdf" },
           { name: "Mikroiqtisadiyyat - 2", file: "mikroiqt2.pdf" },
@@ -167,30 +126,22 @@ const data = {
         ]
       },
       "Qiymət siyasəti": {
-        type: "yazili",
-        semester: 1,
-        pdfs: [
-          { name: "Qiymət Siyasəti", file: "qiymet1.pdf" }
-        ]
+        type: "yazili", semester: 1,
+        pdfs: [{ name: "Qiymət Siyasəti", file: "qiymet1.pdf" }]
       },
       "Əməyin iqtisadiyyatı": {
-        type: "yazili",
-        semester: 1,
+        type: "yazili", semester: 1,
         pdfs: [
           { name: "Əməyin İqtisadiyyatı - 1", file: "emek1.pdf" },
           { name: "Əməyin İqtisadiyyatı - 1 - Kollekvium", file: "emekkollek1.pdf" }
         ]
       },
       "Xarici dildə işgüzar və akademik kommunikasiya B1": {
-        type: "test",
-        semester: 1,
-        pdfs: [
-          { name: "Forrest Gump B1", file: "forrestgumpB1.pdf" }
-        ]
+        type: "test", semester: 1,
+        pdfs: [{ name: "Forrest Gump B1", file: "forrestgumpB1.pdf" }]
       },
       "Ətraf mühitin iqtisadiyyatı": {
-        type: "yazili",
-        semester: 1,
+        type: "yazili", semester: 1,
         pdfs: [
           { name: "Ətraf Mühitin İqtisadiyyatı - 1", file: "emi1.pdf" },
           { name: "Ətraf Mühitin İqtisadiyyatı - 2", file: "emi2.pdf" },
@@ -199,8 +150,7 @@ const data = {
         ]
       },
       "Azərbaycan iqtisadiyyatı": {
-        type: "yazili",
-        semester: 2,
+        type: "yazili", semester: 2,
         pdfs: [
           { name: "Azərbaycan İqtisadiyyatı - 1", file: "aziqt1.pdf" },
           { name: "Azərbaycan İqtisadiyyatı - 2", file: "aziqt2.pdf" },
@@ -208,30 +158,22 @@ const data = {
         ]
       },
       "Makroiqtisadiyyat": {
-        type: "yazili",
-        semester: 2,
+        type: "yazili", semester: 2,
         pdfs: [
           { name: "Makroiqtisadiyyat - 1", file: "makroiqt1.pdf" },
           { name: "Makroiqtisadiyyat - 1 - Məsələlər", file: "makroiqtmesele1.pdf" }
         ]
       },
       "Maliyyə uçotu": {
-        type: "test",
-        semester: 2,
-        pdfs: [
-          { name: "Maliyyə Uçotu Q26", file: "maliyyeQ26.pdf" }
-        ]
+        type: "test", semester: 2,
+        pdfs: [{ name: "Maliyyə Uçotu Q26", file: "maliyyeQ26.pdf" }]
       },
       "Xarici dildə işgüzar və akademik kommunikasiya B1+": {
-        type: "test",
-        semester: 2,
-        pdfs: [
-          { name: "Sherlock Holmes B1+", file: "sherlockholmesB1+.pdf" }
-        ]
+        type: "test", semester: 2,
+        pdfs: [{ name: "Sherlock Holmes B1+", file: "sherlockholmesB1+.pdf" }]
       },
       "İqtisadi fikir tarixi": {
-        type: "yazili",
-        semester: 2,
+        type: "yazili", semester: 2,
         pdfs: [
           { name: "İqtisadi Fikir Tarixi - 1", file: "iqtfkrtrx1.pdf" },
           { name: "İqtisadi Fikir Tarixi - 2", file: "iqtfkrtrx2.pdf" },
@@ -239,11 +181,8 @@ const data = {
         ]
       },
       "Xərclərin idarə edilməsi": {
-        type: "test",
-        semester: 2,
-        pdfs: [
-          { name: "Xərclərin İdarə Edilməsi Y25", file: "xerclerY25.pdf" }
-        ]
+        type: "test", semester: 2,
+        pdfs: [{ name: "Xərclərin İdarə Edilməsi Y25", file: "xerclerY25.pdf" }]
       },
     }
   },
@@ -251,8 +190,7 @@ const data = {
     icon: "📙",
     subjects: {
       "Mülki müdafiə": {
-        type: "test",
-        semester: 1,
+        type: "test", semester: 1,
         pdfs: [
           { name: "Mülki Müdafiə Q26", file: "mulkimudafieQ26.pdf" },
           { name: "Mülki Müdafiə Y24", file: "mulkimudafieY24.pdf" },
@@ -260,11 +198,8 @@ const data = {
         ]
       },
       "Statistika": {
-        type: "yazili",
-        semester: 1,
-        pdfs: [
-          { name: "Statistika", file: "statistika.pdf" }
-        ]
+        type: "yazili", semester: 1,
+        pdfs: [{ name: "Statistika", file: "statistika.pdf" }]
       }
     }
   },
@@ -272,11 +207,8 @@ const data = {
     icon: "📕",
     subjects: {
       "Menecment": {
-        type: "test",
-        semester: 1,
-        pdfs: [
-          { name: "Management material", file: "Manage.pdf" }
-        ]
+        type: "test", semester: 1,
+        pdfs: [{ name: "Management material", file: "Manage.pdf" }]
       }
     }
   }
@@ -292,17 +224,12 @@ const extrasData = {
   "2-ci kurs": [
     { name: "Robinson Crusoe - Azərbaycan", file: "robinsonazeA2.pdf", desc: "Robinson Crusoe Azərbaycan dilindəki versiyası" }
   ],
-  "3-cü kurs": [
-    { name: "Nümunə Material", file: "numune3.pdf", desc: "Əlavə qeydlər" }
-  ],
-  "4-cü kurs": [
-    { name: "Nümunə Material", file: "numune4.pdf", desc: "Əlavə qeydlər" }
-  ]
+  "3-cü kurs": [{ name: "Nümunə Material", file: "numune3.pdf", desc: "Əlavə qeydlər" }],
+  "4-cü kurs": [{ name: "Nümunə Material", file: "numune4.pdf", desc: "Əlavə qeydlər" }]
 };
 
 // ============================================================
 // TƏŞƏKKÜRLƏr DATA
-// role: 'code' — kod töhfəçisi, 'pdf' — PDF töhfəçisi
 // ============================================================
 const thanksData = [
   { name: "Nərimanov Elnur",  initial: "E", role: "code" },
@@ -321,7 +248,7 @@ function renderThanks() {
   ];
   groups.forEach(group => {
     const people = thanksData.filter(p => p.role === group.key);
-    if (people.length === 0) return;
+    if (!people.length) return;
     const header = document.createElement('li');
     header.className = 'thanks-section-label';
     header.textContent = group.label;
@@ -339,7 +266,7 @@ function renderThanks() {
 }
 
 // ============================================================
-// FƏNN TİPİ BADGEI
+// EXAM TYPE BADGE
 // ============================================================
 function getTypeBadgeHTML(type) {
   if (type === 'test')   return `<span class="exam-type-badge exam-type-test">🖥️ Test</span>`;
@@ -348,19 +275,21 @@ function getTypeBadgeHTML(type) {
 }
 
 // ============================================================
-// TƏRCÜMƏ
+// TRANSLATIONS
 // ============================================================
 const translations = {
   az: {
-    badge: "İmtahan Materialları",
+    badge: "İmtahan Materialları · 2025–2026",
     heroTitle: 'UNEC <span>İmtahan</span><br>Materialları',
-    heroDesc: "Bütün kurslar üzrə imtahan materiallarına tez çatın. Fənni seçərək, PDF-i açın.",
+    heroDesc: "Bütün PDF-ləri bir yerdə tap, vaxt itirmə. Fənni seç, materialı aç.",
     coursesLabel: "Kurslar",
+    popularLabel: "Ən çox açılanlar",
     subjectsLabel: "Fənlər",
     extrasLabel: "Əlavələr",
     favoritesLabel: "Seçilmişlər",
     pdfsLabel: "PDF Materiallar",
     searchPlaceholder: "Fənn axtar...",
+    heroSearchPlaceholder: "Fənn axtar...",
     back1: "Kurslara qayıt",
     back2: "Fənlərə qayıt",
     bcHome: "Ana səhifə",
@@ -372,20 +301,25 @@ const translations = {
     statPdfs: "PDF",
     noFavorites: "Hələ seçilən PDF yoxdur. ★ basaraq əlavə edin.",
     noExtras: "Bu kurs üçün hələ əlavə material yoxdur.",
-    footer: "Bu sayt rəsmi deyildir. Yalnız tələbələrin imtahan zamanı materialları daha rahat və əlçatan tapması üçün hazırlanıb.",
+    footer: "Bu sayt rəsmi deyildir. Yalnız tələbələrin imtahan zamanı materialları daha rahat tapması üçün hazırlanıb.",
     semesterFall: "🍂 Payız Semestri",
-    semesterSpring: "🌸 Yaz Semestri"
+    semesterSpring: "🌸 Yaz Semestri",
+    navCourses: "Kurslar",
+    navPopular: "Ən populyar",
+    navAbout: "Haqqında"
   },
   en: {
-    badge: "Exam Materials",
+    badge: "Exam Materials · 2025–2026",
     heroTitle: 'UNEC <span>Exam</span><br>Materials',
-    heroDesc: "Quick access to exam materials for all courses. Select a subject, open the PDF.",
+    heroDesc: "Find all PDFs in one place. Select a subject, open the material.",
     coursesLabel: "Courses",
+    popularLabel: "Most opened",
     subjectsLabel: "Subjects",
     extrasLabel: "Extras",
     favoritesLabel: "Favorites",
     pdfsLabel: "PDF Materials",
     searchPlaceholder: "Search subjects...",
+    heroSearchPlaceholder: "Search subjects...",
     back1: "Back to Courses",
     back2: "Back to Subjects",
     bcHome: "Home",
@@ -399,12 +333,15 @@ const translations = {
     noExtras: "No extra materials for this course yet.",
     footer: "This site is unofficial. Created to help students find exam materials more easily.",
     semesterFall: "🍂 Fall Semester",
-    semesterSpring: "🌸 Spring Semester"
+    semesterSpring: "🌸 Spring Semester",
+    navCourses: "Courses",
+    navPopular: "Most popular",
+    navAbout: "About"
   }
 };
 
 // ============================================================
-// TEMA SİSTEMİ
+// TEMA
 // ============================================================
 const themes = {
   ocean:    { '--bg':'#070d1a','--surface':'#0d1a2e','--surface2':'#122240','--accent':'#3b82f6','--accent2':'#06b6d4','--accent3':'#8b5cf6','--text':'#e2e8f0','--muted':'#64748b','--border':'rgba(59,130,246,0.15)','--glow':'rgba(59,130,246,0.08)' },
@@ -428,7 +365,7 @@ function toggleThemePanel() {
   document.getElementById('theme-panel').classList.toggle('hidden');
 }
 
-document.addEventListener('click', function (e) {
+document.addEventListener('click', function(e) {
   const panel = document.getElementById('theme-panel');
   if (!panel.classList.contains('hidden') &&
       !panel.contains(e.target) &&
@@ -451,8 +388,10 @@ function setLang(l) {
   const view = getCurrentView();
   if (view === 'subjects') renderSubjects(currentCourse);
   else if (view === 'home') renderCourses();
-  const searchInput = document.getElementById('searchInput');
-  if (searchInput) searchInput.placeholder = translations[lang].searchPlaceholder;
+  const si = document.getElementById('searchInput');
+  const hi = document.getElementById('heroSearchInput');
+  if (si) si.placeholder = translations[lang].searchPlaceholder;
+  if (hi) hi.placeholder = translations[lang].heroSearchPlaceholder;
 }
 
 function getCurrentView() {
@@ -463,24 +402,39 @@ function getCurrentView() {
 
 function applyTranslations() {
   const t = translations[lang];
-  document.getElementById('hero-badge').textContent          = t.badge;
-  document.getElementById('hero-title').innerHTML            = t.heroTitle;
-  document.getElementById('hero-desc').textContent           = t.heroDesc;
-  document.getElementById('label-courses').textContent       = t.coursesLabel;
-  document.getElementById('label-subjects').textContent      = t.subjectsLabel;
-  document.getElementById('label-extras').textContent        = t.extrasLabel;
-  document.getElementById('label-favorites').textContent     = t.favoritesLabel;
-  document.getElementById('label-pdfs').textContent          = t.pdfsLabel;
-  document.getElementById('back1-text').textContent          = t.back1;
-  document.getElementById('back2-text').textContent          = t.back2;
-  document.getElementById('bc-home').textContent             = t.bcHome;
-  document.getElementById('bc-home2').textContent            = t.bcHome;
-  document.getElementById('stat-courses-label').textContent  = t.statCourses;
-  document.getElementById('stat-subjects-label').textContent = t.statSubjects;
-  document.getElementById('stat-pdfs-label').textContent     = t.statPdfs;
-  document.getElementById('footer-text').textContent         = t.footer;
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.innerHTML = val; };
+  const setText = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+
+  set('hero-badge', t.badge);
+  set('hero-title', t.heroTitle);
+  setText('hero-desc', t.heroDesc);
+  setText('label-courses', t.coursesLabel);
+  setText('label-popular', t.popularLabel);
+  setText('label-subjects', t.subjectsLabel);
+  setText('label-extras', t.extrasLabel);
+  setText('label-favorites', t.favoritesLabel);
+  setText('label-pdfs', t.pdfsLabel);
+  setText('back1-text', t.back1);
+  setText('back2-text', t.back2);
+  setText('bc-home', t.bcHome);
+  setText('bc-home2', t.bcHome);
+  setText('stat-courses-label', t.statCourses);
+  setText('stat-subjects-label', t.statSubjects);
+  setText('stat-pdfs-label', t.statPdfs);
+  setText('footer-text', t.footer);
+
+  // Navbar links
+  setText('navlink-courses', t.navCourses);
+  setText('navlink-popular', t.navPopular);
+  setText('navlink-about', t.navAbout);
+  setText('m-navlink-courses', t.navCourses);
+  setText('m-navlink-popular', t.navPopular);
+  setText('m-navlink-about', t.navAbout);
+
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.lang-btn')[lang === 'az' ? 0 : 1].classList.add('active');
+  const btns = document.querySelectorAll('.lang-btn');
+  if (lang === 'az' && btns[0]) btns[0].classList.add('active');
+  if (lang === 'en' && btns[1]) btns[1].classList.add('active');
 }
 
 // ============================================================
@@ -499,6 +453,30 @@ function computeStats() {
 }
 
 // ============================================================
+// MOBİL MENU
+// ============================================================
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobile-menu');
+  const burger = document.getElementById('hamburger');
+  menu.classList.toggle('hidden');
+  burger.classList.toggle('open');
+}
+
+// ============================================================
+// SCROLL TO SECTION
+// ============================================================
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (getCurrentView() !== 'home') {
+    goTo('home');
+    setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+  } else {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+// ============================================================
 // NAVİGASİYA
 // ============================================================
 function goTo(view) {
@@ -507,79 +485,211 @@ function goTo(view) {
   });
   document.getElementById('view-' + view).classList.remove('hidden');
   clearSearch();
-  if (view === 'home') renderCourses();
+  if (view === 'home') { renderCourses(); renderPopular(); }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // ============================================================
-// AXTARIŞ
+// HERO AXTARIŞ
+// ============================================================
+function initHeroSearch() {
+  const input   = document.getElementById('heroSearchInput');
+  const clear   = document.getElementById('heroSearchClear');
+  const results = document.getElementById('heroSearchResults');
+  if (!input) return;
+
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    clear.classList.toggle('hidden', q.length === 0);
+    if (!q) { results.classList.add('hidden'); results.innerHTML = ''; return; }
+    showHeroResults(q);
+  });
+
+  // Kənar klik ilə bağla
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.hero-search-wrap')) {
+      results.classList.add('hidden');
+    }
+  });
+}
+
+function clearHeroSearch() {
+  const input   = document.getElementById('heroSearchInput');
+  const clear   = document.getElementById('heroSearchClear');
+  const results = document.getElementById('heroSearchResults');
+  if (input)   input.value = '';
+  if (clear)   clear.classList.add('hidden');
+  if (results) { results.classList.add('hidden'); results.innerHTML = ''; }
+}
+
+function showHeroResults(q) {
+  const results = document.getElementById('heroSearchResults');
+  const t = translations[lang];
+  const matches = [];
+
+  Object.entries(data).forEach(([courseName, courseData]) => {
+    Object.entries(courseData.subjects).forEach(([subjectName, subj]) => {
+      subj.pdfs.forEach(pdf => {
+        if (pdf.name.toLowerCase().includes(q) || subjectName.toLowerCase().includes(q)) {
+          matches.push({ pdfName: pdf.name, subjectName, courseName, file: pdf.file });
+        }
+      });
+    });
+  });
+
+  results.innerHTML = '';
+  results.classList.remove('hidden');
+
+  if (!matches.length) {
+    results.innerHTML = `<div class="hero-no-result">Nəticə tapılmadı</div>`;
+    return;
+  }
+
+  matches.slice(0, 7).forEach(m => {
+    const div = document.createElement('div');
+    div.className = 'hero-result-item';
+    div.innerHTML = `
+      <div class="hero-result-icon">PDF</div>
+      <div class="hero-result-info">
+        <div class="hero-result-name">${m.pdfName}</div>
+        <div class="hero-result-meta">${m.courseName} · ${m.subjectName}</div>
+      </div>
+      <span class="hero-result-open">↗ ${t.openPdf}</span>
+    `;
+    div.onclick = () => {
+      clearHeroSearch();
+      currentCourse = m.courseName;
+      openPDFs(m.subjectName);
+    };
+    results.appendChild(div);
+  });
+}
+
+// ============================================================
+// POPULAR SECTION — ən çox açılan PDF-lər
+// ============================================================
+function getOpenCounts() {
+  return JSON.parse(localStorage.getItem('openCounts') || '{}');
+}
+
+function incrementOpenCount(file) {
+  const counts = getOpenCounts();
+  counts[file] = (counts[file] || 0) + 1;
+  localStorage.setItem('openCounts', JSON.stringify(counts));
+}
+
+function renderPopular() {
+  const list = document.getElementById('popular-list');
+  if (!list) return;
+  const t = translations[lang];
+
+  // Bütün PDF-ləri yığ
+  const allPdfs = [];
+  Object.entries(data).forEach(([courseName, courseData]) => {
+    Object.entries(courseData.subjects).forEach(([subjectName, subj]) => {
+      subj.pdfs.forEach(pdf => {
+        allPdfs.push({ name: pdf.name, file: pdf.file, subject: subjectName, course: courseName, type: subj.type });
+      });
+    });
+  });
+
+  const counts = getOpenCounts();
+
+  // Açılma sayına görə sırala; 0-sa əvvəlcədən seçilmiş 3-ü göstər
+  const sorted = [...allPdfs].sort((a, b) => (counts[b.file] || 0) - (counts[a.file] || 0));
+  const top = sorted.slice(0, 3);
+
+  list.innerHTML = '';
+  top.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'popular-item animate-in';
+    div.innerHTML = `
+      <div class="popular-file-icon"><span>PDF</span></div>
+      <div class="popular-info">
+        <div class="popular-name">${item.name}</div>
+        <div class="popular-meta">${item.course} · ${item.subject}</div>
+      </div>
+      <div class="popular-right">
+        <a class="popular-open-btn"
+           href="/unecimtahanmateriallari/pdf/${item.file}"
+           target="_blank"
+           onclick="incrementOpenCount('${item.file}')">
+          ↗ ${t.openPdf}
+        </a>
+      </div>
+    `;
+    list.appendChild(div);
+  });
+}
+
+// ============================================================
+// SUBJECTS VİEW AXTARIŞ
 // ============================================================
 function initSearch() {
-  const searchInput = document.getElementById('searchInput');
-  const searchClear = document.getElementById('searchClear');
-  if (!searchInput) return;
-  searchInput.placeholder = translations[lang].searchPlaceholder;
-  searchInput.addEventListener('input', (e) => {
-    const query = e.target.value.trim().toLowerCase();
-    searchClear.classList.toggle('visible', query.length > 0);
-    filterSubjects(query);
+  const si = document.getElementById('searchInput');
+  const sc = document.getElementById('searchClear');
+  if (!si) return;
+  si.placeholder = translations[lang].searchPlaceholder;
+  si.addEventListener('input', (e) => {
+    const q = e.target.value.trim().toLowerCase();
+    sc.classList.toggle('visible', q.length > 0);
+    filterSubjects(q);
   });
 }
 
 function clearSearch() {
-  const searchInput = document.getElementById('searchInput');
-  const searchClear = document.getElementById('searchClear');
-  const searchResultsInfo = document.getElementById('searchResultsInfo');
-  if (searchInput) {
-    searchInput.value = '';
-    if (searchClear) searchClear.classList.remove('visible');
-    if (searchResultsInfo) searchResultsInfo.textContent = '';
-    filterSubjects('');
-  }
+  const si  = document.getElementById('searchInput');
+  const sc  = document.getElementById('searchClear');
+  const sri = document.getElementById('searchResultsInfo');
+  if (si) { si.value = ''; if (sc) sc.classList.remove('visible'); if (sri) sri.textContent = ''; filterSubjects(''); }
 }
 
 function filterSubjects(query) {
   const grid = document.getElementById('subjects-grid');
   if (!grid) return;
-  const cards = grid.querySelectorAll('.subject-card');
-  const semesterHeaders = grid.querySelectorAll('.semester-header');
-  const searchResultsInfo = document.getElementById('searchResultsInfo');
-  let visibleCount = 0;
-
+  const cards   = grid.querySelectorAll('.subject-card');
+  const headers = grid.querySelectorAll('.semester-header');
+  const sri     = document.getElementById('searchResultsInfo');
+  let visible   = 0;
   cards.forEach(card => {
-    const subjectName = card.querySelector('h4').textContent.toLowerCase();
-    const matches = !query || subjectName.includes(query);
-    card.style.display = matches ? 'flex' : 'none';
-    if (matches) visibleCount++;
+    const name = card.querySelector('h4').textContent.toLowerCase();
+    const show = !query || name.includes(query);
+    card.style.display = show ? 'flex' : 'none';
+    if (show) visible++;
   });
-
-  // Axtarış aktiv olduqda semester başlıqlarını gizlət
-  semesterHeaders.forEach(header => {
-    header.style.display = query ? 'none' : '';
-  });
-
-  if (searchResultsInfo) {
-    searchResultsInfo.textContent = query ? `${visibleCount} nəticə tapıldı` : '';
-  }
+  headers.forEach(h => { h.style.display = query ? 'none' : ''; });
+  if (sri) sri.textContent = query ? `${visible} nəticə tapıldı` : '';
 }
 
 // ============================================================
-// RENDER
+// RENDER COURSES — yeni kart dizaynı
 // ============================================================
 function renderCourses() {
   const t = translations[lang];
   const grid = document.getElementById('courses-grid');
   grid.innerHTML = '';
-  Object.entries(data).forEach(([courseName, courseData]) => {
-    const subCount = Object.keys(courseData.subjects).length;
-    const pdfCount = Object.values(courseData.subjects).reduce((a, subj) => a + subj.pdfs.length, 0);
+  Object.entries(data).forEach(([courseName, courseData], i) => {
+    const subs = Object.values(courseData.subjects);
+    const subCount = subs.length;
+    const pdfCount = subs.reduce((a, s) => a + s.pdfs.length, 0);
+    const types = [...new Set(subs.map(s => s.type))];
+
     const div = document.createElement('div');
     div.className = 'course-card animate-in';
     div.innerHTML = `
-      <span class="course-icon">${courseData.icon}</span>
-      <h3>${courseName}</h3>
+      <div class="course-card-top">
+        <span class="course-icon">${courseData.icon}</span>
+        <span class="course-kurs-badge">${courseName}</span>
+      </div>
+      <h3>${courseName.replace('-ci kurs', '. kurs').replace('-cü kurs', '. kurs')}</h3>
       <div class="sub-count">${subCount} ${t.subjects} · ${pdfCount} ${t.pdfs}</div>
-      <div class="tag">${courseName}</div>
+      <div class="course-card-footer">
+        <div class="course-type-tags">
+          ${types.includes('test')   ? '<span class="type-tag test">🖥️ Test</span>' : ''}
+          ${types.includes('yazili') ? '<span class="type-tag yazili">✍️ Yazılı</span>' : ''}
+        </div>
+        <span class="course-arrow">→</span>
+      </div>
     `;
     div.onclick = () => openSubjects(courseName);
     grid.appendChild(div);
@@ -609,11 +719,8 @@ function renderExtras() {
   const t = translations[lang];
   const list = document.getElementById('extras-list');
   list.innerHTML = '';
-  const items = (extrasData[currentCourse] || []);
-  if (items.length === 0) {
-    list.innerHTML = `<div class="empty-favs">${t.noExtras}</div>`;
-    return;
-  }
+  const items = extrasData[currentCourse] || [];
+  if (!items.length) { list.innerHTML = `<div class="empty-favs">${t.noExtras}</div>`; return; }
   items.forEach(pdf => {
     const isFav = getFavorites().includes('pdf-extra/' + pdf.file);
     const div = document.createElement('div');
@@ -627,12 +734,10 @@ function renderExtras() {
         <div class="pdf-meta">${pdf.desc || pdf.file}</div>
       </div>
       <div class="pdf-actions">
-        <button class="fav-btn ${isFav ? 'active' : ''}"
-          onclick="toggleFavorite('pdf-extra/${pdf.file}', this)"
-          title="Sevimlilərə əlavə et">
+        <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite('pdf-extra/${pdf.file}', this)" title="Sevimlilərə əlavə et">
           ${isFav ? '★' : '☆'}
         </button>
-        <a class="pdf-open-btn" href="${EXTRAS_BASE}${pdf.file}" target="_blank">
+        <a class="pdf-open-btn" href="${EXTRAS_BASE}${pdf.file}" target="_blank" onclick="incrementOpenCount('${pdf.file}')">
           ↗ ${t.openPdf}
         </a>
       </div>
@@ -656,15 +761,10 @@ function renderFavorites() {
     });
     (extrasData[currentCourse] || []).forEach(pdf => {
       const path = 'pdf-extra/' + pdf.file;
-      if (favs.includes(path)) {
-        allPdfs.push({ name: pdf.name, meta: pdf.desc || '📦 Əlavə material', path, color: 'background:linear-gradient(135deg,#f59e0b,#d97706)' });
-      }
+      if (favs.includes(path)) allPdfs.push({ name: pdf.name, meta: pdf.desc || '📦 Əlavə material', path, color: 'background:linear-gradient(135deg,#f59e0b,#d97706)' });
     });
   }
-  if (allPdfs.length === 0) {
-    list.innerHTML = `<div class="empty-favs">${t.noFavorites}</div>`;
-    return;
-  }
+  if (!allPdfs.length) { list.innerHTML = `<div class="empty-favs">${t.noFavorites}</div>`; return; }
   allPdfs.forEach(item => {
     const div = document.createElement('div');
     div.className = 'pdf-item animate-in';
@@ -691,7 +791,7 @@ function removeFavAndRefresh(filePath) {
 }
 
 // ============================================================
-// SEMESTER QRUPLAŞDIRMASİ İLƏ FƏNN RENDER
+// SUBJECTS — semester qrupları
 // ============================================================
 function renderSubjects(courseName) {
   const t = translations[lang];
@@ -700,24 +800,21 @@ function renderSubjects(courseName) {
   const icons = ['📊','📐','🗓','💡','📝','📈','🔬','⚙️','🎯','📌','🏛','💰','📉','🌿','🔗','📋','🧮','🏆'];
 
   const allEntries = Object.entries(data[courseName].subjects);
-  const sem1 = allEntries.filter(([, subj]) => subj.semester === 1);
-  const sem2 = allEntries.filter(([, subj]) => subj.semester === 2);
+  const sem1 = allEntries.filter(([, s]) => s.semester === 1);
+  const sem2 = allEntries.filter(([, s]) => s.semester === 2);
+  let idx = 0;
 
-  let iconIndex = 0;
-
-  function renderGroup(entries, labelText) {
-    if (entries.length === 0) return;
-
-    const header = document.createElement('div');
-    header.className = 'semester-header';
-    header.textContent = labelText;
-    grid.appendChild(header);
-
+  function renderGroup(entries, label) {
+    if (!entries.length) return;
+    const h = document.createElement('div');
+    h.className = 'semester-header';
+    h.textContent = label;
+    grid.appendChild(h);
     entries.forEach(([subjectName, subj]) => {
       const div = document.createElement('div');
       div.className = 'subject-card animate-in';
       div.innerHTML = `
-        <div class="subject-icon">${icons[iconIndex % icons.length]}</div>
+        <div class="subject-icon">${icons[idx % icons.length]}</div>
         <div class="subject-info">
           <h4>${subjectName}</h4>
           <div class="pdf-count">
@@ -728,7 +825,7 @@ function renderSubjects(courseName) {
       `;
       div.onclick = () => openPDFs(subjectName);
       grid.appendChild(div);
-      iconIndex++;
+      idx++;
     });
   }
 
@@ -755,7 +852,7 @@ function closeThanksIfOutside(e) {
 }
 
 // ============================================================
-// EASTER EGG — logoya 3 dəfə bas
+// EASTER EGG
 // ============================================================
 let easterClickCount = 0;
 let easterTimer = null;
@@ -786,24 +883,22 @@ function closeEasterIfOutside(e) {
 }
 
 // ============================================================
-// INFO PANEL — imtahan tipinə görə avtomatik notlar
+// INFO PANEL
 // ============================================================
 function toggleInfoPanel() {
-  const panel = document.getElementById('subject-info-panel');
-  if (panel) panel.classList.toggle('hidden');
+  const p = document.getElementById('subject-info-panel');
+  if (p) p.classList.toggle('hidden');
 }
 
 function closeInfoPanel() {
-  const panel = document.getElementById('subject-info-panel');
-  if (panel) panel.classList.add('hidden');
+  const p = document.getElementById('subject-info-panel');
+  if (p) p.classList.add('hidden');
 }
 
 document.addEventListener('click', function(e) {
-  const panel = document.getElementById('subject-info-panel');
-  if (panel && !panel.classList.contains('hidden') &&
-      !panel.contains(e.target) &&
-      !e.target.closest('.info-btn')) {
-    panel.classList.add('hidden');
+  const p = document.getElementById('subject-info-panel');
+  if (p && !p.classList.contains('hidden') && !p.contains(e.target) && !e.target.closest('.info-btn')) {
+    p.classList.add('hidden');
   }
 });
 
@@ -813,7 +908,7 @@ document.addEventListener('click', function(e) {
 function openPDFs(subjectName) {
   currentSubject = subjectName;
   const t = translations[lang];
-  const subj = data[currentCourse].subjects[subjectName];
+  const subj  = data[currentCourse].subjects[subjectName];
   const pdfs  = subj.pdfs;
   const type  = subj.type;
   const notes = EXAM_NOTES[type] || [];
@@ -863,7 +958,8 @@ function openPDFs(subjectName) {
         <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite('pdf/${pdf.file}', this)" title="Seçilmişlərə əlavə et">
           ${isFav ? '★' : '☆'}
         </button>
-        <a class="pdf-open-btn" href="/unecimtahanmateriallari/pdf/${pdf.file}" target="_blank">
+        <a class="pdf-open-btn" href="/unecimtahanmateriallari/pdf/${pdf.file}" target="_blank"
+           onclick="incrementOpenCount('${pdf.file}')">
           ↗ ${t.openPdf}
         </a>
       </div>
@@ -871,7 +967,6 @@ function openPDFs(subjectName) {
     list.appendChild(div);
   });
 
-  // Xəta Göndər düyməsi — PDF-lərin ən altında
   const reportBtn = document.createElement('button');
   reportBtn.className = 'report-error-btn';
   reportBtn.innerHTML = `
@@ -913,22 +1008,16 @@ async function toggleFavorite(filePath, btn) {
 
 async function cacheOnePDF(filePath) {
   if (!("caches" in window)) return;
-  try {
-    const cache = await caches.open("pdf-cache");
-    await cache.add(BASE + filePath);
-  } catch (e) { console.warn("Cache xətası:", e); }
+  try { const c = await caches.open("pdf-cache"); await c.add(BASE + filePath); } catch(e) {}
 }
 
 async function removeFromCache(filePath) {
   if (!("caches" in window)) return;
-  try {
-    const cache = await caches.open("pdf-cache");
-    await cache.delete(BASE + filePath);
-  } catch (e) { console.warn("Cache silmə xətası:", e); }
+  try { const c = await caches.open("pdf-cache"); await c.delete(BASE + filePath); } catch(e) {}
 }
 
 // ============================================================
-// XƏTA BİLDİRİŞ SİSTEMİ
+// XƏTA BİLDİRİŞ
 // ============================================================
 let reportSubjectName = '';
 let reportCourseName  = '';
@@ -936,20 +1025,17 @@ let reportCourseName  = '';
 function openReportModal(subjectName, courseName) {
   reportSubjectName = subjectName;
   reportCourseName  = courseName;
-
   const overlay  = document.getElementById('reportOverlay');
   const ctx      = document.getElementById('report-context');
   const form     = document.getElementById('report-form');
   const success  = document.getElementById('report-success');
   const textarea = document.getElementById('report-message');
   const select   = document.getElementById('report-type');
-
   if (ctx)      ctx.textContent      = `${courseName} · ${subjectName}`;
   if (form)     form.classList.remove('hidden');
   if (success)  success.classList.add('hidden');
   if (textarea) textarea.value       = '';
   if (select)   select.selectedIndex = 0;
-
   overlay.classList.remove('hidden');
   document.body.style.overflow = 'hidden';
 }
@@ -967,40 +1053,23 @@ async function sendReport() {
   const type    = document.getElementById('report-type').value;
   const message = document.getElementById('report-message').value.trim();
   const sendBtn = document.getElementById('report-send-btn');
-
-  if (!message) {
-    document.getElementById('report-message').focus();
-    return;
-  }
-
+  if (!message) { document.getElementById('report-message').focus(); return; }
   sendBtn.disabled    = true;
   sendBtn.textContent = 'Göndərilir...';
-
   try {
     const response = await fetch('https://formspree.io/f/xjgjrkyz', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        "Kurs":      reportCourseName,
-        "Fənn":      reportSubjectName,
-        "Xəta növü": type,
-        "Məzmun":    message
-      })
+      body: JSON.stringify({ "Kurs": reportCourseName, "Fənn": reportSubjectName, "Xəta növü": type, "Məzmun": message })
     });
-
     if (response.ok) {
       document.getElementById('report-form').classList.add('hidden');
       document.getElementById('report-success').classList.remove('hidden');
       setTimeout(closeReportModal, 2800);
-    } else {
-      throw new Error('Formspree error');
-    }
-  } catch (err) {
-    // Fallback: mailto
-    const body = encodeURIComponent(
-      `Kurs: ${reportCourseName}\nFənn: ${reportSubjectName}\nXəta növü: ${type}\n\n${message}`
-    );
-    window.open(`mailto:ericismyhero2467@gmail.com?subject=UNEC%20X%C9%99ta%20Bildiri%C5%9Fi&body=${body}`, '_blank');
+    } else { throw new Error(); }
+  } catch {
+    const body = encodeURIComponent(`Kurs: ${reportCourseName}\nFənn: ${reportSubjectName}\nXəta növü: ${type}\n\n${message}`);
+    window.open(`mailto:ericismyhero2467@gmail.com?subject=UNEC%20X%C9%99ta&body=${body}`, '_blank');
     closeReportModal();
   } finally {
     sendBtn.disabled  = false;
@@ -1009,14 +1078,10 @@ async function sendReport() {
 }
 
 // ============================================================
-// KLAVIATURA — ESC ilə bütün modalları bağla
+// ESC
 // ============================================================
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') {
-    closeThanks();
-    closeEaster();
-    closeReportModal();
-  }
+  if (e.key === 'Escape') { closeThanks(); closeEaster(); closeReportModal(); }
 });
 
 // ============================================================
@@ -1033,4 +1098,6 @@ document.addEventListener('keydown', function(e) {
 computeStats();
 applyTranslations();
 renderCourses();
+renderPopular();
 initSearch();
+initHeroSearch();
