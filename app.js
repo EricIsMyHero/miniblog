@@ -22,7 +22,8 @@ const EXAM_NOTES = {
 // ============================================================
 // DATA
 // Hər fənnə mütləq "type" yazın: "test" və ya "yazili"
-// subjects altında: { type: "test", pdfs: [...] }
+// Hər fənnə mütləq "semester" yazın: 1 (Payız) və ya 2 (Yaz)
+// subjects altında: { type: "test", semester: 1, pdfs: [...] }
 // ============================================================
 const data = {
   "1-ci kurs": {
@@ -30,12 +31,14 @@ const data = {
     subjects: {
       "Xətti cəbr və riyazi analiz": {
         type: "test",
+        semester: 1,
         pdfs: [
           { name: "Xətti Cəbr və Riyazi Analiz Q26", file: "xcraQ26.pdf" }
         ]
       },
       "İKT - Baza kompüter bilikləri": {
         type: "test",
+        semester: 1,
         pdfs: [
           { name: "İKT - Baza Kompüter Bilikləri Q26", file: "iktQ26.pdf" },
           { name: "İKT - Baza Kompüter Bilikləri Q25", file: "iktQ25.pdf" }
@@ -43,12 +46,14 @@ const data = {
       },
       "Azərbaycanın tarixi": {
         type: "test",
+        semester: 1,
         pdfs: [
           { name: "Azərbaycanın Tarixi Q26", file: "aztarixiQ26.pdf" }
         ]
       },
       "Karyera planlaması": {
         type: "test",
+        semester: 1,
         pdfs: [
           { name: "Karyera Planlaması Q26", file: "karyeraQ26.pdf" },
           { name: "Karyera Planlaması Q25", file: "karyeraQ25.pdf" }
@@ -56,12 +61,14 @@ const data = {
       },
       "Xarici dildə işgüzar və akademik kommunikasiya A1": {
         type: "test",
+        semester: 1,
         pdfs: [
           { name: "White Death A1", file: "whitedeathA1.pdf" }
         ]
       },
       "Ehtimal nəzəriyyəsi və riyazi statistika": {
         type: "test",
+        semester: 2,
         pdfs: [
           { name: "Ehtimal Nəzəriyyəsi və Riyazi Statistika Y25", file: "enrsY25.pdf" },
           { name: "Ehtimal Nəzəriyyəsi və Riyazi Statistika Y23", file: "enrsY23.pdf" }
@@ -69,12 +76,14 @@ const data = {
       },
       "Xarici dildə işgüzar və akademik kommunikasiya A2": {
         type: "test",
+        semester: 2,
         pdfs: [
           { name: "Robinson Crusoe A2", file: "robinsoncrusoeA2.pdf" }
         ]
       },
       "Azərbaycan dilində işgüzar və akademik kommunikasiya": {
         type: "test",
+        semester: 2,
         pdfs: [
           { name: "ADİAK Q26", file: "adiakQ26.pdf" },
           { name: "ADİAK Y25", file: "adiakY25.pdf" },
@@ -83,25 +92,30 @@ const data = {
       },
       "Yumşaq bacarıqlar (Soft skills)": {
         type: "test",
+        semester: 2,
         pdfs: [
           { name: "Soft Skills Y25", file: "softskillsY25.pdf" }
         ]
       },
       "İqtisadiyyata giriş": {
         type: "yazili",
+        semester: 2,
         pdfs: [
           { name: "İqtisadiyyata Giriş - 1", file: "iqtisadiyyat1.pdf" }
         ]
       },
       "Mülki müdafiə": {
         type: "test",
+        semester: 2,
         pdfs: [
           { name: "Mülki Müdafiə Q26", file: "mulkimudafieQ26.pdf" },
-          { name: "Mülki Müdafiə Y24", file: "mulkimudafieY24.pdf" }
+          { name: "Mülki Müdafiə Y24", file: "mulkimudafieY24.pdf" },
+          { name: "Mülki Müdafiə Q23", file: "mulkimudafieQ23.pdf" }
         ]
       },
       "Liner cebir ve matematiksel analiz": {
         type: "test",
+        semester: 1,
         pdfs: [
           { name: "Liner Cebir ve Matematiksel Analiz Q26", file: "lcmaQ26.pdf" },
           { name: "Liner Cebir ve Matematiksel Analiz Q23", file: "lcmaQ23.pdf" }
@@ -109,6 +123,7 @@ const data = {
       },
       "Azerbaycanın tarihi": {
         type: "test",
+        semester: 1,
         pdfs: [
           { name: "Azerbaycanın Tarihi Q26", file: "aztarihiQ26.pdf" },
           { name: "Azerbaycanın Tarihi Q25", file: "aztarihiQ25.pdf" }
@@ -116,18 +131,21 @@ const data = {
       },
       "Bilgi işlem teknolojileri": {
         type: "test",
+        semester: 1,
         pdfs: [
           { name: "Bilgi İşlem Teknolojileri - 1", file: "bit1.pdf" }
         ]
       },
       "Yönetim ve organizasyon": {
         type: "test",
+        semester: 1,
         pdfs: [
           { name: "Yönetim ve Organizasyon Q25", file: "yonetimorganizasyonQ25.pdf" }
         ]
       },
       "Olasılık teorisi ve matematiksel istatistik": {
         type: "test",
+        semester: 2,
         pdfs: [
           { name: "Olasılık Teorisi ve Matematiksel İstatistik Y26", file: "otmiY26.pdf" }
         ]
@@ -139,6 +157,7 @@ const data = {
     subjects: {
       "Mikroiqtisadiyyat": {
         type: "yazili",
+        semester: 1,
         pdfs: [
           { name: "Mikroiqtisadiyyat - 1", file: "mikroiqt1.pdf" },
           { name: "Mikroiqtisadiyyat - 2", file: "mikroiqt2.pdf" },
@@ -149,19 +168,29 @@ const data = {
       },
       "Qiymət siyasəti": {
         type: "yazili",
+        semester: 1,
         pdfs: [
           { name: "Qiymət Siyasəti", file: "qiymet1.pdf" }
         ]
       },
       "Əməyin iqtisadiyyatı": {
         type: "yazili",
+        semester: 1,
         pdfs: [
           { name: "Əməyin İqtisadiyyatı - 1", file: "emek1.pdf" },
           { name: "Əməyin İqtisadiyyatı - 1 - Kollekvium", file: "emekkollek1.pdf" }
         ]
       },
+      "Xarici dildə işgüzar və akademik kommunikasiya B1": {
+        type: "test",
+        semester: 1,
+        pdfs: [
+          { name: "Forrest Gump B1", file: "forrestgumpB1.pdf" }
+        ]
+      },
       "Ətraf mühitin iqtisadiyyatı": {
         type: "yazili",
+        semester: 1,
         pdfs: [
           { name: "Ətraf Mühitin İqtisadiyyatı - 1", file: "emi1.pdf" },
           { name: "Ətraf Mühitin İqtisadiyyatı - 2", file: "emi2.pdf" },
@@ -171,6 +200,7 @@ const data = {
       },
       "Azərbaycan iqtisadiyyatı": {
         type: "yazili",
+        semester: 2,
         pdfs: [
           { name: "Azərbaycan İqtisadiyyatı - 1", file: "aziqt1.pdf" },
           { name: "Azərbaycan İqtisadiyyatı - 2", file: "aziqt2.pdf" },
@@ -179,6 +209,7 @@ const data = {
       },
       "Makroiqtisadiyyat": {
         type: "yazili",
+        semester: 2,
         pdfs: [
           { name: "Makroiqtisadiyyat - 1", file: "makroiqt1.pdf" },
           { name: "Makroiqtisadiyyat - 1 - Məsələlər", file: "makroiqtmesele1.pdf" }
@@ -186,12 +217,21 @@ const data = {
       },
       "Maliyyə uçotu": {
         type: "test",
+        semester: 2,
         pdfs: [
           { name: "Maliyyə Uçotu Q26", file: "maliyyeQ26.pdf" }
         ]
       },
+      "Xarici dildə işgüzar və akademik kommunikasiya B1+": {
+        type: "test",
+        semester: 2,
+        pdfs: [
+          { name: "Sherlock Holmes B1+", file: "sherlockholmesB1+.pdf" }
+        ]
+      },
       "İqtisadi fikir tarixi": {
         type: "yazili",
+        semester: 2,
         pdfs: [
           { name: "İqtisadi Fikir Tarixi - 1", file: "iqtfkrtrx1.pdf" },
           { name: "İqtisadi Fikir Tarixi - 2", file: "iqtfkrtrx2.pdf" },
@@ -200,6 +240,7 @@ const data = {
       },
       "Xərclərin idarə edilməsi": {
         type: "test",
+        semester: 2,
         pdfs: [
           { name: "Xərclərin İdarə Edilməsi Y25", file: "xerclerY25.pdf" }
         ]
@@ -209,10 +250,20 @@ const data = {
   "3-cü kurs": {
     icon: "📙",
     subjects: {
-      "Maliyyə": {
-        type: "yazili",
+      "Mülki müdafiə": {
+        type: "test",
+        semester: 1,
         pdfs: [
-          { name: "Finance — Əsas material", file: "Finance.pdf" }
+          { name: "Mülki Müdafiə Q26", file: "mulkimudafieQ26.pdf" },
+          { name: "Mülki Müdafiə Y24", file: "mulkimudafieY24.pdf" },
+          { name: "Mülki Müdafiə Q23", file: "mulkimudafieQ23.pdf" }
+        ]
+      },
+      "Statistika": {
+        type: "yazili",
+        semester: 1,
+        pdfs: [
+          { name: "Statistika", file: "statistika.pdf" }
         ]
       }
     }
@@ -222,6 +273,7 @@ const data = {
     subjects: {
       "Menecment": {
         type: "test",
+        semester: 1,
         pdfs: [
           { name: "Management material", file: "Manage.pdf" }
         ]
@@ -320,7 +372,9 @@ const translations = {
     statPdfs: "PDF",
     noFavorites: "Hələ seçilən PDF yoxdur. ★ basaraq əlavə edin.",
     noExtras: "Bu kurs üçün hələ əlavə material yoxdur.",
-    footer: "Bu sayt rəsmi deyildir. Yalnız tələbələrin imtahan zamanı materialları daha rahat və əlçatan tapması üçün hazırlanıb."
+    footer: "Bu sayt rəsmi deyildir. Yalnız tələbələrin imtahan zamanı materialları daha rahat və əlçatan tapması üçün hazırlanıb.",
+    semesterFall: "🍂 Payız Semestri",
+    semesterSpring: "🌸 Yaz Semestri"
   },
   en: {
     badge: "Exam Materials",
@@ -343,7 +397,9 @@ const translations = {
     statPdfs: "PDFs",
     noFavorites: "No favorites yet. Tap ★ to add one.",
     noExtras: "No extra materials for this course yet.",
-    footer: "This site is unofficial. Created to help students find exam materials more easily."
+    footer: "This site is unofficial. Created to help students find exam materials more easily.",
+    semesterFall: "🍂 Fall Semester",
+    semesterSpring: "🌸 Spring Semester"
   }
 };
 
@@ -486,14 +542,22 @@ function filterSubjects(query) {
   const grid = document.getElementById('subjects-grid');
   if (!grid) return;
   const cards = grid.querySelectorAll('.subject-card');
+  const semesterHeaders = grid.querySelectorAll('.semester-header');
   const searchResultsInfo = document.getElementById('searchResultsInfo');
   let visibleCount = 0;
+
   cards.forEach(card => {
     const subjectName = card.querySelector('h4').textContent.toLowerCase();
     const matches = !query || subjectName.includes(query);
     card.style.display = matches ? 'flex' : 'none';
     if (matches) visibleCount++;
   });
+
+  // Axtarış aktiv olduqda semester başlıqlarını gizlət
+  semesterHeaders.forEach(header => {
+    header.style.display = query ? 'none' : '';
+  });
+
   if (searchResultsInfo) {
     searchResultsInfo.textContent = query ? `${visibleCount} nəticə tapıldı` : '';
   }
@@ -626,26 +690,50 @@ function removeFavAndRefresh(filePath) {
   renderFavorites();
 }
 
+// ============================================================
+// SEMESTER QRUPLAŞDIRMASİ İLƏ FƏNN RENDER
+// ============================================================
 function renderSubjects(courseName) {
+  const t = translations[lang];
   const grid = document.getElementById('subjects-grid');
   grid.innerHTML = '';
   const icons = ['📊','📐','🗓','💡','📝','📈','🔬','⚙️','🎯','📌','🏛','💰','📉','🌿','🔗','📋','🧮','🏆'];
-  Object.entries(data[courseName].subjects).forEach(([subjectName, subj], i) => {
-    const div = document.createElement('div');
-    div.className = 'subject-card animate-in';
-    div.innerHTML = `
-      <div class="subject-icon">${icons[i % icons.length]}</div>
-      <div class="subject-info">
-        <h4>${subjectName}</h4>
-        <div class="pdf-count">
-          ${getTypeBadgeHTML(subj.type)}
-          <span class="pdf-badge">PDF ${subj.pdfs.length}</span>
+
+  const allEntries = Object.entries(data[courseName].subjects);
+  const sem1 = allEntries.filter(([, subj]) => subj.semester === 1);
+  const sem2 = allEntries.filter(([, subj]) => subj.semester === 2);
+
+  let iconIndex = 0;
+
+  function renderGroup(entries, labelText) {
+    if (entries.length === 0) return;
+
+    const header = document.createElement('div');
+    header.className = 'semester-header';
+    header.textContent = labelText;
+    grid.appendChild(header);
+
+    entries.forEach(([subjectName, subj]) => {
+      const div = document.createElement('div');
+      div.className = 'subject-card animate-in';
+      div.innerHTML = `
+        <div class="subject-icon">${icons[iconIndex % icons.length]}</div>
+        <div class="subject-info">
+          <h4>${subjectName}</h4>
+          <div class="pdf-count">
+            ${getTypeBadgeHTML(subj.type)}
+            <span class="pdf-badge">PDF ${subj.pdfs.length}</span>
+          </div>
         </div>
-      </div>
-    `;
-    div.onclick = () => openPDFs(subjectName);
-    grid.appendChild(div);
-  });
+      `;
+      div.onclick = () => openPDFs(subjectName);
+      grid.appendChild(div);
+      iconIndex++;
+    });
+  }
+
+  renderGroup(sem1, t.semesterFall);
+  renderGroup(sem2, t.semesterSpring);
 }
 
 // ============================================================
@@ -856,10 +944,10 @@ function openReportModal(subjectName, courseName) {
   const textarea = document.getElementById('report-message');
   const select   = document.getElementById('report-type');
 
-  if (ctx)      ctx.textContent    = `${courseName} · ${subjectName}`;
+  if (ctx)      ctx.textContent      = `${courseName} · ${subjectName}`;
   if (form)     form.classList.remove('hidden');
   if (success)  success.classList.add('hidden');
-  if (textarea) textarea.value     = '';
+  if (textarea) textarea.value       = '';
   if (select)   select.selectedIndex = 0;
 
   overlay.classList.remove('hidden');
@@ -893,10 +981,10 @@ async function sendReport() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-      "Kurs":      reportCourseName,
-      "Fənn":      reportSubjectName,
-      "Xəta növü": type,
-      "Məzmun":    message
+        "Kurs":      reportCourseName,
+        "Fənn":      reportSubjectName,
+        "Xəta növü": type,
+        "Məzmun":    message
       })
     });
 
