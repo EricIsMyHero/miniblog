@@ -22,22 +22,44 @@
 
 <div class="grid-bg"></div>
 
-<header>
-  <div class="logo" id="logo-easter" onclick="easterEggClick()">UNEC · İMTAHAN</div>
-  <div style="display:flex;align-items:center;gap:10px;">
-    <button class="thanks-btn" onclick="openThanks()" title="Təşəkkürlər">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-      <span class="thanks-btn-text">Təşəkkürlər</span>
-    </button>
-    <button class="theme-toggle-btn" onclick="toggleThemePanel()" title="Tema seç">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-    </button>
-    <div class="lang-toggle">
-      <button class="lang-btn active" onclick="setLang('az')">AZ</button>
-      <button class="lang-btn" onclick="setLang('en')">EN</button>
+<!-- ── YENİ NAVBAR ── -->
+<nav class="navbar" id="main-navbar">
+  <div class="navbar-inner">
+    <div class="nav-logo" id="logo-easter" onclick="easterEggClick()">
+      <span class="nav-logo-dot"></span>UNEC · İMTAHAN
+    </div>
+
+    <div class="nav-links" id="nav-links">
+      <span class="nav-link" onclick="scrollToSection('courses-section')" id="navlink-courses">Kurslar</span>
+      <span class="nav-link" onclick="scrollToSection('popular-section')" id="navlink-popular">Ən populyar</span>
+      <span class="nav-link" onclick="openThanks()" id="navlink-about">Haqqında</span>
+    </div>
+
+    <div class="nav-right">
+      <button class="thanks-btn" onclick="openThanks()" title="Təşəkkürlər">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span class="thanks-btn-text">Təşəkkürlər</span>
+      </button>
+      <button class="theme-toggle-btn" onclick="toggleThemePanel()" title="Tema seç">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('az')">AZ</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
+      </div>
+      <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Menyu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
-</header>
+
+  <!-- Mobil menyu -->
+  <div class="mobile-menu hidden" id="mobile-menu">
+    <span class="mobile-link" onclick="scrollToSection('courses-section'); toggleMobileMenu()" id="m-navlink-courses">Kurslar</span>
+    <span class="mobile-link" onclick="scrollToSection('popular-section'); toggleMobileMenu()" id="m-navlink-popular">Ən populyar</span>
+    <span class="mobile-link" onclick="openThanks(); toggleMobileMenu()" id="m-navlink-about">Haqqında</span>
+  </div>
+</nav>
 
 <!-- Easter Egg Modal -->
 <div id="easterOverlay" class="thanks-overlay hidden" onclick="closeEasterIfOutside(event)">
@@ -54,25 +76,16 @@
         Bu sayta <strong>heç bir töhfə vermədiyiniz</strong> üçün sizə xüsusi minnətdarlığımızı bildiririk.
       </p>
       <div class="easter-list">
-        <div class="easter-person">
-          <span class="easter-num">🥇</span>
-          <span>Vəlizadə Kərim</span>
-        </div>
-        <div class="easter-person">
-          <span class="easter-num">🥈</span>
-          <span>Atakişiyev Xəzər</span>
-        </div>
-        <div class="easter-person">
-          <span class="easter-num">🥉</span>
-          <span>Paşayev Səid</span>
-        </div>
+        <div class="easter-person"><span class="easter-num">🥇</span><span>Vəlizadə Kərim</span></div>
+        <div class="easter-person"><span class="easter-num">🥈</span><span>Atakişiyev Xəzər</span></div>
+        <div class="easter-person"><span class="easter-num">🥉</span><span>Paşayev Səid</span></div>
       </div>
       <p class="easter-footer">Siz olmadan bu sayt tamamilə eyni olardı 💅</p>
     </div>
   </div>
 </div>
 
-  <!-- Xəta Bildiriş Modalı -->
+<!-- Xəta Bildiriş Modalı -->
 <div id="reportOverlay" class="thanks-overlay hidden" onclick="closeReportIfOutside(event)">
   <div class="report-modal">
     <div class="report-modal-header">
@@ -81,7 +94,6 @@
       <button class="report-modal-close" onclick="closeReportModal()">✕</button>
     </div>
     <p class="report-modal-subject" id="report-context"></p>
-
     <div id="report-form">
       <div class="report-field">
         <label>Xəta növü</label>
@@ -103,7 +115,6 @@
         <button class="report-send-btn" id="report-send-btn" onclick="sendReport()">↗ Göndər</button>
       </div>
     </div>
-
     <div id="report-success" class="report-success hidden">
       <div class="report-success-icon">✅</div>
       <div class="report-success-title">Təşəkkür edirik!</div>
@@ -111,7 +122,7 @@
     </div>
   </div>
 </div>
-  
+
 <!-- Təşəkkürlər Modalı -->
 <div id="thanksOverlay" class="thanks-overlay hidden" onclick="closeThanksIfOutside(event)">
   <div class="thanks-modal" id="thanksModal">
@@ -126,6 +137,7 @@
   </div>
 </div>
 
+<!-- Tema Paneli -->
 <div id="theme-panel" class="theme-panel hidden">
   <div class="theme-panel-inner">
     <p class="theme-panel-title">Tema seç</p>
@@ -170,33 +182,67 @@
   </div>
 </div>
 
+<!-- ── ANA KONTEYNER ── -->
 <div class="container">
 
+  <!-- HOME VIEW -->
   <div id="view-home">
-    <div class="hero">
-      <div class="hero-badge" id="hero-badge">İmtahan Materialları</div>
+
+    <!-- HERO -->
+    <div class="hero" id="hero-section">
+      <div class="hero-pill">
+        <span class="hero-pill-dot"></span>
+        <span id="hero-badge">İmtahan Materialları</span>
+      </div>
       <h1 id="hero-title">UNEC <span>İmtahan</span><br>Materialları</h1>
-      <p id="hero-desc">Bütün kurslar üzrə imtahan materiallarına tez çatın. Fənni seçərək, PDF-i açın.</p>
-      <div class="stats">
-        <div class="stat">
-          <div class="stat-num" id="stat-courses">4</div>
-          <div class="stat-label" id="stat-courses-label">Kurs</div>
+      <p id="hero-desc">Bütün PDF-ləri bir yerdə tap, vaxt itirmə. Fənni seç, materialı aç.</p>
+
+      <!-- Hero Axtarış -->
+      <div class="hero-search-wrap">
+        <div class="hero-search-inner">
+          <svg class="hero-search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 l2.5 2.5" stroke-linecap="round"/>
+          </svg>
+          <input type="text" id="heroSearchInput" placeholder="Fənn axtar..." autocomplete="off">
+          <button class="hero-search-clear hidden" id="heroSearchClear" onclick="clearHeroSearch()">✕</button>
         </div>
-        <div class="stat">
-          <div class="stat-num" id="stat-subjects">21</div>
-          <div class="stat-label" id="stat-subjects-label">Fənn</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num" id="stat-pdfs">21</div>
-          <div class="stat-label" id="stat-pdfs-label">PDF</div>
-        </div>
+        <div class="hero-search-results hidden" id="heroSearchResults"></div>
       </div>
     </div>
 
-    <p class="section-label" id="label-courses">Kurslar</p>
-    <div class="courses-grid" id="courses-grid"></div>
-  </div>
+    <!-- STATS -->
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-num" id="stat-courses">4</div>
+        <div class="stat-label" id="stat-courses-label">Kurs</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-num" id="stat-subjects">21</div>
+        <div class="stat-label" id="stat-subjects-label">Fənn</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-num" id="stat-pdfs">21</div>
+        <div class="stat-label" id="stat-pdfs-label">PDF</div>
+      </div>
+    </div>
 
+    <!-- KURSLAR -->
+    <div id="courses-section" style="padding-top: 8px;">
+      <p class="section-label" id="label-courses">Kurslar</p>
+      <div class="courses-grid" id="courses-grid"></div>
+    </div>
+
+    <!-- ƏN POPULYAR -->
+    <div id="popular-section" style="margin-top: 40px;">
+      <p class="section-label" id="label-popular">Ən çox açılanlar</p>
+      <div class="popular-list" id="popular-list"></div>
+    </div>
+
+  </div><!-- /view-home -->
+
+  <!-- SUBJECTS VIEW -->
   <div id="view-subjects" class="hidden">
     <div class="back-btn" onclick="goTo('home')">
       <span>←</span> <span id="back1-text">Kurslara qayıt</span>
@@ -217,7 +263,6 @@
         ★ <span id="label-favorites">Seçilmişlər</span>
       </button>
     </div>
-
     <div class="search-bar-container" id="searchBarContainer">
       <div class="search-bar-wrapper">
         <div class="search-icon">🔍</div>
@@ -226,7 +271,6 @@
       </div>
       <div class="search-results-info" id="searchResultsInfo"></div>
     </div>
-
     <div id="tab-subjects-content">
       <div class="subjects-grid" id="subjects-grid"></div>
     </div>
@@ -238,6 +282,7 @@
     </div>
   </div>
 
+  <!-- PDF VIEW -->
   <div id="view-pdfs" class="hidden">
     <div class="back-btn" onclick="goTo('subjects')">
       <span>←</span> <span id="back2-text">Fənlərə qayıt</span>
@@ -256,16 +301,16 @@
     <div class="pdf-items" id="pdf-items"></div>
   </div>
 
-</div>
+</div><!-- /container -->
 
 <footer class="footer">
-  <span id="footer-text">Bu sayt rəsmi deyildir. Yalnız tələbələrin imtahan zamanı materialları daha rahat və əlçatan tapması üçün hazırlanıb.</span>
+  <span id="footer-text">Bu sayt rəsmi deyildir. Yalnız tələbələrin imtahan zamanı materialları daha rahat tapması üçün hazırlanıb.</span>
   <div class="footer-credits">
-    &copy; 2025 - 2026 Ali Production 💖
+    &copy; 2025–2026 Ali Production 💖
     <span class="footer-sep">|</span>
     <a href="https://ericismyhero.github.io/my-portfolio/" target="_blank">Əlaqə</a>
     <span class="footer-sep">|</span>
-    <a href="mailto:ericismyhero2467@gmail.com">Təklif və İradlarınız üçün</a>
+    <a href="mailto:ericismyhero2467@gmail.com">Təklif və İradlarınız</a>
   </div>
 </footer>
 
@@ -274,32 +319,22 @@
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("sw.js");
   }
-
   let deferredPrompt;
-
   window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
     deferredPrompt = e;
     document.getElementById("installBanner").classList.add("visible");
   });
-
   function installApp() {
     if (deferredPrompt) {
       deferredPrompt.prompt();
-      deferredPrompt.userChoice.then(() => {
-        deferredPrompt = null;
-        dismissBanner();
-      });
+      deferredPrompt.userChoice.then(() => { deferredPrompt = null; dismissBanner(); });
     }
   }
-
   function dismissBanner() {
     document.getElementById("installBanner").classList.remove("visible");
   }
-
-  window.addEventListener("appinstalled", () => {
-    dismissBanner();
-  });
+  window.addEventListener("appinstalled", () => { dismissBanner(); });
 </script>
 </body>
 </html>
