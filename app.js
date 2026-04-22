@@ -9,13 +9,13 @@ const EXAM_NOTES = {
     "🖥️ Bu fənn <strong>Elektron-Test</strong> formatındadır.",
     "🔀 Sualların sırası fərqli ola bilər. Cavabları sıraya görə deyil, mənaya görə öyrənin.",
     "⚠️ Materiallardakı cavablar köhnə ola bilər, müəllimin dediyi mövzularla müqayisə edin.",
-    "💡 Bütün variantları nəzərdən keçirin, tələ suallarına diqqət edin."
+    "💡 Bütün variantları nəzərdən keçirin, bəzən test tipli fənnlər yazılıya çevrilə bilər."
   ],
   yazili: [
     "✍️ Bu fənn <strong>Elektron-Yazılı</strong> formatındadır.",
     "📝 Cavablarınızı tam, əsaslandırılmış və ən önəmlisi fərqli şəkildə yazmağa diqqət göstərin.",
     "⚠️ Materiallardakı suallar köhnə ola bilər, sillabusunuzla mütləq uyğunlaşdırın.",
-    "💡 Əlavə mənbələrdən də istifadə etməyi tövsiyə edirik."
+    "💡 Əlavə mənbələrdən də istifadə etməyi tövsiyə edirik, bəzən yazılı tipli fənnlər testə çevrilə bilər."
   ]
 };
 
@@ -37,7 +37,8 @@ const data = {
       "İKT - Baza kompüter bilikləri": {
         type: "test",
         pdfs: [
-          { name: "İKT - Baza Kompüter Bilikləri Q26", file: "iktQ26.pdf" }
+          { name: "İKT - Baza Kompüter Bilikləri Q26", file: "iktQ26.pdf" },
+          { name: "İKT - Baza Kompüter Bilikləri Q25", file: "iktQ25.pdf" }
         ]
       },
       "Azərbaycanın tarixi": {
@@ -49,7 +50,8 @@ const data = {
       "Karyera planlaması": {
         type: "test",
         pdfs: [
-          { name: "Karyera Planlaması Q26", file: "karyeraQ26.pdf" }
+          { name: "Karyera Planlaması Q26", file: "karyeraQ26.pdf" },
+          { name: "Karyera Planlaması Q25", file: "karyeraQ25.pdf" }
         ]
       },
       "Xarici dildə işgüzar və akademik kommunikasiya A1": {
@@ -59,7 +61,7 @@ const data = {
         ]
       },
       "Ehtimal nəzəriyyəsi və riyazi statistika": {
-        type: "yazili",
+        type: "test",
         pdfs: [
           { name: "Ehtimal Nəzəriyyəsi və Riyazi Statistika Y25", file: "enrsY25.pdf" },
           { name: "Ehtimal Nəzəriyyəsi və Riyazi Statistika Y23", file: "enrsY23.pdf" }
@@ -91,6 +93,13 @@ const data = {
           { name: "İqtisadiyyata Giriş - 1", file: "iqtisadiyyat1.pdf" }
         ]
       },
+      "Mülki müdafiə": {
+        type: "test",
+        pdfs: [
+          { name: "Mülki Müdafiə Q26", file: "mulkimudafieQ26.pdf" },
+          { name: "Mülki Müdafiə Y24", file: "mulkimudafieY24.pdf" }
+        ]
+      },
       "Liner cebir ve matematiksel analiz": {
         type: "test",
         pdfs: [
@@ -116,7 +125,13 @@ const data = {
         pdfs: [
           { name: "Yönetim ve Organizasyon Q25", file: "yonetimorganizasyonQ25.pdf" }
         ]
-      }
+      },
+      "Olasılık teorisi ve matematiksel istatistik": {
+        type: "test",
+        pdfs: [
+          { name: "Olasılık Teorisi ve Matematiksel İstatistik Y26", file: "otmiY26.pdf" }
+        ]
+      },
     }
   },
   "2-ci kurs": {
@@ -182,7 +197,13 @@ const data = {
           { name: "İqtisadi Fikir Tarixi - 2", file: "iqtfkrtrx2.pdf" },
           { name: "İqtisadi Fikir Tarixi - 3", file: "iqtfkrtrx3.pdf" }
         ]
-      }
+      },
+      "Xərclərin idarə edilməsi": {
+        type: "test",
+        pdfs: [
+          { name: "Xərclərin İdarə Edilməsi Y25", file: "xerclerY25.pdf" }
+        ]
+      },
     }
   },
   "3-cü kurs": {
@@ -213,7 +234,8 @@ const EXTRAS_BASE = "/unecimtahanmateriallari/pdf-extra/";
 
 const extrasData = {
   "1-ci kurs": [
-    { name: "Ehtimal nəzəriyyəsi və riyazi statistika - Kollekvium", file: "enrskollektaplarla1.pdf", desc: "Bir çox testin yanında həlli yolu var" }
+    { name: "Ehtimal nəzəriyyəsi və riyazi statistika - Kollekvium", file: "enrskollektaplarla1.pdf", desc: "Bir çox testin yanında həlli yolu var" },
+    { name: "Azərbaycan dilində işgüzar və akademik kommunikasiya - Test", file: "adiaktest1.pdf", desc: "ADİAK fənninə aid test" }
   ],
   "2-ci kurs": [
     { name: "Robinson Crusoe - Azərbaycan", file: "robinsonazeA2.pdf", desc: "Robinson Crusoe Azərbaycan dilindəki versiyası" }
@@ -597,20 +619,6 @@ function renderFavorites() {
   });
 }
 
-// PDF-lər render olduqdan sonra "Xəta Göndər" düyməsini əlavə et
-const reportBtn = document.createElement('button');
-reportBtn.className = 'report-error-btn';
-reportBtn.innerHTML = `
-  <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
-    <circle cx="8" cy="8" r="7"/>
-    <line x1="8" y1="5" x2="8" y2="8.5"/>
-    <circle cx="8" cy="11.5" r="0.6" fill="currentColor" stroke="none"/>
-  </svg>
-  Xəta Göndər
-`;
-reportBtn.onclick = () => openReportModal(subjectName, currentCourse);
-list.appendChild(reportBtn);
-
 function removeFavAndRefresh(filePath) {
   let favs = getFavorites().filter(f => f !== filePath);
   localStorage.setItem("favorites", JSON.stringify(favs));
@@ -689,10 +697,6 @@ function closeEasterIfOutside(e) {
   if (e.target === document.getElementById('easterOverlay')) closeEaster();
 }
 
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') { closeThanks(); closeEaster(); }
-});
-
 // ============================================================
 // INFO PANEL — imtahan tipinə görə avtomatik notlar
 // ============================================================
@@ -715,6 +719,9 @@ document.addEventListener('click', function(e) {
   }
 });
 
+// ============================================================
+// PDF SƏHİFƏSİ
+// ============================================================
 function openPDFs(subjectName) {
   currentSubject = subjectName;
   const t = translations[lang];
@@ -753,6 +760,7 @@ function openPDFs(subjectName) {
 
   const list = document.getElementById('pdf-items');
   list.innerHTML = '';
+
   pdfs.forEach(pdf => {
     const isFav = getFavorites().includes('pdf/' + pdf.file);
     const div = document.createElement('div');
@@ -774,6 +782,20 @@ function openPDFs(subjectName) {
     `;
     list.appendChild(div);
   });
+
+  // Xəta Göndər düyməsi — PDF-lərin ən altında
+  const reportBtn = document.createElement('button');
+  reportBtn.className = 'report-error-btn';
+  reportBtn.innerHTML = `
+    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+      <circle cx="8" cy="8" r="7"/>
+      <line x1="8" y1="5" x2="8" y2="8.5"/>
+      <circle cx="8" cy="11.5" r="0.6" fill="currentColor" stroke="none"/>
+    </svg>
+    Xəta Göndər
+  `;
+  reportBtn.onclick = () => openReportModal(subjectName, currentCourse);
+  list.appendChild(reportBtn);
 
   goTo('pdfs');
 }
@@ -820,7 +842,6 @@ async function removeFromCache(filePath) {
 // ============================================================
 // XƏTA BİLDİRİŞ SİSTEMİ
 // ============================================================
-
 let reportSubjectName = '';
 let reportCourseName  = '';
 
@@ -828,18 +849,18 @@ function openReportModal(subjectName, courseName) {
   reportSubjectName = subjectName;
   reportCourseName  = courseName;
 
-  const overlay = document.getElementById('reportOverlay');
-  const ctx = document.getElementById('report-context');
-  const form = document.getElementById('report-form');
-  const success = document.getElementById('report-success');
+  const overlay  = document.getElementById('reportOverlay');
+  const ctx      = document.getElementById('report-context');
+  const form     = document.getElementById('report-form');
+  const success  = document.getElementById('report-success');
   const textarea = document.getElementById('report-message');
-  const select = document.getElementById('report-type');
+  const select   = document.getElementById('report-type');
 
-  if (ctx) ctx.textContent = `${courseName} · ${subjectName}`;
-  if (form) form.classList.remove('hidden');
-  if (success) success.classList.add('hidden');
-  if (textarea) textarea.value = '';
-  if (select) select.selectedIndex = 0;
+  if (ctx)      ctx.textContent    = `${courseName} · ${subjectName}`;
+  if (form)     form.classList.remove('hidden');
+  if (success)  success.classList.add('hidden');
+  if (textarea) textarea.value     = '';
+  if (select)   select.selectedIndex = 0;
 
   overlay.classList.remove('hidden');
   document.body.style.overflow = 'hidden';
@@ -864,18 +885,18 @@ async function sendReport() {
     return;
   }
 
-  sendBtn.disabled = true;
+  sendBtn.disabled    = true;
   sendBtn.textContent = 'Göndərilir...';
 
   try {
-    const response = await fetch('/api/send-report', {
+    const response = await fetch('https://formspree.io/f/xjgjrkyz', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        course:  reportCourseName,
-        subject: reportSubjectName,
-        type:    type,
-        message: message
+      "Kurs":      reportCourseName,
+      "Fənn":      reportSubjectName,
+      "Xəta növü": type,
+      "Məzmun":    message
       })
     });
 
@@ -884,26 +905,29 @@ async function sendReport() {
       document.getElementById('report-success').classList.remove('hidden');
       setTimeout(closeReportModal, 2800);
     } else {
-      throw new Error('Server error');
+      throw new Error('Formspree error');
     }
   } catch (err) {
-    // Fallback: mailto linki aç
+    // Fallback: mailto
     const body = encodeURIComponent(
       `Kurs: ${reportCourseName}\nFənn: ${reportSubjectName}\nXəta növü: ${type}\n\n${message}`
     );
-    window.open(`mailto:ericismyhero2467@gmail.com?subject=UNEC%20Xəta%20Bildirişi&body=${body}`, '_blank');
+    window.open(`mailto:ericismyhero2467@gmail.com?subject=UNEC%20X%C9%99ta%20Bildiri%C5%9Fi&body=${body}`, '_blank');
     closeReportModal();
   } finally {
-    sendBtn.disabled = false;
+    sendBtn.disabled  = false;
     sendBtn.innerHTML = '↗ Göndər';
   }
 }
 
+// ============================================================
+// KLAVIATURA — ESC ilə bütün modalları bağla
+// ============================================================
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
     closeThanks();
     closeEaster();
-    closeReportModal();  // ← bu sətri mövcud keydown listener-inə əlavə et
+    closeReportModal();
   }
 });
 
